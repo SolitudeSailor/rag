@@ -15,18 +15,22 @@
 
 ```text
 rag/
-├── search_rag_example.py  # 主程序：模型调用、Bing 搜索、问答循环与命令行入口
-├── requirements.txt       # Python 依赖清单
-├── README.md              # 安装、使用及实验说明（整合 RAG.md）
-├── RAG.md                 # 原始操作与实验笔记
-├── .env.example           # 配置模板，可提交到 GitHub
-├── .gitignore             # 排除密钥文件、虚拟环境及 Python 缓存
-├── AGENTS.md              # 本地协作约定，当前未提交到 GitHub
-├── .env                   # 本地 API Key 配置，不提交到 GitHub
-└── .venv/                 # 本地 Python 虚拟环境，不提交到 GitHub
+├── search_rag_example.py   # 核心问答程序，默认医疗助手 V3
+├── RAG项目目标.md         # 课程目标和评分要求
+├── AGENTS.md              # 项目协作约定
+├── requirements.txt       # 核心运行依赖
+├── .env.example           # 配置模板
+├── scripts/               # 三版提示词、演示、评测及离线统计
+├── docs/                  # 问答清单、操作教程及原始笔记
+├── tools/                 # Word 分页检查工具
+├── data/                  # 官方数据集缓存，不提交数据文件
+├── outputs/               # 新实验结果、图表及截图
+└── reports/               # 新 Word 报告
 ```
 
-`.env` 和 `.venv` 需要在新电脑上重新配置；`AGENTS.md` 是当前本地文件，克隆仓库不会自动获得它。
+复用已有 `.env` 和 `.venv`，不将凭据、环境、实验输出或旧材料提交 Git。新电脑需自行配置环境。旧材料集中在 `待清理旧文件/`，不参与新实验。
+
+逐题命令和次数见 [问答操作清单](docs/问答操作清单.md)，完整流程见 [实验教程](docs/RAG实验操作教程.md)。
 
 ## 安装与运行
 
@@ -105,7 +109,7 @@ MODEL = os.environ.get("LLM_MODEL", "deepseek-flash")
 
 ## 提示词实验：V1 → V2 → V3
 
-修改 `search_rag_example.py` 中“学生修改区 ②”的 `SYSTEM_PROMPT`，逐步比较提示词对搜索行为和答案的影响。当前代码启用 V2，V1 和 V3 作为注释保留；切换时只保留一个有效的 `SYSTEM_PROMPT` 赋值。
+核心文件只允许修改 V2/V3 提示词内容，当前默认启用医疗助手 V3，V1/V2 以注释保留。使用 `scripts/run_demo.py --version V1/V2/V3` 选择实验版本；修改提示词时同步 `scripts/prompt_versions.py`。下方百科和天气片段为历史设计示意，实际实验以源码中的医疗身份、规则和模拟示例为准。
 
 | 版本 | 设计重点 | 观察内容 |
 | --- | --- | --- |
@@ -199,4 +203,4 @@ print(f"  [Token] 输入 {resp.usage.prompt_tokens} | 输出 {resp.usage.complet
 
 问答需要联网及有效 API Key，可能产生服务商费用。模型答案和网页摘要需结合可靠来源核验。
 
-原始笔记保留在 [RAG.md](RAG.md)，其中的安装、配置、提示词示例、Token 统计和运行步骤已整合至本文。
+原始笔记保留在 [RAG原始笔记](docs/RAG原始笔记.md)，历史说明与当前版本不一致时，以实际源码和新操作教程为准。

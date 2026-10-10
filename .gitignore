@@ -1,3 +1,11 @@
 .venv/
 .env
 __pycache__/
+*.py[cod]
+outputs/**
+!outputs/.gitkeep
+reports/**
+!reports/.gitkeep
+data/*.jsonl
+待清理旧文件/
+~$*.docx
