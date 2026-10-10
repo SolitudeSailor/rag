@@ -10,12 +10,14 @@
 ## 目录与重启状态
 
 - `scripts/`：实验脚本；`docs/`：文档；`tools/`：辅助工具；`data/`：官方数据集。
-- `outputs/experiment/`：新实验；`outputs/screenshots/`：截图；`reports/`：新 Word。
+- `outputs/experiment/`：第四部分数据集实验；`outputs/sessions/`：第三部分及演示会话；`outputs/screenshots/`：用户手工截图；`reports/`：新 Word。
+- 第三、第四部分独立执行、独立评价：run_demo.py 不预设测试题；evaluate.py 仅执行固定 30 题两模式的 60 个任务；export_experiment_summary.py 仅统计第四部分。
 - 项目已重新开始，旧成绩不沿用。旧材料集中在 `待清理旧文件/`，永久删除曾被自动审批拒绝，等待明确授权；新实验不读取旧材料。
 
 ## 代码与实验
 
 - `search_rag_example.py` 仅允许修改 V2/V3 提示词，其余部分（含 V1、导入、配置、搜索地址、Token 打印和交互）不得改动；同步 `scripts/prompt_versions.py`。
+- 本会话用户已明确授权两处核心修复：Bing 入口改为 www.bing.com/search；Token 打印兼容缺失 usage。这两处已执行，其余核心修改限制仍适用；旧实验保留，新实验另存目录。
 - V1 保留教师基础版；V2 为角色与规则版；V3 增加 1～2 个完整模拟 Few-shot，搜索无果或不确定须明确说明，严禁编造查询经历。
 - V2/V3 保持“健康科普与医疗信息查询助手”身份，不诊断、不推荐个人用药剂量。
 - 三版使用同一组至少四题：两道时效性/冷门事实题、一道常识题、一道已核验的陷阱题；记录搜索、关键词合理性、正确性、角色风格和编造情况。

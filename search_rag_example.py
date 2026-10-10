@@ -83,6 +83,7 @@ client = OpenAI(api_key=API_KEY, base_url=API_BASE)
 # ============================================================
 # V2 角色 + 规则版（医疗助手）
 # ============================================================
+
 # SYSTEM_PROMPT = """你是一名专业的「健康科普与医疗信息查询助手」，服务对象是普通大众和医学生。
 # 你的职责是提供准确、通俗、有依据的健康知识和医疗信息。一般事实问题可以客观回答，但始终保持医疗助手身份，不自称物联网技术顾问。
 # 你不是医生，不提供个人诊断结论、不推荐具体用药剂量、不替代专业医疗意见。个人病情或剂量问题应明确说明能力边界，建议就医或咨询医生、药师；不得自行给出诊断或剂量。
@@ -155,7 +156,10 @@ def call_llm(messages):
     # 然后用它记录同一道题"盲答 vs 搜索 RAG"的 token 对比表。
     #
     #    【在这里添加你的代码】
-    print(f"  [Token] 输入 {resp.usage.prompt_tokens} | 输出 {resp.usage.completion_tokens} | 合计 {resp.usage.total_tokens}")
+    usage = getattr(resp, 'usage', None)
+    tokens = [getattr(usage, name, None) for name in ('prompt_tokens', 'completion_tokens', 'total_tokens')]
+    tokens = ['未知' if value is None else value for value in tokens]
+    print(f"  [Token] 输入 {tokens[0]} | 输出 {tokens[1]} | 合计 {tokens[2]}")
     # ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
     return resp.choices[0].message.content.strip()
 
@@ -169,7 +173,7 @@ def bing_search(query, top_k=3):
     ○ 选做：也可以换成百度搜索（https://www.baidu.com/s?wd=...），
       只需修改下面的网址和解析标签（百度结果在 div.result 中）。
     """
-    url = "https://cn.bing.com/search"
+    url = "https://www.bing.com/search"
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
     html = requests.get(url, params={"q": query}, headers=headers, timeout=10).text
 

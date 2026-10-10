@@ -16,6 +16,9 @@ import requests
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 import search_rag_example as rag
+from search_tracking import api_base_fingerprint, capture, completed_log, install
+
+install(rag)
 
 OUT = ROOT / 'outputs' / 'experiment'
 DATA = ROOT / 'data'
@@ -26,11 +29,11 @@ original_create = rag.client.chat.completions.create
 
 def tracked_create(*args, **kwargs):
     response = original_create(*args, **kwargs)
-    u = response.usage
+    u = getattr(response, 'usage', None)
     USAGE.get().append({
-        'prompt_tokens': u.prompt_tokens if u else None,
-        'completion_tokens': u.completion_tokens if u else None,
-        'total_tokens': u.total_tokens if u else None,
+        'prompt_tokens': getattr(u, 'prompt_tokens', None),
+        'completion_tokens': getattr(u, 'completion_tokens', None),
+        'total_tokens': getattr(u, 'total_tokens', None),
     })
     return response
 
@@ -39,7 +42,9 @@ rag.client.chat.completions.create = tracked_create
 
 
 def write_json(path, obj):
-    path.write_text(json.dumps(obj, ensure_ascii=False, indent=2), encoding='utf-8')
+    temporary = path.with_suffix(path.suffix + '.tmp')
+    temporary.write_text(json.dumps(obj, ensure_ascii=False, indent=2), encoding='utf-8')
+    temporary.replace(path)
 
 
 def versions():
@@ -48,18 +53,27 @@ def versions():
     return PROMPTS.copy()
 
 
-def run_one(question, mode, prompt=None):
+def run_one(question, mode, prompt=None, trace_path=None):
     usage = []
     token = USAGE.set(usage)
     start = time.perf_counter()
-    result = {'question': question, 'mode': mode, 'answer': '', 'status': 'ok', 'search_log': []}
+    events = []
+    result = {'question': question, 'mode': mode, 'answer': '', 'status': 'running',
+              'search_log': [], 'search_events': events}
+
+    def checkpoint():
+        result['search_log'] = completed_log(events)
+        if trace_path is not None:
+            write_json(trace_path, result)
+
+    checkpoint()
     try:
-        if mode == 'blind':
-            result['answer'] = rag.blind_answer(question)
-        else:
-            result['answer'], result['search_log'] = rag.rag_answer(question, system_prompt=prompt)
-        if re.match(r'^搜索[:：]', result['answer']):
-            result['status'] = 'unfinished_search'
+        with capture(events, checkpoint):
+            if mode == 'blind':
+                result['answer'] = rag.blind_answer(question)
+            else:
+                result['answer'], result['search_log'] = rag.rag_answer(question, system_prompt=prompt)
+        result['status'] = 'unfinished_search' if re.match(r'^\s*搜索[:：]', result['answer']) else 'ok'
     except Exception as exc:
         result['status'] = type(exc).__name__
         # 不存储可能含请求头或凭据的异常原文。
@@ -67,7 +81,8 @@ def run_one(question, mode, prompt=None):
         USAGE.reset(token)
     result.update(usage=usage, seconds=round(time.perf_counter() - start, 3))
     for key in ('prompt_tokens', 'completion_tokens', 'total_tokens'):
-        result[key] = sum(x[key] for x in usage) if all(x[key] is not None for x in usage) else None
+        result[key] = sum(x[key] for x in usage) if usage and all(x[key] is not None for x in usage) else None
+    checkpoint()
     return result
 
 
@@ -76,12 +91,16 @@ def correct(answer, answers):
 
 
 def main():
+    global OUT
     parser = argparse.ArgumentParser()
     parser.add_argument('--workers', type=int, default=3)
+    parser.add_argument('--output-dir', type=Path, default=OUT, help='第四部分实验目录；重测请指定新目录')
     args = parser.parse_args()
+    if args.workers < 1:
+        parser.error('--workers 必须至少为 1')
+    OUT = args.output_dir.resolve()
     OUT.mkdir(parents=True, exist_ok=True)
     prompts = versions()
-    write_json(OUT / 'prompts.json', prompts)
     DATA.mkdir(parents=True, exist_ok=True)
     dataset = DATA / 'NQ-open.dev.jsonl'
     if not dataset.exists():
@@ -92,38 +111,60 @@ def main():
     random.seed(42)
     indices = random.sample(range(len(rows)), 30)
     selected = [dict(index=i, **rows[i]) for i in indices]
-    write_json(OUT / 'sample30.json', selected)
-    write_json(OUT / 'metadata.json', {
+    metadata = {
         'date': datetime.now(timezone(timedelta(hours=8))).isoformat(),
         'model': rag.MODEL, 'temperature': 0.3, 'max_search': 2, 'top_k': 3,
+        'api_base_sha256': api_base_fingerprint(rag),
+        'search_url': 'https://www.bing.com/search',
         'seed': 42, 'workers': args.workers, 'dataset_size': len(rows),
         'dataset_url': DATA_URL, 'dataset_sha256': hashlib.sha256(dataset.read_bytes()).hexdigest(),
         'source_sha256': hashlib.sha256((ROOT / 'search_rag_example.py').read_bytes()).hexdigest(),
         'prompt_sha256': hashlib.sha256((ROOT / 'scripts' / 'prompt_versions.py').read_bytes()).hexdigest(),
-        'note': '医疗助手 V2/V3；核心文件除 V2/V3 提示词外保持原样，使用原 cn.bing.com 搜索；本目录两模式全部重新调用，不复用旧版本成绩。固定样本工程评测，非独立泛化测试。',
-    })
+        'note': '第四部分固定 30 题，盲答与医疗助手 V3 RAG 共 60 个任务；使用已修复的 www.bing.com/search；缺失 usage 标为未知。仅同配置可断点续跑；固定样本工程评测，非独立泛化测试。',
+    }
     jobs = [(f'nq_{i}_{mode}', item['question'], mode, prompts['V3'])
             for i, item in enumerate(selected) for mode in ('blind', 'rag')]
-    tests = [
-        ('时效事实', '2026年诺贝尔物理学奖获奖者是谁？'),
-        ('冷门参数', 'STM32F103C8T6 的 Flash 容量是多少 KB？'),
-        ('常识计算', '计算 12×8 并说明计算过程。'),
-        ('虚假前提', 'J.K.罗琳已经出版的《哈利波特》第九部小说叫什么？请概述剧情。'),
-    ]
-    for version, prompt in prompts.items():
-        for i, (_, question) in enumerate(tests):
-            jobs.append((f'prompt_{version}_{i}', question, version, prompt))
     results = {}
     cache = OUT / 'raw_results.json'
     if cache.exists():
         results = json.loads(cache.read_text(encoding='utf-8'))
+        evidence = ['metadata.json', 'sample30.json', 'prompts.json']
+        if not all((OUT / name).exists() for name in evidence):
+            raise SystemExit('缓存缺少配置证据，停止续跑；请用 --output-dir 指定新实验目录。')
+        previous = json.loads((OUT / 'metadata.json').read_text(encoding='utf-8'))
+        config_keys = ['model', 'temperature', 'max_search', 'top_k', 'seed',
+                       'dataset_sha256', 'source_sha256', 'prompt_sha256']
+        same_config = all(previous.get(key) == metadata[key] for key in config_keys)
+        same_sample = json.loads((OUT / 'sample30.json').read_text(encoding='utf-8')) == selected
+        same_prompt = json.loads((OUT / 'prompts.json').read_text(encoding='utf-8')).get('V3') == prompts['V3']
+        if not (same_config and same_sample and same_prompt):
+            raise SystemExit('缓存与当前模型、提示词或样本不一致，停止续跑；请用 --output-dir 指定新实验目录。')
+        for key, question, mode, _ in jobs:
+            if key in results and (results[key].get('question') != question or results[key].get('mode') != mode):
+                raise SystemExit('缓存任务与抽样题目或模式不一致，停止续跑。')
+        if 'api_base_sha256' not in previous:
+            if all(key in results for key, *_ in jobs):
+                print('历史实验已完整，但未记录接口指纹：保留原文件，不续跑或补写配置；可使用离线统计脚本。', flush=True)
+                return
+            raise SystemExit('旧缓存缺少接口指纹，无法确认原接口；请用 --output-dir 指定新目录，不补写历史配置。')
+        if previous['api_base_sha256'] != metadata['api_base_sha256']:
+            raise SystemExit('接口地址与原实验不一致，停止续跑；请用 --output-dir 指定新目录。')
+        print('[续跑] 保留已有记录和原配置，仅运行缺失任务；已有失败不重试。', flush=True)
+    else:
+        write_json(OUT / 'prompts.json', prompts)
+        write_json(OUT / 'sample30.json', selected)
+        write_json(OUT / 'metadata.json', metadata)
+    # 每次执行独立存放检查点，续跑不会覆盖上次中断的搜索过程。
+    traces = OUT / 'search_traces' / datetime.now(timezone(timedelta(hours=8))).strftime('%Y%m%d_%H%M%S_%f')
+    traces.mkdir(parents=True, exist_ok=True)
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
-        futures = {pool.submit(run_one, q, m, p): key for key, q, m, p in jobs if key not in results}
+        futures = {pool.submit(run_one, q, m, p, traces / f'{key}.json'): key for key, q, m, p in jobs if key not in results}
         for future in as_completed(futures):
             key = futures[future]
             results[key] = future.result()
             write_json(cache, results)
-            print(f'[进度] {len(results)}/{len(jobs)} {key} {results[key]["status"]}', flush=True)
+            completed = sum(job_key in results for job_key, *_ in jobs)
+            print(f'[进度] {completed}/{len(jobs)} {key} {results[key]["status"]}', flush=True)
     with (OUT / 'results.csv').open('w', newline='', encoding='utf-8-sig') as f:
         fields = ['question', 'gold_answers', 'blind_answer', 'rag_answer', 'blind_correct', 'rag_correct', 'blind_status', 'rag_status', 'rag_search_count', 'blind_prompt_tokens', 'rag_prompt_tokens']
         writer = csv.DictWriter(f, fieldnames=fields)
@@ -135,8 +176,8 @@ def main():
                 blind_correct=b['status'] == 'ok' and correct(b['answer'], item['answer']),
                 rag_correct=r['status'] == 'ok' and correct(r['answer'], item['answer']),
                 blind_status=b['status'], rag_status=r['status'], rag_search_count=len(r['search_log']),
-                blind_prompt_tokens=b['prompt_tokens'], rag_prompt_tokens=r['prompt_tokens']))
-    write_json(OUT / 'manual_questions.json', tests)
+                blind_prompt_tokens='未知' if b['prompt_tokens'] is None else b['prompt_tokens'],
+                rag_prompt_tokens='未知' if r['prompt_tokens'] is None else r['prompt_tokens']))
     print('实验完成；真实结果已保存。', flush=True)
 
 

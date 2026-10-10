@@ -1,3 +1,5 @@
+> 原始学习笔记，保留历史内容。实际流程和文件位置以 README、问答操作清单及现行源码为准。
+
 1.新建文件夹，放置代码
 	在项目目录打开 PowerShell，安装依赖到项目虚拟环境：
 	.\.venv\Scripts\python.exe -m pip install -r requirements.txt
