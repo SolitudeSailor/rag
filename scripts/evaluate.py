@@ -1,7 +1,6 @@
 """固定样本真实实验，逐次保存调用与 usage，不向模型提供标准答案。"""
 import argparse
 import contextvars
-import csv
 import hashlib
 import json
 import random
@@ -16,7 +15,9 @@ import requests
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 import search_rag_example as rag
-from search_tracking import api_base_fingerprint, capture, completed_log, install
+from experiment_utils import api_base_fingerprint, capture, completed_log, install
+from experiment_utils import write_results
+from experiment_utils import new_experiment
 
 install(rag)
 
@@ -44,7 +45,15 @@ rag.client.chat.completions.create = tracked_create
 def write_json(path, obj):
     temporary = path.with_suffix(path.suffix + '.tmp')
     temporary.write_text(json.dumps(obj, ensure_ascii=False, indent=2), encoding='utf-8')
-    temporary.replace(path)
+    # Windows 上临时读者可能短暂占用目标文件；保留临时文件并有限重试。
+    for attempt in range(5):
+        try:
+            temporary.replace(path)
+            return
+        except PermissionError:
+            if attempt == 4:
+                raise
+            time.sleep(0.05 * (attempt + 1))
 
 
 def versions():
@@ -86,21 +95,22 @@ def run_one(question, mode, prompt=None, trace_path=None):
     return result
 
 
-def correct(answer, answers):
-    return any(str(gold).lower() in answer.lower() for gold in answers if str(gold).strip())
-
-
 def main():
     global OUT
     parser = argparse.ArgumentParser()
     parser.add_argument('--workers', type=int, default=3)
-    parser.add_argument('--output-dir', type=Path, default=OUT, help='第四部分实验目录；重测请指定新目录')
+    parser.add_argument('--output-dir', type=Path, help='续跑时指定已有exp_编号目录；不指定则自动创建下一编号')
     args = parser.parse_args()
     if args.workers < 1:
         parser.error('--workers 必须至少为 1')
-    OUT = args.output_dir.resolve()
-    OUT.mkdir(parents=True, exist_ok=True)
     prompts = versions()
+    experiment_root = ROOT / 'outputs' / 'experiment'
+    if args.output_dir is None or args.output_dir.resolve() == experiment_root.resolve():
+        OUT = new_experiment(experiment_root)
+    else:
+        OUT = args.output_dir.resolve()
+        OUT.mkdir(parents=True, exist_ok=True)
+    print(f'[实验目录] {OUT}', flush=True)
     DATA.mkdir(parents=True, exist_ok=True)
     dataset = DATA / 'NQ-open.dev.jsonl'
     if not dataset.exists():
@@ -165,19 +175,7 @@ def main():
             write_json(cache, results)
             completed = sum(job_key in results for job_key, *_ in jobs)
             print(f'[进度] {completed}/{len(jobs)} {key} {results[key]["status"]}', flush=True)
-    with (OUT / 'results.csv').open('w', newline='', encoding='utf-8-sig') as f:
-        fields = ['question', 'gold_answers', 'blind_answer', 'rag_answer', 'blind_correct', 'rag_correct', 'blind_status', 'rag_status', 'rag_search_count', 'blind_prompt_tokens', 'rag_prompt_tokens']
-        writer = csv.DictWriter(f, fieldnames=fields)
-        writer.writeheader()
-        for i, item in enumerate(selected):
-            b, r = results[f'nq_{i}_blind'], results[f'nq_{i}_rag']
-            writer.writerow(dict(question=item['question'], gold_answers=json.dumps(item['answer'], ensure_ascii=False),
-                blind_answer=b['answer'], rag_answer=r['answer'],
-                blind_correct=b['status'] == 'ok' and correct(b['answer'], item['answer']),
-                rag_correct=r['status'] == 'ok' and correct(r['answer'], item['answer']),
-                blind_status=b['status'], rag_status=r['status'], rag_search_count=len(r['search_log']),
-                blind_prompt_tokens='未知' if b['prompt_tokens'] is None else b['prompt_tokens'],
-                rag_prompt_tokens='未知' if r['prompt_tokens'] is None else r['prompt_tokens']))
+    write_results(OUT, selected, results)
     print('实验完成；真实结果已保存。', flush=True)
 
 

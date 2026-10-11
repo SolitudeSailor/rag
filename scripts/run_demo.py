@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 import search_rag_example as rag
 from prompt_versions import PROMPTS
-from search_tracking import api_base_fingerprint, capture, completed_log, install
+from experiment_utils import api_base_fingerprint, capture, completed_log, install
 
 install(rag)
 

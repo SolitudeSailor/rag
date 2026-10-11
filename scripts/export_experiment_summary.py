@@ -4,12 +4,19 @@ import argparse
 import json
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
+from experiment_utils import record_correct, STANDARD_ID
+from experiment_utils import latest_experiment
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'outputs' / 'experiment'
 parser = argparse.ArgumentParser(description='仅统计第四部分，不读取第三部分会话')
-parser.add_argument('--input-dir', type=Path, default=OUT, help='evaluate.py 的实验输出目录')
-OUT = parser.parse_args().input_dir.resolve()
+parser.add_argument('--input-dir', type=Path, help='指定exp_编号目录；不指定则统计最新编号')
+input_dir = parser.parse_args().input_dir
+try:
+    OUT = latest_experiment(OUT) if input_dir is None or input_dir.resolve() == OUT.resolve() else input_dir.resolve()
+except ValueError as exc:
+    raise SystemExit(str(exc))
+print(f'[统计目录] {OUT}', flush=True)
 if not (OUT / 'results.csv').exists():
     raise SystemExit('尚无新实验结果，请先运行 scripts/evaluate.py。')
 with (OUT / 'results.csv').open(encoding='utf-8-sig', newline='') as f:
@@ -26,7 +33,7 @@ for i, item in enumerate(sample):
     assert json.loads(rows[i]['gold_answers']) == item['answer'], '标准答案不一致，停止统计'
     for mode in ('blind', 'rag'):
         record = raw[f'nq_{i}_{mode}']
-        expected = record['status'] == 'ok' and any(str(gold).lower() in record['answer'].lower() for gold in item['answer'] if str(gold).strip())
+        expected = record_correct(record, item['answer'])
         assert rows[i][f'{mode}_answer'] == record['answer'], 'CSV 与原始回答不一致，停止统计'
         assert rows[i][f'{mode}_correct'] == str(expected), 'CSV 与课程判分不一致，停止统计'
         usage = record['usage']
@@ -35,12 +42,17 @@ for i, item in enumerate(sample):
 bc = sum(r['blind_correct'] == 'True' for r in rows)
 rc = sum(r['rag_correct'] == 'True' for r in rows)
 summary = {
+    'scoring_standard': STANDARD_ID,
+    'sample_size': 30,
     'blind_correct': bc, 'rag_correct': rc,
     'blind_accuracy': bc / 30 * 100, 'rag_accuracy': rc / 30 * 100,
     'difference_pp': (rc - bc) / 30 * 100,
     'search_questions': sum(bool(raw[f'nq_{i}_rag']['search_log']) for i in range(30)),
     'search_count': sum(len(raw[f'nq_{i}_rag']['search_log']) for i in range(30)),
     'nonempty_searches': sum(bool(s) for i in range(30) for _, s in raw[f'nq_{i}_rag']['search_log']),
+    'meets_course_threshold': rc - bc >= 2,
+    'meets_excellent_accuracy_threshold': rc - bc >= 3,
+    'non_ok_tasks': [key for key in sorted(raw) if raw[key]['status'] != 'ok'],
 }
 (OUT / 'summary.json').write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding='utf-8')
 

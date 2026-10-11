@@ -1,8 +1,7 @@
-# 原始数据
+# 官方数据集缓存
 
-本目录仅存放公开数据集输入，不保存实验回答或成绩。
+本目录仅用于指定NQ-open开发集，不存实验回答。此前缓存已清空，evaluate.py在缺失时自动下载3610题开发集：
 
-`NQ-open.dev.jsonl` 是保留下来的官方 NQ-open 开发集缓存，避免重复下载。来源：
 https://raw.githubusercontent.com/google-research-datasets/natural-questions/master/nq_open/NQ-open.dev.jsonl
 
-批量脚本固定使用 `random.seed(42)` 抽取 30 题，样本和数据集 SHA256 写入新实验目录。数据集缓存不提交 Git；缺失时脚本自动下载。
+固定seed=42抽样30题，数据集与样本哈希保存在实验目录。JSONL缓存不提交Git。
