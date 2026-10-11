@@ -7,5 +7,4 @@ outputs/**
 reports/**
 !reports/.gitkeep
 data/*.jsonl
-待清理旧文件/
 ~$*.docx
