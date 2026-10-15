@@ -18,6 +18,7 @@ import search_rag_example as rag
 from experiment_utils import api_base_fingerprint, capture, completed_log, install
 from experiment_utils import write_results
 from experiment_utils import new_experiment
+from scripts.search_sources import configuration as search_configuration
 
 install(rag)
 
@@ -125,12 +126,12 @@ def main():
         'date': datetime.now(timezone(timedelta(hours=8))).isoformat(),
         'model': rag.MODEL, 'temperature': 0.3, 'max_search': 2, 'top_k': 3,
         'api_base_sha256': api_base_fingerprint(rag),
-        'search_url': 'https://www.bing.com/search',
+        'search_configuration': search_configuration(),
         'seed': 42, 'workers': args.workers, 'dataset_size': len(rows),
         'dataset_url': DATA_URL, 'dataset_sha256': hashlib.sha256(dataset.read_bytes()).hexdigest(),
         'source_sha256': hashlib.sha256((ROOT / 'search_rag_example.py').read_bytes()).hexdigest(),
         'prompt_sha256': hashlib.sha256((ROOT / 'scripts' / 'prompt_versions.py').read_bytes()).hexdigest(),
-        'note': '第四部分固定 30 题，盲答与医疗助手 V3 RAG 共 60 个任务；使用已修复的 www.bing.com/search；缺失 usage 标为未知。仅同配置可断点续跑；固定样本工程评测，非独立泛化测试。',
+        'note': '第四部分固定 30 题，盲答与医疗助手 V3 RAG 共 60 个任务；维基百科优先，年度/时效查询补充网页与权威引用，另有时钟和天气工具；缺失 usage 标为未知。仅同配置可断点续跑；固定样本工程评测，非独立泛化测试。',
     }
     jobs = [(f'nq_{i}_{mode}', item['question'], mode, prompts['V3'])
             for i, item in enumerate(selected) for mode in ('blind', 'rag')]
@@ -143,7 +144,7 @@ def main():
             raise SystemExit('缓存缺少配置证据，停止续跑；请用 --output-dir 指定新实验目录。')
         previous = json.loads((OUT / 'metadata.json').read_text(encoding='utf-8'))
         config_keys = ['model', 'temperature', 'max_search', 'top_k', 'seed',
-                       'dataset_sha256', 'source_sha256', 'prompt_sha256']
+                       'dataset_sha256', 'source_sha256', 'prompt_sha256', 'search_configuration']
         same_config = all(previous.get(key) == metadata[key] for key in config_keys)
         same_sample = json.loads((OUT / 'sample30.json').read_text(encoding='utf-8')) == selected
         same_prompt = json.loads((OUT / 'prompts.json').read_text(encoding='utf-8')).get('V3') == prompts['V3']
@@ -164,6 +165,9 @@ def main():
         write_json(OUT / 'prompts.json', prompts)
         write_json(OUT / 'sample30.json', selected)
         write_json(OUT / 'metadata.json', metadata)
+        # 保存真实检索实现快照，辅助函数变化也不得混用旧轮次结果。
+        (OUT / 'search_sources.py').write_bytes((ROOT / 'scripts' / 'search_sources.py').read_bytes())
+        (OUT / 'runtime_tools.py').write_bytes((ROOT / 'scripts' / 'runtime_tools.py').read_bytes())
     # 每次执行独立存放检查点，续跑不会覆盖上次中断的搜索过程。
     traces = OUT / 'search_traces' / datetime.now(timezone(timedelta(hours=8))).strftime('%Y%m%d_%H%M%S_%f')
     traces.mkdir(parents=True, exist_ok=True)

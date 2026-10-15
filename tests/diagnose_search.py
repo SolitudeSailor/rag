@@ -1,24 +1,17 @@
-"""只检查公开搜索页面，不加载 .env、不调用模型、不改核心搜索函数。"""
+"""验证实际信息源优先级与公开网页；不加载 .env、不调用模型。"""
 import argparse
-import ast
 import json
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from types import SimpleNamespace
+import sys
 from urllib.parse import urlsplit
 
 import requests
 from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parents[1]
-
-
-def current_search_url():
-    source = ast.parse((ROOT / 'search_rag_example.py').read_text(encoding='utf-8'))
-    function = next(node for node in source.body if isinstance(node, ast.FunctionDef) and node.name == 'bing_search')
-    assignment = next(node for node in function.body if isinstance(node, ast.Assign)
-                      and any(isinstance(target, ast.Name) and target.id == 'url' for target in node.targets))
-    return ast.literal_eval(assignment.value)
+sys.path.insert(0, str(ROOT))
+from scripts.search_sources import BING_URL, capture_attempts, configuration, search
 
 
 def inspect_page(query, url):
@@ -46,28 +39,32 @@ def inspect_page(query, url):
         items_with_h2_and_p=sum(bool(item.find('h2') and item.find('p')) for item in items),
         challenge_elements=len(soup.select('#b_captcha, #b_captcha_verify, iframe[src*="captcha"]')),
     )
-    # 将这次响应回放给原函数，核对原解析器结果，不再发送请求。
-    source = ast.parse((ROOT / 'search_rag_example.py').read_text(encoding='utf-8'))
-    function = next(node for node in source.body if isinstance(node, ast.FunctionDef) and node.name == 'bing_search')
-    namespace = {'requests': SimpleNamespace(get=lambda *args, **kwargs: response), 'BeautifulSoup': BeautifulSoup}
-    exec(compile(ast.Module(body=[function], type_ignores=[]), 'original_bing_search', 'exec'), namespace)
-    record['original_parser_snippet_count'] = len(namespace['bing_search'](query))
     return record
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--query', action='append', help='可以重复提供关键词')
-    parser.add_argument('--compare-global', action='store_true', help='额外检查 www.bing.com；不修改原搜索地址')
+    parser.add_argument('--compare-global', action='store_true', help='额外检查未过滤的 www.bing.com 页面')
     parser.add_argument('--compare-legacy', action='store_true', help='额外检查旧 cn.bing.com 入口')
     args = parser.parse_args()
-    queries = args.query or ['世卫组织疟疾疫苗', 'NQ open dataset']
-    urls = [current_search_url()]
-    if args.compare_global and 'https://www.bing.com/search' not in urls:
-        urls.append('https://www.bing.com/search')
+    queries = args.query or ['光合作用', 'photosynthesis']
+    urls = []
+    if args.compare_global:
+        urls.append(BING_URL)
     if args.compare_legacy and 'https://cn.bing.com/search' not in urls:
         urls.append('https://cn.bing.com/search')
     results = []
+    for query in queries:
+        attempts = []
+        with capture_attempts(attempts):
+            snippets = search(query)
+        record = {'query': query, 'snippet_count': len(snippets),
+                  'snippets': snippets, 'source_attempts': attempts}
+        results.append(record)
+        print(json.dumps({'query': query, 'snippet_count': len(snippets),
+                          'attempt_statuses': [f"{a['source']}:{a['status']}" for a in attempts]},
+                         ensure_ascii=False), flush=True)
     for url in urls:
         for query in queries:
             record = inspect_page(query, url)
@@ -77,7 +74,8 @@ def main():
     out = ROOT / 'outputs' / 'diagnostics'
     out.mkdir(parents=True, exist_ok=True)
     path = out / f'search_{timestamp:%Y%m%d_%H%M%S_%f}.json'
-    path.write_text(json.dumps({'time': timestamp.isoformat(), 'results': results}, ensure_ascii=False, indent=2), encoding='utf-8')
+    path.write_text(json.dumps({'time': timestamp.isoformat(), 'search_configuration': configuration(),
+                               'results': results}, ensure_ascii=False, indent=2), encoding='utf-8')
     print(f'[诊断记录] {path}', flush=True)
 
 

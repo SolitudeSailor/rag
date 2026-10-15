@@ -125,18 +125,27 @@ def install(rag):
         if active is None:
             return original(query, *args, **kwargs)
         events, persist = active
-        event = {'query': query, 'started_at': now(), 'status': 'running', 'snippets': []}
+        event = {'query': query, 'started_at': now(), 'status': 'running', 'snippets': [],
+                 'source_attempts': []}
         events.append(event)
         if persist:
             persist()
         try:
-            snippets = original(query, *args, **kwargs)
+            from scripts.search_sources import capture_attempts
+            with capture_attempts(event['source_attempts'], persist):
+                snippets = original(query, *args, **kwargs)
         except (Exception, KeyboardInterrupt) as exc:
             event.update(status=type(exc).__name__, finished_at=now())
             if persist:
                 persist()
             raise
-        event.update(status='ok', snippets=snippets, finished_at=now())
+        labels = {'wikipedia_entry': '【维基百科', 'bing_fallback': '【Bing 网页摘要',
+                  'web_page': '【辅助网页正文', 'system_clock': '【系统时钟',
+                  'weather': '【Open-Meteo天气数据'}
+        selected = {attempt['source'] for attempt in event['source_attempts']
+                    if attempt['status'] == 'accepted' and attempt['source'] in labels
+                    and any(snippet.startswith(labels[attempt['source']]) for snippet in snippets)}
+        event.update(status='ok', snippets=snippets, finished_at=now(), selected_sources=sorted(selected))
         if persist:
             persist()
         return snippets

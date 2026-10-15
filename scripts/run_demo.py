@@ -12,6 +12,7 @@ sys.path.insert(0, str(ROOT))
 import search_rag_example as rag
 from prompt_versions import PROMPTS
 from experiment_utils import api_base_fingerprint, capture, completed_log, install
+from scripts.search_sources import configuration as search_configuration
 
 install(rag)
 
@@ -35,6 +36,7 @@ session = {
     'api_base_sha256': api_base_fingerprint(rag),
     'system_prompt': PROMPTS[args.version] if args.version != 'blind' else '你是一个问答助手，请直接回答问题。',
     'source_sha256': hashlib.sha256((ROOT / 'search_rag_example.py').read_bytes()).hexdigest(),
+    'search_configuration': search_configuration(),
     'context_enabled': False,
     'turns': [],
 }
