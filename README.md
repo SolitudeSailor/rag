@@ -4,6 +4,8 @@ Python命令行课程项目：通过OpenAI兼容接口调用模型，以维基�
 
 **了解架构和查询各模块：[索引 index.md](索引%20index.md)**。操作见[实验指南](docs/实验指南.md)，实现见[检索代码说明](docs/检索代码说明.md)。
 
+评分采用课程原规则，另提供[别名与人工复核补充评价](docs/补充评价说明.md)，减少姓名写法等造成的误判。
+
 ## 启动
 
 在项目根目录打开PowerShell，电脑需已有Python。首次模型配置用`.env.example`创建本地`.env`，填写LLM_API_KEY、LLM_API_BASE、LLM_MODEL；已有配置不覆盖，环境变量优先，不展示或提交密钥。

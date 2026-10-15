@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "note": "仅供离线补充评价，禁止注入问答或检索提示词；在观察 exp_3 后新增，不作为独立测试证据。",
+  "entries": [
+    {
+      "question": "who's the model on let's make a deal",
+      "gold_answer": "Tiffany Adams Coyne",
+      "aliases": ["Tiffany Coyne"],
+      "verified_on": "2026-10-15",
+      "rationale": "CBS 节目官方人物页及本人官网均将该节目模特列为 Tiffany Coyne，故接受其作为本题替代答案。官方页支持本题回答，不单凭省略中间名推断所有姓名等价。",
+      "sources": [
+        "https://www.cbs.com/shows/lets_make_a_deal/cast/67164/",
+        "https://tiffanycoyne.com/"
+      ]
+    }
+  ]
+}
