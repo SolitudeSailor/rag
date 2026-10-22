@@ -15,16 +15,18 @@ import project_runner as runner
 
 def results_fixture(directory, failed=False):
     directory.mkdir(parents=True, exist_ok=True)
-    raw = {f'nq_{i}_{mode}': {'status': 'ok'}
+    raw = {f'live_{i}_{mode}': {'status': 'ok'}
            for i in range(30) for mode in ('blind', 'rag')}
     if failed:
-        raw['nq_0_rag']['status'] = 'APIConnectionError'
+        raw['live_0_rag']['status'] = 'APIConnectionError'
     summary = dict(blind_accuracy=60, rag_accuracy=60, difference_pp=0,
                    meets_course_threshold=False,
-                   non_ok_tasks=['nq_0_rag'] if failed else [])
+                   non_ok_tasks=['live_0_rag'] if failed else [], complete_truth=True, scored=30, total=30, by_type={kind: dict(blind_accuracy=60, rag_accuracy=60, difference_pp=0, scored=15, total=15) for kind in ('weather', 'fx')})
     (directory / 'raw_results.json').write_text(json.dumps(raw), encoding='utf-8')
     (directory / 'summary.json').write_text(json.dumps(summary), encoding='utf-8')
     (directory / 'sample30.json').write_text('[]', encoding='utf-8')
+    (directory / 'truths.json').write_text('{}', encoding='utf-8')
+    (directory / 'metadata.json').write_text('{}', encoding='utf-8')
     (directory / 'results.csv').write_text('question\n', encoding='utf-8')
 
 

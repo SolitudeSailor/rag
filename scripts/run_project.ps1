@@ -14,6 +14,8 @@ param(
     [string]$Version = 'V3',
     [ValidateRange(1, 64)]
     [int]$Workers = 3,
+    [ValidateSet('on', 'off')]
+    [string]$TimeInjection = 'on',
     [string]$InputDir,
     [string]$IndexUrl = 'https://pypi.tuna.tsinghua.edu.cn/simple'
 )
@@ -46,6 +48,7 @@ try {
     $runnerArguments = @(
         '-X', 'utf8', '-u', (Join-Path $PSScriptRoot 'project_runner.py'),
         '--task', $Task, '--version', $Version, '--workers', "$Workers",
+        '--time-injection', $TimeInjection,
         '--index-url', $IndexUrl
     )
     if ($InputDir) {

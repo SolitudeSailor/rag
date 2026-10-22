@@ -2,9 +2,6 @@
 .env
 __pycache__/
 *.py[cod]
-outputs/**
-!outputs/.gitkeep
-reports/**
-!reports/.gitkeep
-data/*.jsonl
+outputs/
+reports/
 ~$*.docx

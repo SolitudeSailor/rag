@@ -99,7 +99,7 @@ def validate_export(directory):
         raise RunnerError('export 模式必须指定 -InputDir，例如 outputs/experiment/exp_1。')
     path = Path(directory)
     path = (ROOT / path).resolve() if not path.is_absolute() else path.resolve()
-    required = ['results.csv', 'raw_results.json', 'sample30.json']
+    required = ['results.csv', 'raw_results.json', 'sample30.json', 'truths.json', 'metadata.json']
     if not path.is_dir() or not all((path / name).is_file() for name in required):
         raise RunnerError('指定目录缺少完整评测文件；请先完成评测，不会改用其他轮次。')
     return path
@@ -109,7 +109,7 @@ def check_model_configuration():
     # 配置仍由原模块加载，只检查是否保留了占位符，不输出变量内容。
     sys.path.insert(0, str(ROOT))
     try:
-        import search_rag_example as rag
+        import search_rag_weather_fx as rag
     except Exception as exc:
         raise RunnerError(f'模型配置加载失败（{type(exc).__name__}），请检查 .env 配置。') from None
     if not rag.API_KEY.strip() or rag.API_KEY.strip() == 'YOUR_API_KEY_HERE':
@@ -119,16 +119,20 @@ def check_model_configuration():
 def print_summary(directory):
     summary = json.loads((directory / 'summary.json').read_text(encoding='utf-8'))
     raw = json.loads((directory / 'raw_results.json').read_text(encoding='utf-8'))
-    required = {f'nq_{i}_{mode}' for i in range(30) for mode in ('blind', 'rag')}
+    required = {f'live_{i}_{mode}' for i in range(30) for mode in ('blind', 'rag')}
     if not required <= raw.keys():
         raise RunnerError('实验缺少固定60项记录，不能报告完成。')
     counts = Counter(raw[key]['status'] for key in required)
     print('[任务状态] ' + json.dumps(dict(sorted(counts.items())), ensure_ascii=False), flush=True)
-    print(f'[准确率] 盲答 {summary["blind_accuracy"]:.2f}% | '
-          f'RAG {summary["rag_accuracy"]:.2f}% | 差异 {summary["difference_pp"]:+.2f} 个百分点', flush=True)
+    def rate(value):
+        return '不适用' if value is None else f'{value:.2f}%'
+    for label, group in [('天气', summary['by_type']['weather']), ('汇率', summary['by_type']['fx']), ('总体', summary)]:
+        diff = '不适用' if group['difference_pp'] is None else f'{group["difference_pp"]:+.2f}'
+        print(f'[{label}] 盲答 {rate(group["blind_accuracy"])} | RAG {rate(group["rag_accuracy"])} | '
+              f'差异 {diff} 个百分点 | 有效 {group["scored"]}/{group["total"]}', flush=True)
     print(f'[结果目录] {directory}', flush=True)
-    if summary['non_ok_tasks']:
-        print('[结果] 导出完成，但存在失败或未完成任务；记录已保留，不自动重试。', flush=True)
+    if summary['non_ok_tasks'] or not summary['complete_truth']:
+        print('[结果] 导出完成，但存在标准值缺失、失败或未完成任务；记录已保留，不自动重试。', flush=True)
         return 2
     if summary['meets_course_threshold']:
         print('[结果] 全部60项成功，本轮达到课程准确率提升要求。', flush=True)
@@ -145,7 +149,8 @@ def dispatch(args, export_dir=None):
         print('[完成] 离线测试通过。', flush=True)
     elif args.task == 'demo':
         check_model_configuration()
-        run_python([ROOT / 'scripts' / 'run_demo.py', '--version', args.version], '交互演示')
+        run_python([ROOT / 'scripts' / 'run_demo.py', '--version', args.version,
+                    '--time-injection', getattr(args, 'time_injection', 'on')], '交互演示')
         print('[完成] 演示入口已退出；逐题状态见 outputs/sessions。', flush=True)
     else:
         if args.task == 'experiment':
@@ -166,6 +171,7 @@ def main(argv=None):
     parser.add_argument('--task', choices=['setup', 'test', 'demo', 'experiment', 'export'], default='setup')
     parser.add_argument('--version', choices=['V1', 'V2', 'V3', 'blind'], default='V3')
     parser.add_argument('--workers', type=int, default=3)
+    parser.add_argument('--time-injection', choices=['on', 'off'], default='on', help='仅demo：时间注入前后对照')
     parser.add_argument('--input-dir', type=Path)
     parser.add_argument('--index-url', default=DEFAULT_INDEX)
     parser.add_argument('--check-dependencies', action='store_true', help=argparse.SUPPRESS)
@@ -180,6 +186,8 @@ def main(argv=None):
             raise RunnerError('Workers 必须在1至64之间。')
         if args.input_dir is not None and args.task != 'export':
             raise RunnerError('-InputDir 仅用于 export；新实验自动创建独立目录。')
+        if args.time_injection == 'off' and args.task != 'demo':
+            raise RunnerError('关闭时间注入仅用于demo对照；正式评测固定开启。')
         validate_index(args.index_url)
         export_dir = validate_export(args.input_dir) if args.task == 'export' else None
         print(f'[Python] {sys.executable}', flush=True)
