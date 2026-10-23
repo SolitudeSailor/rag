@@ -131,6 +131,10 @@ def print_summary(directory):
         print(f'[{label}] 盲答 {rate(group["blind_accuracy"])} | RAG {rate(group["rag_accuracy"])} | '
               f'差异 {diff} 个百分点 | 有效 {group["scored"]}/{group["total"]}', flush=True)
     print(f'[结果目录] {directory}', flush=True)
+    if 'meets_rag_target' in summary:
+        status = '已达到' if summary['meets_rag_target'] else '尚未达到'
+        print(f'[90%目标] {status}；RAG答对{summary["rag_correct"]}/{summary["total"]}题，'
+              f'有效标准值{summary["scored"]}/{summary["total"]}；要求完整30题至少答对27题。', flush=True)
     if summary['non_ok_tasks'] or not summary['complete_truth']:
         print('[结果] 导出完成，但存在标准值缺失、失败或未完成任务；记录已保留，不自动重试。', flush=True)
         return 2

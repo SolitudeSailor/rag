@@ -62,10 +62,11 @@ def install(rag):
             return original(query, *args, **kwargs)
         events, persist = active
         event = {'query': query, 'started_at': now(), 'status': 'running', 'snippets': [],
-                 'source_attempts': []}
+                 'source_attempts': [], 'request_attempts': []}
         events.append(event)
         if persist:
             persist()
+        token = rag.SEARCH_REQUEST_LOG.set(event['request_attempts'])
         try:
             snippets = original(query, *args, **kwargs)
         except (Exception, KeyboardInterrupt) as exc:
@@ -73,6 +74,8 @@ def install(rag):
             if persist:
                 persist()
             raise
+        finally:
+            rag.SEARCH_REQUEST_LOG.reset(token)
         event['source_attempts'].append({'source': 'bing_snippet', 'status': 'accepted' if snippets else 'empty'})
         selected = ['bing_snippet'] if snippets else []
         for source, prefix in [('weather_page', '【天气网页当前栏】'), ('bank_fx_page', '【银行汇率网页】')]:

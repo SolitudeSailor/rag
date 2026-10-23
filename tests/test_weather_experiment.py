@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 import search_rag_weather_fx as rag
 from scripts import evaluate, weather_experiment as exp
-from scripts.export_experiment_summary import export
+from scripts.export_experiment_summary import export, merge_summary
 from scripts.weather_prompts import PROMPTS
 
 
@@ -34,6 +34,21 @@ def fixture():
            usage=copy.deepcopy(usage), prompt_tokens=10, completion_tokens=2, total_tokens=12, search_log=[])
            for i, item in enumerate(sample) for mode in ('blind', 'rag')}
     return sample, raw, truths
+
+
+def archive_fixture(directory, sample, raw, truths):
+    hashes = {}
+    for name in exp.SOURCE_FILES:
+        dest = directory/'source'/name
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_bytes((ROOT/name).read_bytes())
+        hashes[name] = hashlib.sha256(dest.read_bytes()).hexdigest()
+    metadata = dict(schema=exp.STANDARD_ID, time_injection=True, time_zone='Asia/Shanghai',
+                    max_search=2, top_k=5, source_sha256=hashes)
+    for name, value in [('metadata.json', metadata), ('sample30.json', sample),
+                        ('raw_results.json', raw), ('truths.json', truths), ('prompts.json', PROMPTS)]:
+        exp.write_json(directory/name, value)
+    exp.write_results(directory, sample, raw, truths)
 
 
 class WeatherExperimentTests(unittest.TestCase):
@@ -189,6 +204,76 @@ class WeatherExperimentTests(unittest.TestCase):
         self.assertEqual(len(snippets), 2)
         fetch.assert_called_once_with(target, '北京天气')
 
+    def test_weather_link_without_slash_or_summary_is_still_read(self):
+        target = 'https://www.tianqi.com/shenzhen'
+        self.assertEqual(rag._weather_result_url(target), target)
+        html = f'<li class="b_algo"><h2><a href="{target}">深圳天气</a></h2></li>'
+        with patch('requests.get', return_value=SimpleNamespace(text=html, raise_for_status=lambda: None)), \
+                patch.object(rag, '_weather_page', return_value='【天气网页当前栏】城市：深圳；当前气温：26℃') as fetch:
+            snippets = rag.bing_search('深圳天气')
+        fetch.assert_called_once_with(target, '深圳天气')
+        self.assertTrue(snippets[0].startswith('【天气网页当前栏】'))
+        for link in ('https://www.tianqi.com/shenzhen/15/', 'https://www.tianqi.com/shenzhen.html'):
+            self.assertIsNone(rag._weather_result_url(link))
+
+    def test_search_transport_retries_same_url_and_records_attempts(self):
+        import requests
+        from scripts.experiment_utils import capture
+        response = SimpleNamespace(text='<li class="b_algo"><h2>天气</h2><p>暂无数值</p></li>',
+                                   raise_for_status=lambda: None)
+        events = []
+        with patch('requests.get', side_effect=[requests.exceptions.SSLError(), response]) as get, patch('time.sleep'):
+            with capture(events):
+                snippets = rag.bing_search('北京天气')
+        self.assertEqual(len(snippets), 1)
+        self.assertEqual(get.call_count, 2)
+        self.assertEqual(get.call_args_list[0], get.call_args_list[1])
+        self.assertEqual([r['status'] for r in events[0]['request_attempts']], ['SSLError', 'ok'])
+        self.assertEqual(events[0]['status'], 'ok')
+        self.assertNotIn('verify', get.call_args.kwargs)
+        events = []
+        with patch('requests.get', side_effect=requests.exceptions.Timeout) as get, patch('time.sleep'):
+            with self.assertRaises(requests.exceptions.Timeout), capture(events):
+                rag.bing_search('北京天气')
+        self.assertEqual(get.call_count, 2)
+        self.assertEqual(events[0]['status'], 'Timeout')
+        self.assertEqual(len(events[0]['request_attempts']), 2)
+
+    def test_search_transport_does_not_retry_permanent_http_failure(self):
+        import requests
+        response = SimpleNamespace(status_code=404)
+        error = requests.exceptions.HTTPError(response=response)
+        with patch('requests.get', side_effect=error) as get, self.assertRaises(requests.exceptions.HTTPError):
+            rag.bing_search('北京天气')
+        self.assertEqual(get.call_count, 1)
+
+    def test_refined_weather_uses_locale_without_extra_query(self):
+        response = SimpleNamespace(text='', raise_for_status=lambda: None)
+        for query, localized in [('北京天气', False), ('"北京天气"', True), ('"中国银行外汇牌价" "美元"', False)]:
+            with self.subTest(query=query), patch('requests.get', return_value=response) as get:
+                rag.bing_search(query)
+            get.assert_called_once()
+            params = get.call_args.kwargs['params']
+            self.assertEqual(params['q'], query)
+            self.assertEqual('mkt' in params, localized)
+            if localized:
+                self.assertEqual(params['mkt'], 'zh-CN')
+
+    def test_ninety_percent_target_requires_twenty_seven_and_all_truths(self):
+        sample, raw, truths = fixture()
+        for i in range(30):
+            if i >= 27:
+                raw[f'live_{i}_rag']['answer'] = '无法确定'
+        result = exp.summarize(exp.build_rows(sample, raw, truths), raw)
+        self.assertEqual(result['rag_accuracy'], 90)
+        self.assertTrue(result['meets_rag_target'])
+        answer = raw['live_26_rag']['answer']
+        raw['live_26_rag']['answer'] = '无法确定'
+        self.assertFalse(exp.summarize(exp.build_rows(sample, raw, truths), raw)['meets_rag_target'])
+        raw['live_26_rag']['answer'] = answer
+        truths['29']['value'] = None
+        self.assertFalse(exp.summarize(exp.build_rows(sample, raw, truths), raw)['meets_rag_target'])
+
     def bank_page(self, currency='加拿大元', bid='703', ask='707', date=None, units=True):
         date = date or datetime.now(timezone(timedelta(hours=8))).strftime('%Y/%m/%d %H:%M:%S')
         html = '<p>本汇率表单位为100外币换算人民币</p>' if units else ''
@@ -247,10 +332,7 @@ class WeatherExperimentTests(unittest.TestCase):
         sample, raw, truths = fixture()
         with tempfile.TemporaryDirectory() as directory:
             directory = Path(directory)
-            for name, value in [('metadata.json', {'schema': exp.STANDARD_ID}), ('sample30.json', sample),
-                                ('raw_results.json', raw), ('truths.json', truths)]:
-                exp.write_json(directory/name, value)
-            exp.write_results(directory, sample, raw, truths)
+            archive_fixture(directory, sample, raw, truths)
             summary = export(directory)
             self.assertEqual(summary['by_type']['weather']['rag_correct'], 15)
             self.assertEqual(summary['by_type']['fx']['scored'], 15)
@@ -265,6 +347,68 @@ class WeatherExperimentTests(unittest.TestCase):
             (directory/'results.csv').write_text(text.replace('20.0', '9999').replace('True', 'False', 1), encoding='utf-8-sig')
             with self.assertRaises(ValueError):
                 export(directory)
+
+    def test_export_preserves_analysis_and_is_idempotent(self):
+        sample, raw, truths = fixture()
+        with tempfile.TemporaryDirectory() as tmp:
+            directory = Path(tmp)
+            archive_fixture(directory, sample, raw, truths)
+            path = directory/'实验结果摘要.md'
+            analysis = '# 真实分析\n\n失败项必须保留，不能替换。\n'
+            path.write_text(analysis, encoding='utf-8')
+            with patch.object(rag, 'get_ground_truth') as truth:
+                export(directory)
+                first = path.read_text(encoding='utf-8')
+                export(directory)
+            self.assertEqual(path.read_text(encoding='utf-8'), first)
+            self.assertIn(analysis, first)
+            truth.assert_not_called()
+        with self.assertRaises(ValueError):
+            merge_summary('统计', '<!-- auto-statistics:start -->未闭合')
+
+    def test_archive_rejects_changed_snapshot_and_false_configuration(self):
+        sample, raw, truths = fixture()
+        with tempfile.TemporaryDirectory() as tmp:
+            directory = Path(tmp)
+            archive_fixture(directory, sample, raw, truths)
+            metadata = json.loads((directory/'metadata.json').read_text(encoding='utf-8'))
+            metadata['time_injection'] = False
+            exp.write_json(directory/'metadata.json', metadata)
+            with self.assertRaises(ValueError):
+                exp.read_archive(directory)
+            metadata['time_injection'] = True
+            exp.write_json(directory/'metadata.json', metadata)
+            exp.write_json(directory/'prompts.json', {**PROMPTS, 'V3': '替换的提示词'})
+            with self.assertRaises(ValueError):
+                exp.read_archive(directory)
+            exp.write_json(directory/'prompts.json', PROMPTS)
+            (directory/'source/scripts/weather_prompts.py').write_text('changed', encoding='utf-8')
+            with self.assertRaises(ValueError):
+                exp.read_archive(directory)
+
+    def test_usage_rejects_invalid_counts_and_blind_search(self):
+        for value in (-1, True, 1.5, '10'):
+            with self.assertRaises(ValueError):
+                exp.cumulative([{'prompt_tokens': value}], 'prompt_tokens')
+        sample, raw, truths = fixture()
+        raw['live_0_blind']['search_log'] = [('北京天气', [])]
+        with self.assertRaises(ValueError):
+            exp.build_rows(sample, raw, truths)
+
+    def test_interruption_keeps_all_planned_tasks(self):
+        with tempfile.TemporaryDirectory() as tmp, patch.object(rag, 'API_KEY', 'test-placeholder'), \
+             patch.object(evaluate, 'ThreadPoolExecutor', side_effect=KeyboardInterrupt):
+            with self.assertRaises(KeyboardInterrupt):
+                evaluate.main(['--output-dir', tmp])
+            directory = Path(tmp)
+            raw = json.loads((directory/'raw_results.json').read_text(encoding='utf-8'))
+            self.assertEqual(set(raw), exp.required_tasks())
+            self.assertTrue(all(r['status'] == 'not_started' for r in raw.values()))
+            self.assertEqual(len(json.loads((directory/'truths.json').read_text(encoding='utf-8'))), 30)
+
+    def test_sdk_has_no_hidden_retries_and_has_timeout(self):
+        self.assertEqual(rag.client.max_retries, 0)
+        self.assertEqual(rag.client.timeout, 60.0)
 
     def test_full_batch_sixty_tasks_with_mocked_services(self):
         def respond(**kwargs):

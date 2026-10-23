@@ -9,7 +9,24 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from PIL import Image, ImageDraw, ImageFont
 from scripts.experiment_utils import latest_experiment
-from scripts.weather_experiment import STANDARD_ID, FIELDS, TOKEN_SAMPLES, build_rows, summarize, write_json
+from scripts.weather_experiment import TOKEN_SAMPLES, read_archive, summarize, write_json
+
+AUTO_START = '<!-- auto-statistics:start -->'
+AUTO_END = '<!-- auto-statistics:end -->'
+
+
+def merge_summary(generated, existing):
+    """仅更新托管统计区域，保留组员的真实分析和旧版补充记录。"""
+    block = AUTO_START + '\n' + generated.rstrip() + '\n' + AUTO_END
+    if AUTO_START in existing or AUTO_END in existing:
+        if existing.count(AUTO_START) != 1 or existing.count(AUTO_END) != 1:
+            raise ValueError('统计区标记损坏，请检查摘要文件')
+        before, rest = existing.split(AUTO_START)
+        _, after = rest.split(AUTO_END)
+        return before + block + after
+    if existing.strip():
+        return block + '\n\n## 既有记录与分析（原文保留）\n\n' + existing
+    return block + '\n'
 
 
 def percent(value):
@@ -49,20 +66,11 @@ def chart(directory, summary):
 
 
 def export(directory):
-    read = lambda name: json.loads((directory/name).read_text(encoding='utf-8'))
-    metadata = read('metadata.json')
-    if metadata.get('schema') != STANDARD_ID:
-        raise ValueError('该目录不是新版天气/汇率实验，禁止混用旧NQ结果')
-    sample, raw, truths = read('sample30.json'), read('raw_results.json'), read('truths.json')
-    expected = build_rows(sample, raw, truths)
-    with (directory/'results.csv').open(encoding='utf-8-sig', newline='') as f:
-        reader = csv.DictReader(f)
-        actual = list(reader)
-        if reader.fieldnames != FIELDS:
-            raise ValueError('CSV列必须与新版八列要求一致')
-    serialized = [{k: '' if row[k] is None else str(row[k]) for k in FIELDS} for row in expected]
-    if actual != serialized:
-        raise ValueError('CSV与原始回答、标准值或教师判分不一致，停止统计')
+    directory = Path(directory)
+    metadata, sample, raw, truths, expected = read_archive(directory)
+    summary_path = directory/'实验结果摘要.md'
+    existing = summary_path.read_text(encoding='utf-8') if summary_path.exists() else ''
+    merge_summary('', existing)  # 先核对标记，再更新任何导出文件。
     summary = summarize(expected, raw)
     write_json(directory/'summary.json', summary)
     with (directory/'token_comparison.csv').open('w', newline='', encoding='utf-8-sig') as f:
@@ -80,6 +88,7 @@ def export(directory):
         diff = '不适用' if group['difference_pp'] is None else f'{group["difference_pp"]:+.2f}'
         lines.append(f'|{label}|{group["total"]}/{group["scored"]}|{percent(group["blind_accuracy"])}|{percent(group["rag_accuracy"])}|{diff}|')
     lines += ['', f'标准值缺失 {summary["truth_failures"]} 题；非正常模型任务 {len(summary["non_ok_tasks"])} 项。',
+              f'90%目标：{"已达到" if summary["meets_rag_target"] else "尚未达到"}；须完整30题标准值且RAG至少答对27题。',
               f'实际搜索 {summary["search_count"]} 次，非空摘要 {summary["nonempty_searches"]} 次。',
               '缺少标准值时按教师规则不计分，必须报告有效分母；未取得全部30题标准值时不宣称正式达标。',
               '失败任务完整保留；本摘要只统计第四部分，不包含手工提示词对比或时间注入实验。', '',
@@ -89,7 +98,7 @@ def export(directory):
               '- 对照原始回答，分别统计盲答的猜测数字、旧值与拒答表现。',
               '- 比较天气与汇率增益，检查摘要是否含所问数值、是否有多个干扰数字、是否过期。',
               '- 从 search_traces 选择真实搜索词，对比城市/币种、单位、方向、日期等写法；无对照证据时不编造改进结论。']
-    (directory/'实验结果摘要.md').write_text('\n'.join(lines)+'\n', encoding='utf-8')
+    summary_path.write_text(merge_summary('\n'.join(lines)+'\n', existing), encoding='utf-8')
     return summary
 
 

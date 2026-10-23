@@ -12,7 +12,7 @@ sys.path.insert(0, str(ROOT))
 import search_rag_weather_fx as rag
 from scripts.weather_prompts import PROMPTS
 from scripts.experiment_utils import api_base_fingerprint, capture, completed_log, install, new_experiment, now
-from scripts.weather_experiment import (STANDARD_ID, cumulative, final_status, load_sample,
+from scripts.weather_experiment import (STANDARD_ID, SOURCE_FILES, cumulative, final_status, load_sample,
                                        write_json, write_results)
 
 install(rag)
@@ -60,9 +60,13 @@ def run_pair(index, item, traces):
     write_json(traces / f'truth_{index}.json', truth)
     # 标准值只存档评分，不进入问题、提示词或检索上下文。
     records = {}
-    for mode in ('blind', 'rag'):
-        key = f'live_{index}_{mode}'
-        records[key] = run_one(item['question'], mode, trace_path=traces / f'{key}.json')
+    token = rag.TIME_INJECTION.set(True)
+    try:
+        for mode in ('blind', 'rag'):
+            key = f'live_{index}_{mode}'
+            records[key] = run_one(item['question'], mode, trace_path=traces / f'{key}.json')
+    finally:
+        rag.TIME_INJECTION.reset(token)
     return index, truth, records
 
 
@@ -80,11 +84,11 @@ def main(argv=None):
     if not rag.API_KEY.strip() or rag.API_KEY == 'YOUR_API_KEY_HERE':
         raise SystemExit('请先配置LLM_API_KEY；不会打印密钥。')
     sample = load_sample()
-    sources = ['search_rag_weather_fx.py', 'scripts/weather_prompts.py', 'scripts/evaluate.py',
-               'scripts/weather_experiment.py', 'scripts/experiment_utils.py']
+    sources = sorted(SOURCE_FILES | {'scripts/export_experiment_summary.py'})
     metadata = dict(schema=STANDARD_ID, started_at=now(), model=rag.MODEL, temperature=0.3,
                     api_base_sha256=api_base_fingerprint(rag), workers=args.workers,
                     max_search=2, top_k=5, time_injection=True, time_zone='Asia/Shanghai',
+                    request_timeout_seconds=60, sdk_max_retries=0,
                     search_configuration=rag.SEARCH_CONFIGURATION.copy(),
                     extra_body_sha256=hashlib.sha256(json.dumps(rag.EXTRA_BODY, sort_keys=True).encode()).hexdigest(),
                     source_sha256={name: hashlib.sha256((ROOT/name).read_bytes()).hexdigest() for name in sources},
@@ -99,7 +103,16 @@ def main(argv=None):
         dest.write_bytes((ROOT/name).read_bytes())
     traces = out/'search_traces'
     traces.mkdir()
-    raw, truths = {}, {}
+    # 先存全部计划项；中断时也不会丢失未开始的题目或悄然缩小分母。
+    raw = {f'live_{i}_{mode}': dict(question=item['question'], mode=mode,
+           answer='', status='not_started', usage=[], search_log=[], search_events=[],
+           prompt_tokens=None, completion_tokens=None, total_tokens=None)
+           for i, item in enumerate(sample) for mode in ('blind', 'rag')}
+    truths = {str(i): dict(type=item['type'], item=item['item'], value=None,
+                          status='not_started') for i, item in enumerate(sample)}
+    write_json(out/'truths.json', truths)
+    write_json(out/'raw_results.json', raw)
+    completed = 0
     print(f'[实验目录] {out}\n[任务] 天气15题+汇率15题，两模式60项；每题现场获取标准值。', flush=True)
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
         futures = [pool.submit(run_pair, i, item, traces) for i, item in enumerate(sample)]
@@ -109,7 +122,8 @@ def main(argv=None):
             raw.update(records)
             write_json(out/'truths.json', truths)
             write_json(out/'raw_results.json', raw)
-            print(f'[进度] {len(raw)}/60；{sample[i]["item"]} 标准值状态={truth["status"]}', flush=True)
+            completed += len(records)
+            print(f'[进度] {completed}/60；{sample[i]["item"]} 标准值状态={truth["status"]}', flush=True)
     write_results(out, sample, raw, truths)
     metadata['finished_at'] = now()
     write_json(out/'metadata.json', metadata)

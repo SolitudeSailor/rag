@@ -1,29 +1,8 @@
 # -*- coding: utf-8 -*-
-"""
-==============================================================
- 极简"搜索引擎 RAG"示例代码 · 天气+汇率混合版
- （物联网工程专业 · 人工智能课程项目）
-==============================================================
-功能：在命令行中与 大语言模型 对话。模型可以按约定格式主动请求
-     调用 Bing 搜索引擎，程序自动执行搜索并把结果拼回上下文，
-     让模型基于"联网检索到的最新信息"作答（即搜索增强 RAG）。
+"""天气与汇率RAG核心：模型调用、Bing检索、ReAct问答与教师评测工具。
 
-使用方法：
-  1. 安装依赖：  pip install openai requests beautifulsoup4
-  2. 在下方"配置区"填入你的大模型 API Key（或设置环境变量）
-  3. 运行：      python search_rag_weather_fx.py
-  4. 直接输入问题开始对话；输入 "盲答 问题" 可切换到无搜索模式
-     （用于第四部分的数据集对比实验）；输入 quit 退出。
-
-【学生可以动手的位置一览】（正文中均有醒目的横幅标记）
-  ★ 修改区 ① ：配置区 —— 填入你的 API Key / 选择模型（必做）
-  ★ 修改区 ② ：SYSTEM_PROMPT —— 设计 V1→V2→V3 三版提示词（第三部分核心任务）
-  ★ 加代码处 ③：call_llm() 内 —— 添加约 2 行代码打印 token 用量（第四部分·任务 b）
-  ★ 加代码处 ④：extract_keyword() —— 关键词提取（第四部分·任务 c 进阶路径，选做）
-  ○ 选做     ：call_llm() 的 temperature 参数、bing_search() 换成百度搜索
-
- 除以上位置外，本文件的其余代码【无需修改】。
-==============================================================
+直接运行用于交互问答；批量评测运行同目录的run_30.py。
+配置读取根目录.env和环境变量；三版提示词统一维护于scripts/weather_prompts.py。
 """
 
 import os
@@ -38,41 +17,17 @@ from decimal import Decimal, InvalidOperation
 import requests
 from bs4 import BeautifulSoup
 from openai import OpenAI
-
-
-def _load_env(path=".env"):
-    """极简 .env 加载器：把 .env 文件中的 KEY=VALUE 行读入环境变量
-    （不覆盖已存在的环境变量），免去手动设置环境变量的麻烦。"""
-    if not os.path.exists(path):
-        return
-    for line in open(path, encoding="utf-8"):
-        line = line.strip()
-        if line and not line.startswith("#") and "=" in line:
-            key, _, value = line.partition("=")
-            os.environ.setdefault(key.strip(), value.strip())
-
 from dotenv import load_dotenv
+
+# 配置只从根目录.env或环境变量加载，不覆盖已有环境变量。
 load_dotenv(Path(__file__).resolve().with_name('.env'), override=False)
 
-# ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-# ★★★ 学生修改区 ① ：配置区（必做）★★★
-# 选择任意一家"OpenAI 兼容"接口的大模型服务，填入 API Key。
-# 示例一：通义千问（阿里云百炼）
-#   API_BASE = "https://dashscope.aliyuncs.com/compatible-mode/v1"
-#   MODEL    = "qwen-plus"
-# 示例二：DeepSeek
-#   API_BASE = "https://api.deepseek.com/v1"
-#   MODEL    = "deepseek-chat"
-# ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
 API_BASE = os.environ.get("LLM_API_BASE", "https://dashscope.aliyuncs.com/compatible-mode/v1")
 API_KEY  = os.environ.get("LLM_API_KEY", "YOUR_API_KEY_HERE")   # ← 禁止硬编码，建议用环境变量
 MODEL    = os.environ.get("LLM_MODEL", "qwen-plus")
 
-# 屏蔽服务商"自带的联网搜索"功能：部分大模型服务（如阿里云百炼的 enable_search、
-# 智谱的 web_search 等）支持由服务端直接联网搜索。本项目要求搜索行为由本地代码完成，
-# 否则"盲答"模式就不盲了，对比实验失去意义。若你使用的服务默认开启了联网搜索，
-# 请在此显式关闭，例如阿里云百炼： EXTRA_BODY = {"enable_search": False}
+# 禁用已识别服务商的内置联网，检索统一由本地Bing工具执行。
 EXTRA_BODY = json.loads(os.environ.get('LLM_EXTRA_BODY', '{}'))
 if not isinstance(EXTRA_BODY, dict):
     raise ValueError('LLM_EXTRA_BODY 必须是 JSON 对象')
@@ -86,7 +41,8 @@ if EXTRA_BODY.get('enable_search') or any(
 ):
     raise ValueError('课程对比实验要求关闭服务商联网搜索')
 
-client = OpenAI(api_key=API_KEY, base_url=API_BASE)
+# 重试统一由call_llm记录，避免SDK隐式重试导致usage漏记；网络请求有界等待。
+client = OpenAI(api_key=API_KEY, base_url=API_BASE, timeout=60.0, max_retries=0)
 SEARCH_CONFIGURATION = {
     'provider': 'bing_snippets_and_live_pages',
     'url': 'https://www.bing.com/search',
@@ -96,40 +52,27 @@ SEARCH_CONFIGURATION = {
     'fx_page_limit': 1,
     'fx_reference': '现汇买入卖出价均值除以100，非成交报价',
     'direct_truth_tool': False,
+    'http_attempt_limit': 2,
+    'weather_root_path': '城市拼音路径，允许有或无末尾斜杠',
+    'refined_weather_params': {'mkt': 'zh-CN', 'setlang': 'zh-hans'},
 }
 
 # 对照实验由入口设置；ContextVar 防止批量任务之间互相覆盖。
 TIME_INJECTION = ContextVar('weather_time_injection', default=True)
 CALL_USAGE = ContextVar('weather_call_usage', default=None)
+SEARCH_REQUEST_LOG = ContextVar('search_request_log', default=None)
 
 
 def current_time_note():
-    """把当前系统时间附加到系统提示词末尾。
-    大模型自己不知道"今天"是哪天（它只有训练时代的日期概念，直接问日期
-    会得到训练截止时期的错误答案），把当前时间注入上下文是业界标准做法，
-    也属于上下文工程（Context Engineering）的一种。"""
+    """按开关注入当前北京时间；知道日期不等于取得实时天气或汇率。"""
     if not TIME_INJECTION.get():
         return ''
     from datetime import timezone, timedelta
     return f"\n\n（当前系统时间：{datetime.now(timezone(timedelta(hours=8))):%Y年%m月%d日 %H:%M}，Asia/Shanghai，UTC+08:00）"
 
-# ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-# ★★★ 学生修改区 ② ：System Prompt（第三部分核心任务，必做）★★★
-#
-# 下面是【V1 基础版】，只告诉模型"可以搜索"，没有角色和规则。
-# 请按项目要求依次设计并替换为：
-#   V2 角色+规则版：角色身份 + 行为规则（何时必须搜索、回答要求等）
-#   V3 完整版    ：V2 + Few-shot 示例 + "拒答规则"（搜不到不许编造）
-# 每改一版就重新运行程序做对比测试，并在报告中截图记录。
-#
-# 约定输出格式（程序靠它识别，不要随意改动"搜索:"和"回答:"两个关键词）：
-#   需要搜索时，模型另起一行输出：   搜索: 关键词
-#   最终作答时，模型另起一行输出：   回答: 答案内容
-# ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 # 三版统一维护，V1保留教师原文；交互对照使用scripts/run_demo.py --version。
 from scripts.weather_prompts import PROMPTS
 SYSTEM_PROMPT = PROMPTS['V3']
-# ▲▲▲ 学生修改区 ② 结束 ▲▲▲
 
 
 # ------------------------------------------------------------
@@ -141,7 +84,7 @@ def call_llm(messages):
     kwargs = dict(
         model=MODEL,
         messages=messages,
-        temperature=0.3,   # ○ 选做：可尝试修改该参数，观察输出变化
+        temperature=0.3,
         extra_body=EXTRA_BODY or None,   # 关闭服务端自带的联网搜索（见配置区说明）
     )
     resp = None
@@ -167,23 +110,38 @@ def call_llm(messages):
                 time.sleep(3)
     if resp is None:
         raise RuntimeError('大模型接口暂时不可用')
-    # ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-    # ★★★ 学生加代码处 ③ ：第四部分·任务 b（必做，约 2 行）★★★
-    # 请在此处添加代码，打印每次调用的 token 用量，例如：
-    #     prompt_tokens 在 resp.usage.prompt_tokens
-    #     completion_tokens 在 resp.usage.completion_tokens
-    # 然后用它记录同一道题"盲答 vs 搜索 RAG"的 token 对比表。
-    #
     usage = getattr(resp, 'usage', None)
     print(f"  [Token] prompt_tokens={getattr(usage, 'prompt_tokens', None)} completion_tokens={getattr(usage, 'completion_tokens', None)}（None=未知）")
-    #
-    # ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
     return resp.choices[0].message.content.strip()
 
 
 # ------------------------------------------------------------
 # 工具函数 2：Bing 网页搜索（免 API Key，抓取搜索结果摘要）
 # ------------------------------------------------------------
+def _search_get(url, *, purpose, **kwargs):
+    """同一公开URL最多尝试两次，记录全部请求；不新增搜索词、不关闭TLS校验。"""
+    import time
+    for attempt in range(2):
+        event = dict(purpose=purpose, url=url, params=kwargs.get('params', {}).copy(),
+                     attempt=attempt+1, status='running')
+        log = SEARCH_REQUEST_LOG.get()
+        if log is not None:
+            log.append(event)
+        try:
+            response = requests.get(url, **kwargs)
+            response.raise_for_status()
+            event.update(status='ok', final_url=getattr(response, 'url', url))
+            return response
+        except requests.RequestException as exc:
+            event['status'] = type(exc).__name__
+            status = getattr(getattr(exc, 'response', None), 'status_code', None)
+            retryable = isinstance(exc, (requests.ConnectionError, requests.Timeout)) or status == 429 or (status is not None and status >= 500)
+            if attempt == 1 or not retryable:
+                raise
+            print(f'  [系统] {purpose}请求暂时失败，重试同一URL（2/2）', flush=True)
+            time.sleep(0.4)
+
+
 def _bing_result_url(link):
     """解出本次搜索结果的公开链接，不猜测结果地址。"""
     try:
@@ -207,7 +165,7 @@ def _weather_result_url(link):
     if link is None:
         return None
     parsed = urlsplit(link)
-    if parsed.hostname not in ('www.tianqi.com', 'tianqi.com') or not re.fullmatch(r'/[a-z]+/', parsed.path):
+    if parsed.hostname not in ('www.tianqi.com', 'tianqi.com') or not re.fullmatch(r'/[a-z]+/?', parsed.path):
         return None
     return link
 
@@ -232,8 +190,7 @@ def _fx_page(link, query):
     aliases = {'澳大利亚元': ('澳元',), '加拿大元': ('加元',), '港币': ('港元',),
                '林吉特': ('马来西亚林吉特',), '卢布': ('俄罗斯卢布',), '泰国铢': ('泰铢',)}
     try:
-        response = requests.get(link, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}, timeout=10)
-        response.raise_for_status()
+        response = _search_get(link, purpose='bank_page', headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}, timeout=10)
         if _fx_result_url(response.url) is None:
             return None
         response.encoding = response.apparent_encoding
@@ -289,9 +246,8 @@ def _weather_page(link, query):
     if link is None:
         return None
     try:
-        response = requests.get(link, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}, timeout=10)
-        response.raise_for_status()
-        if urlsplit(response.url).hostname not in ('www.tianqi.com', 'tianqi.com'):
+        response = _search_get(link, purpose='weather_page', headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}, timeout=10)
+        if _weather_result_url(response.url) is None:
             return None
         response.encoding = response.apparent_encoding
         page = BeautifulSoup(response.text, 'html.parser')
@@ -320,13 +276,17 @@ def bing_search(query, top_k=5):
     用 Bing 搜索 query，返回前 top_k 条结果的"标题 + 摘要"文本。
     天气或汇率问题可从本次实际结果补读一个相关网页，仍最多返回top_k条。
     （默认取 5 条：条数太少可能漏掉含答案的结果，太多则浪费 token）
-    ○ 选做：也可以换成百度搜索（https://www.baidu.com/s?wd=...），
-      只需修改下面的网址和解析标签（百度结果在 div.result 中）。
     """
     url = "https://www.bing.com/search"
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
-    response = requests.get(url, params={"q": query}, headers=headers, timeout=10)
-    response.raise_for_status()
+    if top_k <= 0:
+        return []
+    weather_query = bool(re.search(r'天气|气温|weather|temperature', query, re.IGNORECASE))
+    params = {'q': query}
+    # 精确天气查询使用中文地区；同一轮仍只有一个Bing查询，不增加隐藏搜索。
+    if weather_query and re.search(r'["“”]', query):
+        params.update(SEARCH_CONFIGURATION['refined_weather_params'])
+    response = _search_get(url, purpose='bing', params=params, headers=headers, timeout=10)
     html = response.text
 
     soup = BeautifulSoup(html, "html.parser")
@@ -335,14 +295,19 @@ def bing_search(query, top_k=5):
     for item in soup.select("li.b_algo"):          # Bing 的每条搜索结果在 <li class="b_algo"> 中
         title = item.find("h2")
         summary = item.find("p")
-        if title and summary:
-            snippets.append(f"【{title.get_text(strip=True)}】{summary.get_text(strip=True)}")
+        if title:
+            text = summary.get_text(strip=True) if summary else '（此结果未提供摘要）'
+            snippet = f"【{title.get_text(strip=True)}】{text}"
             anchor = title.find('a', href=True)
             if anchor:
                 result_links.append(anchor['href'])
+                source = _bing_result_url(anchor['href'])
+                if source:
+                    snippet += f' 来源：{source}'
+            snippets.append(snippet)
         if len(snippets) >= top_k:
             break
-    if top_k > 0 and re.search(r'天气|气温|weather|temperature', query, re.IGNORECASE):
+    if weather_query:
         for link in result_links:
             candidate = _weather_result_url(link)
             if candidate is None:
@@ -365,19 +330,6 @@ def bing_search(query, top_k=5):
     return snippets
 
 
-# ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-# ★★★ 学生加代码处 ④ ：第四部分·任务 c 路径二（进阶·选做）★★★
-# 实现关键词提取：单独调用一次大模型，从用户问题中提炼搜索关键词，
-# 再接入 rag_answer() 的搜索流程（接入点见 rag_answer 内的 ○ 标记）。
-# 提示：一次 call_llm() + 一段提取专用提示词即可；提取结果为空时应
-#       回退为原问题，保证程序不会中断。
-# ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
-def extract_keyword(question):
-    """【进阶路径·选做】用辅助 LLM 从用户问题中提取搜索关键词。"""
-    #    【在这里添加你的代码（选做）】
-    return None     # 未实现时返回 None，程序会自动回退、不影响基础流程
-
-
 # ------------------------------------------------------------
 # 核心逻辑：ReAct 式"思考 → 行动(搜索) → 观察 → 作答"循环
 # ------------------------------------------------------------
@@ -390,13 +342,6 @@ def rag_answer(question, system_prompt=SYSTEM_PROMPT, max_search=2):
       程序会自动提醒它一次，给它使用搜索功能的机会。
     返回 (最终答案, 搜索过程记录列表)。
     """
-    # ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-    # ★★★ 学生加代码处：时间注入小实验（第三部分，仅 1 行）★★★
-    # 大模型自己不知道"今天"是哪天。请把下面的 system_prompt 改为：
-    #     system_prompt + current_time_note()
-    # （current_time_note() 已在上方定义好，直接用即可；
-    #   blind_answer 中还有同样的一处，记得一起改）
-    # ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
     messages = [
         {"role": "system", "content": system_prompt + current_time_note()},
         {"role": "user", "content": question},
@@ -412,9 +357,6 @@ def rag_answer(question, system_prompt=SYSTEM_PROMPT, max_search=2):
         if m and len(search_log) < max_search:
             # ---- 模型请求搜索：执行搜索，把结果作为新上下文拼回去 ----
             keyword = m.group(1).strip()
-            # ○ 进阶路径接入点（选做）：若你实现了 extract_keyword()，
-            #   可在此处先把 keyword 提炼后再搜索，例如：
-            #   keyword = extract_keyword(keyword) or keyword
             print(f"  [系统] 模型请求搜索 → 「{keyword}」")
             snippets = bing_search(keyword)
             search_log.append((keyword, snippets))
@@ -452,8 +394,6 @@ def rag_answer(question, system_prompt=SYSTEM_PROMPT, max_search=2):
 
 def blind_answer(question):
     """无搜索"盲答"模式：模型仅凭自身记忆回答（用于对比实验）。"""
-    # ★ 时间注入小实验：下面 "你是一个问答助手..." 这行末尾同样追加
-    #   + current_time_note()
     return call_llm([
         {"role": "system", "content": "你是一个问答助手，请直接回答问题。" + current_time_note()},
         {"role": "user", "content": question},

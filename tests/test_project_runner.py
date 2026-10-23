@@ -1,6 +1,7 @@
 """验证统一入口补齐依赖、精确导出目录及失败停止，不联网或调用模型。"""
 from contextlib import redirect_stdout, redirect_stderr
 import io
+import importlib.util
 import json
 from pathlib import Path
 import sys
@@ -167,6 +168,47 @@ class RoutingTests(unittest.TestCase):
         with patch.object(runner, 'prepare_dependencies') as prepare, redirect_stderr(io.StringIO()):
             self.assertEqual(runner.main(['--index-url', 'https://user:password@example.com/simple']), 1)
         prepare.assert_not_called()
+
+    def evaluation_entry(self):
+        path = Path(__file__).resolve().parents[1] / 'run_30.py'
+        spec = importlib.util.spec_from_file_location('automatic_evaluation_entry', path)
+        entry = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(entry)
+        return entry
+
+    def test_standalone_evaluation_uses_project_environment_without_input(self):
+        entry = self.evaluation_entry()
+        with tempfile.TemporaryDirectory(prefix='rag evaluation ') as tmp:
+            root = Path(tmp)
+            python = root / '.venv' / ('Scripts/python.exe' if sys.platform == 'win32' else 'bin/python')
+            python.parent.mkdir(parents=True)
+            python.touch()
+            for code in (0, 1, 2):
+                with self.subTest(code=code), patch.object(entry, 'ROOT', root), \
+                        patch('builtins.input', side_effect=AssertionError('测评入口不得等待输入')), \
+                        patch('subprocess.run', return_value=SimpleNamespace(returncode=code)) as run:
+                    self.assertEqual(entry.main(), code)
+                run.assert_called_once_with(
+                    [str(python), '-X', 'utf8', '-u', str(root/'scripts/project_runner.py'),
+                     '--task', 'experiment', '--workers', '3'], cwd=root)
+
+    def test_standalone_evaluation_handles_interruption_and_start_failure(self):
+        entry = self.evaluation_entry()
+        with patch('subprocess.run', side_effect=KeyboardInterrupt):
+            self.assertEqual(entry.main(), 130)
+        with patch('subprocess.run', side_effect=OSError), redirect_stdout(io.StringIO()) as output:
+            self.assertEqual(entry.main(), 1)
+        self.assertIn('启动失败', output.getvalue())
+
+    def test_interactive_question_no_longer_starts_evaluation(self):
+        import search_rag_weather_fx as rag
+        with patch('builtins.input', side_effect=['评测', 'quit']), \
+                patch.object(rag, 'rag_answer', return_value=('交互回答', [])) as answer, \
+                patch('subprocess.run') as run, redirect_stdout(io.StringIO()) as output:
+            rag.main()
+        answer.assert_called_once_with('评测')
+        run.assert_not_called()
+        self.assertNotIn('输入「评测」', output.getvalue())
 
 
 if __name__ == '__main__':
