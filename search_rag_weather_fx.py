@@ -11,7 +11,7 @@ import json
 import base64
 from contextvars import ContextVar
 from pathlib import Path
-from urllib.parse import urlsplit, parse_qs
+from urllib.parse import urlsplit, parse_qs, urljoin
 from datetime import datetime
 from decimal import Decimal, InvalidOperation
 import requests
@@ -53,8 +53,9 @@ SEARCH_CONFIGURATION = {
     'fx_reference': '现汇买入卖出价均值除以100，非成交报价',
     'direct_truth_tool': False,
     'http_attempt_limit': 2,
-    'weather_root_path': '城市拼音路径，允许有或无末尾斜杠',
-    'refined_weather_params': {'mkt': 'zh-CN', 'setlang': 'zh-hans'},
+    'weather_root_path': '城市拼音主路径或城市子域名首页，允许有或无末尾斜杠',
+    'request_params': {'mkt': 'zh-CN', 'setlang': 'zh-hans', 'ensearch': '1'},
+    'result_link_scope': 'all_returned_organic_results',
 }
 
 # 对照实验由入口设置；ContextVar 防止批量任务之间互相覆盖。
@@ -145,8 +146,10 @@ def _search_get(url, *, purpose, **kwargs):
 def _bing_result_url(link):
     """解出本次搜索结果的公开链接，不猜测结果地址。"""
     try:
+        if link.startswith('/'):
+            link = urljoin(SEARCH_CONFIGURATION['url'], link)
         parsed = urlsplit(link)
-        if parsed.hostname == 'www.bing.com' and parsed.path == '/ck/a':
+        if parsed.hostname in ('www.bing.com', 'cn.bing.com', 'bing.com') and parsed.path == '/ck/a':
             encoded = parse_qs(parsed.query).get('u', [''])[0]
             if not encoded.startswith('a1'):
                 return None
@@ -165,7 +168,11 @@ def _weather_result_url(link):
     if link is None:
         return None
     parsed = urlsplit(link)
-    if parsed.hostname not in ('www.tianqi.com', 'tianqi.com') or not re.fullmatch(r'/[a-z]+/?', parsed.path):
+    main_page = (parsed.hostname in ('www.tianqi.com', 'tianqi.com')
+                 and re.fullmatch(r'/[a-z]+/?', parsed.path))
+    city_home = (re.fullmatch(r'[a-z]+\.tianqi\.com', parsed.hostname or '')
+                 and parsed.hostname != 'www.tianqi.com' and parsed.path in ('', '/'))
+    if not (main_page or city_home):
         return None
     return link
 
@@ -277,36 +284,42 @@ def bing_search(query, top_k=5):
     天气或汇率问题可从本次实际结果补读一个相关网页，仍最多返回top_k条。
     （默认取 5 条：条数太少可能漏掉含答案的结果，太多则浪费 token）
     """
-    url = "https://www.bing.com/search"
-    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
+    url = SEARCH_CONFIGURATION['url']
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+               "Accept-Language": "zh-CN,zh;q=0.9"}
     if top_k <= 0:
         return []
     weather_query = bool(re.search(r'天气|气温|weather|temperature', query, re.IGNORECASE))
-    params = {'q': query}
-    # 精确天气查询使用中文地区；同一轮仍只有一个Bing查询，不增加隐藏搜索。
-    if weather_query and re.search(r'["“”]', query):
-        params.update(SEARCH_CONFIGURATION['refined_weather_params'])
+    # 显式指定搜索模式，避免www/cn自动跳转时沿用不同默认模式。
+    # ensearch是Bing网页参数，不是VPN；每轮仍只有一次搜索请求。
+    params = {'q': query, **SEARCH_CONFIGURATION['request_params']}
     response = _search_get(url, purpose='bing', params=params, headers=headers, timeout=10)
     html = response.text
 
     soup = BeautifulSoup(html, "html.parser")
     snippets = []
     result_links = []
-    for item in soup.select("li.b_algo"):          # Bing 的每条搜索结果在 <li class="b_algo"> 中
+    organic_results = []
+    for rank, item in enumerate(soup.select("li.b_algo"), 1):
         title = item.find("h2")
         summary = item.find("p")
         if title:
             text = summary.get_text(strip=True) if summary else '（此结果未提供摘要）'
             snippet = f"【{title.get_text(strip=True)}】{text}"
             anchor = title.find('a', href=True)
+            source = None
             if anchor:
                 result_links.append(anchor['href'])
                 source = _bing_result_url(anchor['href'])
                 if source:
                     snippet += f' 来源：{source}'
-            snippets.append(snippet)
-        if len(snippets) >= top_k:
-            break
+            organic_results.append({'rank': rank, 'title': title.get_text(strip=True), 'url': source})
+            if len(snippets) < top_k:
+                snippets.append(snippet)
+    # 摘要只给前top_k条；补读链接可来自本次结果页的全部自然结果，不翻页、不另搜。
+    request_log = SEARCH_REQUEST_LOG.get()
+    if request_log:
+        request_log[-1]['organic_results'] = organic_results
     if weather_query:
         for link in result_links:
             candidate = _weather_result_url(link)

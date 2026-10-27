@@ -247,17 +247,72 @@ class WeatherExperimentTests(unittest.TestCase):
             rag.bing_search('北京天气')
         self.assertEqual(get.call_count, 1)
 
-    def test_refined_weather_uses_locale_without_extra_query(self):
+    def test_search_mode_and_locale_are_explicit_without_extra_query(self):
         response = SimpleNamespace(text='', raise_for_status=lambda: None)
-        for query, localized in [('北京天气', False), ('"北京天气"', True), ('"中国银行外汇牌价" "美元"', False)]:
+        for query in ['北京天气', '"北京天气"', '中国银行外汇牌价 欧元', '"中国银行外汇牌价" "美元"']:
             with self.subTest(query=query), patch('requests.get', return_value=response) as get:
                 rag.bing_search(query)
             get.assert_called_once()
             params = get.call_args.kwargs['params']
             self.assertEqual(params['q'], query)
-            self.assertEqual('mkt' in params, localized)
-            if localized:
-                self.assertEqual(params['mkt'], 'zh-CN')
+            self.assertEqual(params['mkt'], 'zh-CN')
+            self.assertEqual(params['setlang'], 'zh-hans')
+            self.assertEqual(params['ensearch'], '1')
+            self.assertEqual(get.call_args.args[0], rag.SEARCH_CONFIGURATION['url'])
+
+    def test_cn_and_relative_result_links_decode_before_source_validation(self):
+        for target, validate in [('https://www.tianqi.com/beijing/', rag._weather_result_url),
+                                 ('https://www.boc.cn/sourcedb/whpj/', rag._fx_result_url)]:
+            encoded = base64.urlsafe_b64encode(target.encode()).decode().rstrip('=')
+            for prefix in ['https://cn.bing.com', 'https://www.bing.com', 'https://bing.com', '']:
+                self.assertEqual(validate(prefix + '/ck/a?u=a1' + encoded), target)
+            self.assertIsNone(validate('https://cn.bing.com.evil.example/ck/a?u=a1' + encoded))
+        for target in ['javascript:alert(1)', 'https://user:password@www.boc.cn/sourcedb/whpj/']:
+            encoded = base64.urlsafe_b64encode(target.encode()).decode().rstrip('=')
+            self.assertIsNone(rag._bing_result_url('https://cn.bing.com/ck/a?u=a1' + encoded))
+
+    def test_weather_city_subdomain_still_requires_matching_city_and_today(self):
+        target = 'https://beijing.tianqi.com/'
+        self.assertEqual(rag._weather_result_url(target), target)
+        for invalid in ['https://beijing.tianqi.com/15/', 'https://beijing.tianqi.com.evil.example/',
+                        'https://www.tianqi.com/', 'https://beijing.other.example/']:
+            self.assertIsNone(rag._weather_result_url(invalid))
+        today = datetime.now(timezone(timedelta(hours=8))).strftime('%Y年%m月%d日')
+        def page(city):
+            return SimpleNamespace(text=f'<div class="weather_info"><div class="name"><h1>{city}天气</h1></div>'
+                                        f'<div class="week">{today}</div><p class="now">13℃</p></div>',
+                                   url='https://www.tianqi.com/beijing/', apparent_encoding='utf-8',
+                                   raise_for_status=lambda: None)
+        with patch('requests.get', return_value=page('北京')):
+            self.assertIn('当前气温：13℃', rag._weather_page(target, '北京天气'))
+        with patch('requests.get', return_value=page('上海')):
+            self.assertIsNone(rag._weather_page(target, '北京天气'))
+
+    def test_source_beyond_snippet_limit_is_logged_and_only_one_page_is_read(self):
+        from scripts.experiment_utils import capture
+        for query, target, extra, fetch_name, detail in [
+            ('北京天气', 'https://beijing.tianqi.com/', 'https://www.tianqi.com/shanghai/',
+             '_weather_page', '【天气网页当前栏】当前气温：13℃'),
+            ('中国银行外汇牌价 欧元', 'https://www.boc.cn/sourcedb/whpj/',
+             'https://www.boc.cn/sourcedb/whpj/index.html', '_fx_page', '【银行汇率网页】目标报价'),
+        ]:
+            html = ''.join(f'<li class="b_algo"><h2><a href="{url}">结果{rank}</a></h2><p>摘要{rank}</p></li>'
+                           for rank, url in enumerate(['https://example.com/a', 'https://example.com/b', target, extra], 1))
+            events = []
+            with self.subTest(query=query), \
+                    patch('requests.get', return_value=SimpleNamespace(text=html, raise_for_status=lambda: None)) as get, \
+                    patch.object(rag, fetch_name, return_value=detail) as fetch, \
+                    patch.object(rag, 'get_ground_truth') as truth:
+                with capture(events):
+                    snippets = rag.bing_search(query, top_k=2)
+            get.assert_called_once()
+            fetch.assert_called_once_with(target, query)
+            truth.assert_not_called()
+            self.assertEqual(len(snippets), 2)
+            self.assertEqual(snippets[0], detail)
+            results = events[0]['request_attempts'][0]['organic_results']
+            self.assertEqual(len(results), 4)
+            self.assertEqual(results[2], {'rank': 3, 'title': '结果3', 'url': target})
 
     def test_ninety_percent_target_requires_twenty_seven_and_all_truths(self):
         sample, raw, truths = fixture()
