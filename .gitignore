@@ -5,6 +5,7 @@ __pycache__/
 outputs/*
 !outputs/experiment/
 outputs/experiment/*
-!outputs/experiment/exp_3/
-reports/
+!outputs/experiment/exp_1/
+reports/*
+!reports/素材/
 ~$*.docx
