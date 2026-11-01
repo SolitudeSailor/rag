@@ -1,0 +1,9 @@
+{
+  "type": "fx",
+  "item": "新加坡元",
+  "value": 5.2091,
+  "status": "ok",
+  "started_at": "2026-11-01T20:19:15.978683+08:00",
+  "source": "新版教师get_ground_truth：中国银行官网 → open.er-api.com → currency-api备用",
+  "finished_at": "2026-11-01T20:19:18.877485+08:00"
+}

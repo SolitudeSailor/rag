@@ -1,0 +1,23 @@
+{
+  "question": "昆明现在的气温是多少摄氏度？",
+  "mode": "blind",
+  "answer": "我无法实时获取昆明当前气温，建议查看天气App或中国天气网等实时天气来源。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:23.758313+08:00",
+  "search_log": [],
+  "search_events": [],
+  "usage": [
+    {
+      "prompt_tokens": 73,
+      "completion_tokens": 95,
+      "total_tokens": 168,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:18:25.413745+08:00",
+  "seconds": 1.655,
+  "prompt_tokens": 73,
+  "completion_tokens": 95,
+  "total_tokens": 168
+}

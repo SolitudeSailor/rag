@@ -50,7 +50,7 @@ def run_one(question, mode, prompt=None, trace_path=None):
 
 def run_pair(index, item, traces):
     truth = dict(type=item['type'], item=item['item'], value=None, status='running',
-                 started_at=now(), source='教师get_ground_truth：wttr.in' if item['type'] == 'weather' else '教师get_ground_truth：open.er-api.com / currency-api备用')
+                 started_at=now(), source='教师get_ground_truth：wttr.in' if item['type'] == 'weather' else '新版教师get_ground_truth：中国银行官网 → open.er-api.com → currency-api备用')
     try:
         truth['value'] = rag.get_ground_truth(item['type'], item['item'])
         truth['status'] = 'ok' if truth['value'] is not None else 'unavailable'
@@ -84,10 +84,11 @@ def main(argv=None):
     if not rag.API_KEY.strip() or rag.API_KEY == 'YOUR_API_KEY_HERE':
         raise SystemExit('请先配置LLM_API_KEY；不会打印密钥。')
     sample = load_sample()
-    sources = sorted(SOURCE_FILES | {'scripts/export_experiment_summary.py'})
+    sources = sorted(SOURCE_FILES | {'scripts/export_experiment_summary.py', 'scripts/teacher_reference.json'})
     metadata = dict(schema=STANDARD_ID, started_at=now(), model=rag.MODEL, temperature=0.3,
                     api_base_sha256=api_base_fingerprint(rag), workers=args.workers,
                     max_search=2, top_k=5, time_injection=True, time_zone='Asia/Shanghai',
+                    teacher_reference=json.loads((ROOT/'scripts/teacher_reference.json').read_text(encoding='utf-8')),
                     request_timeout_seconds=60, sdk_max_retries=0,
                     search_configuration=rag.SEARCH_CONFIGURATION.copy(),
                     extra_body_sha256=hashlib.sha256(json.dumps(rag.EXTRA_BODY, sort_keys=True).encode()).hexdigest(),

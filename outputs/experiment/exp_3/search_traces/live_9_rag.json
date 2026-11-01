@@ -1,0 +1,144 @@
+{
+  "question": "重庆现在的气温是多少摄氏度？",
+  "mode": "rag",
+  "answer": "重庆当前气温18℃。来源为天气网页当前栏（tianqi.com），页面日期2026年11月1日，抓取时间20:18（北京时间）；页面未提供具体观测时刻，不能视为独立现场实测。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:23.370241+08:00",
+  "search_log": [
+    [
+      "重庆天气",
+      [
+        "【天气网页当前栏】城市：重庆；当前气温：18℃；页面日期：2026年11月01日；抓取时间：2026-11-01 20:18:27（北京时间）。页面未提供具体观测时刻，不能视为独立现场实测。来源：https://www.tianqi.com/chongqing/",
+        "【重庆天气预报,重庆7天天气预报,重庆15天天气预报,重庆天气查询】重庆天气预报，及时准确发布中央气象台天气信息，便捷查询重庆今日天气，重庆周末天气，重庆一周天气预报，重庆蓝天预报，重 … 来源：https://www.weather.com.cn/weather/101040100.shtml",
+        "【【重庆天气预报】重庆天气预报一周,重庆天气预报15天,30天,今天,明天,7天,10天,未来重庆一周天气预报查询—天气网】12 hours ago· 天气网提供重庆天气预报15天,30天,今日天气,明天天气,重庆未来一周的天气预报,重庆天气,重庆实时天气查询,重庆天气 … 来源：https://www.tianqi.com/chongqing/",
+        "【重庆天气预报15天_重庆天气预报15天查询,重庆未来15天天气预报-重庆天气网】12 hours ago· 重庆天气网提供重庆天气预报15天，重庆天气预报15天查询，重庆未来15天天气预报，通过重庆天气预报15天查询， … 来源：https://www.tianqi.com/chongqing/15/",
+        "【重庆-天气预报】重庆 日落 降水量 相对湿度 体感温度 雷达图 24小时预报 7天预报 10天预报 11-30天预报 发布时间：11-01 12:00 11/01 周日 阵雨 西 … 来源：https://www.nmc.cn/publish/forecast/ACQ/zhongqing.html"
+      ]
+    ]
+  ],
+  "search_events": [
+    {
+      "query": "重庆天气",
+      "started_at": "2026-11-01T20:18:24.646600+08:00",
+      "status": "ok",
+      "snippets": [
+        "【天气网页当前栏】城市：重庆；当前气温：18℃；页面日期：2026年11月01日；抓取时间：2026-11-01 20:18:27（北京时间）。页面未提供具体观测时刻，不能视为独立现场实测。来源：https://www.tianqi.com/chongqing/",
+        "【重庆天气预报,重庆7天天气预报,重庆15天天气预报,重庆天气查询】重庆天气预报，及时准确发布中央气象台天气信息，便捷查询重庆今日天气，重庆周末天气，重庆一周天气预报，重庆蓝天预报，重 … 来源：https://www.weather.com.cn/weather/101040100.shtml",
+        "【【重庆天气预报】重庆天气预报一周,重庆天气预报15天,30天,今天,明天,7天,10天,未来重庆一周天气预报查询—天气网】12 hours ago· 天气网提供重庆天气预报15天,30天,今日天气,明天天气,重庆未来一周的天气预报,重庆天气,重庆实时天气查询,重庆天气 … 来源：https://www.tianqi.com/chongqing/",
+        "【重庆天气预报15天_重庆天气预报15天查询,重庆未来15天天气预报-重庆天气网】12 hours ago· 重庆天气网提供重庆天气预报15天，重庆天气预报15天查询，重庆未来15天天气预报，通过重庆天气预报15天查询， … 来源：https://www.tianqi.com/chongqing/15/",
+        "【重庆-天气预报】重庆 日落 降水量 相对湿度 体感温度 雷达图 24小时预报 7天预报 10天预报 11-30天预报 发布时间：11-01 12:00 11/01 周日 阵雨 西 … 来源：https://www.nmc.cn/publish/forecast/ACQ/zhongqing.html"
+      ],
+      "source_attempts": [
+        {
+          "source": "bing_snippet",
+          "status": "accepted"
+        },
+        {
+          "source": "weather_page",
+          "status": "accepted"
+        }
+      ],
+      "request_attempts": [
+        {
+          "purpose": "bing",
+          "url": "https://www.bing.com/search",
+          "params": {
+            "q": "重庆天气",
+            "mkt": "zh-CN",
+            "setlang": "zh-hans",
+            "ensearch": "1"
+          },
+          "attempt": 1,
+          "status": "ok",
+          "final_url": "https://www.bing.com/search?q=%E9%87%8D%E5%BA%86%E5%A4%A9%E6%B0%94&mkt=zh-CN&setlang=zh-hans&ensearch=1",
+          "organic_results": [
+            {
+              "rank": 1,
+              "title": "重庆天气预报,重庆7天天气预报,重庆15天天气预报,重庆天气查询",
+              "url": "https://www.weather.com.cn/weather/101040100.shtml"
+            },
+            {
+              "rank": 2,
+              "title": "【重庆天气预报】重庆天气预报一周,重庆天气预报15天,30天,今天,明天,7天,10天,未来重庆一周天气预报查询—天气网",
+              "url": "https://www.tianqi.com/chongqing/"
+            },
+            {
+              "rank": 3,
+              "title": "重庆天气预报15天_重庆天气预报15天查询,重庆未来15天天气预报-重庆天气网",
+              "url": "https://www.tianqi.com/chongqing/15/"
+            },
+            {
+              "rank": 4,
+              "title": "重庆-天气预报",
+              "url": "https://www.nmc.cn/publish/forecast/ACQ/zhongqing.html"
+            },
+            {
+              "rank": 5,
+              "title": "重庆天气预报,重庆7天天气预报,重庆15天天气预报,重庆天气查询 - 中国天气网",
+              "url": "https://www.weather.com.cn/weathern/101040100.shtml"
+            },
+            {
+              "rank": 6,
+              "title": "重庆首页 -重庆",
+              "url": "https://cq.weather.com.cn/"
+            },
+            {
+              "rank": 7,
+              "title": "重庆天气预报 -重庆- 中国天气网 - weather.com.cn",
+              "url": "https://cq.weather.com.cn/indexOnline.shtml"
+            },
+            {
+              "rank": 8,
+              "title": "【重庆市天气预报】重庆市天气预报一周,重庆市天气预报15天,30天,今天,明天,7天,10天,未来重庆市一周天气预报查询 -重庆…",
+              "url": "https://chongqing.tianqi.com/chongqing"
+            },
+            {
+              "rank": 9,
+              "title": "重庆市气象局",
+              "url": "https://cq.cma.gov.cn/"
+            },
+            {
+              "rank": 10,
+              "title": "重庆市 10 天天气预报 - The Weather Channel | Weather.com",
+              "url": "https://weather.com/zh-CN/cn/city/chongqing/tenday"
+            }
+          ]
+        },
+        {
+          "purpose": "weather_page",
+          "url": "https://www.tianqi.com/chongqing/",
+          "params": {},
+          "attempt": 1,
+          "status": "ok",
+          "final_url": "https://www.tianqi.com/chongqing/"
+        }
+      ],
+      "finished_at": "2026-11-01T20:18:27.680405+08:00",
+      "selected_sources": [
+        "bing_snippet",
+        "weather_page"
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "prompt_tokens": 1017,
+      "completion_tokens": 31,
+      "total_tokens": 1048,
+      "status": "ok",
+      "temperature": 0.3
+    },
+    {
+      "prompt_tokens": 1427,
+      "completion_tokens": 101,
+      "total_tokens": 1528,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:18:29.307699+08:00",
+  "seconds": 5.937,
+  "prompt_tokens": 2444,
+  "completion_tokens": 132,
+  "total_tokens": 2576
+}

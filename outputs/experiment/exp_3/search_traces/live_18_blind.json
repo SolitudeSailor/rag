@@ -1,0 +1,23 @@
+{
+  "question": "现在1港元兑换多少人民币？",
+  "mode": "blind",
+  "answer": "我无法获取实时汇率，因此不能准确告诉你“现在”1港元兑多少人民币。请以银行或外汇平台实时报价为准；近期港元兑人民币大致在 1 港元 ≈ 0.90～0.93 元人民币附近波动。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:57.492257+08:00",
+  "search_log": [],
+  "search_events": [],
+  "usage": [
+    {
+      "prompt_tokens": 74,
+      "completion_tokens": 200,
+      "total_tokens": 274,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:18:59.832131+08:00",
+  "seconds": 2.34,
+  "prompt_tokens": 74,
+  "completion_tokens": 200,
+  "total_tokens": 274
+}

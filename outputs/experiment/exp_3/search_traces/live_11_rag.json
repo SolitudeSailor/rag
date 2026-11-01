@@ -1,0 +1,144 @@
+{
+  "question": "昆明现在的气温是多少摄氏度？",
+  "mode": "rag",
+  "answer": "昆明当前气温为23℃。来源为天气网昆明页面（tianqi.com/kunming/），页面日期为2026年11月1日，抓取时间20:18；页面未提供具体观测时刻，因此不能视为现场实测。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:25.415736+08:00",
+  "search_log": [
+    [
+      "昆明天气",
+      [
+        "【天气网页当前栏】城市：昆明；当前气温：23℃；页面日期：2026年11月01日；抓取时间：2026-11-01 20:18:29（北京时间）。页面未提供具体观测时刻，不能视为独立现场实测。来源：https://www.tianqi.com/kunming/",
+        "【昆明天气预报,昆明7天天气预报,昆明15天天气预报,昆明天气查询】昆明天气预报，及时准确发布中央气象台天气信息，便捷查询昆明今日天气，昆明周末天气，昆明一周天气预报，昆明蓝天预报，昆 … 来源：https://www.weather.com.cn/weather/101290101.shtml",
+        "【【昆明天气预报】昆明天气预报一周,昆明天气预报15天,30天,今天,明天,7天,10天,未来昆明一周天气预报查询—天气网】12 hours ago· 天气网提供昆明天气预报15天,30天,今日天气,明天天气,昆明未来一周的天气预报,云南昆明天气,昆明实时天气查询,昆明 … 来源：https://www.tianqi.com/kunming/",
+        "【昆明天气预报,昆明7天天气预报,昆明15天天气预报,昆明天气查询 - 中国天气网】昆明天气预报，及时准确发布中央气象台天气信息，便捷查询北京今日天气，昆明周末天气，昆明一周天气预报，昆明15日天气预 … 来源：https://www.weather.com.cn/weather15dn/101290101.shtml",
+        "【【昆明天气预报】昆明天气预报一周_昆明天气预报今天、7天、15天、30天、40天气预报查询—天气网】昆明天气网为您提供昆明天气预报详情，便捷查询昆明24小时实况天气、温度趋势、风力风向、 降水预报、 紫外线强度、 日出和日 … 来源：https://www.tianqi.com/yunnan-kunming/43678/"
+      ]
+    ]
+  ],
+  "search_events": [
+    {
+      "query": "昆明天气",
+      "started_at": "2026-11-01T20:18:26.654852+08:00",
+      "status": "ok",
+      "snippets": [
+        "【天气网页当前栏】城市：昆明；当前气温：23℃；页面日期：2026年11月01日；抓取时间：2026-11-01 20:18:29（北京时间）。页面未提供具体观测时刻，不能视为独立现场实测。来源：https://www.tianqi.com/kunming/",
+        "【昆明天气预报,昆明7天天气预报,昆明15天天气预报,昆明天气查询】昆明天气预报，及时准确发布中央气象台天气信息，便捷查询昆明今日天气，昆明周末天气，昆明一周天气预报，昆明蓝天预报，昆 … 来源：https://www.weather.com.cn/weather/101290101.shtml",
+        "【【昆明天气预报】昆明天气预报一周,昆明天气预报15天,30天,今天,明天,7天,10天,未来昆明一周天气预报查询—天气网】12 hours ago· 天气网提供昆明天气预报15天,30天,今日天气,明天天气,昆明未来一周的天气预报,云南昆明天气,昆明实时天气查询,昆明 … 来源：https://www.tianqi.com/kunming/",
+        "【昆明天气预报,昆明7天天气预报,昆明15天天气预报,昆明天气查询 - 中国天气网】昆明天气预报，及时准确发布中央气象台天气信息，便捷查询北京今日天气，昆明周末天气，昆明一周天气预报，昆明15日天气预 … 来源：https://www.weather.com.cn/weather15dn/101290101.shtml",
+        "【【昆明天气预报】昆明天气预报一周_昆明天气预报今天、7天、15天、30天、40天气预报查询—天气网】昆明天气网为您提供昆明天气预报详情，便捷查询昆明24小时实况天气、温度趋势、风力风向、 降水预报、 紫外线强度、 日出和日 … 来源：https://www.tianqi.com/yunnan-kunming/43678/"
+      ],
+      "source_attempts": [
+        {
+          "source": "bing_snippet",
+          "status": "accepted"
+        },
+        {
+          "source": "weather_page",
+          "status": "accepted"
+        }
+      ],
+      "request_attempts": [
+        {
+          "purpose": "bing",
+          "url": "https://www.bing.com/search",
+          "params": {
+            "q": "昆明天气",
+            "mkt": "zh-CN",
+            "setlang": "zh-hans",
+            "ensearch": "1"
+          },
+          "attempt": 1,
+          "status": "ok",
+          "final_url": "https://www.bing.com/search?q=%E6%98%86%E6%98%8E%E5%A4%A9%E6%B0%94&mkt=zh-CN&setlang=zh-hans&ensearch=1",
+          "organic_results": [
+            {
+              "rank": 1,
+              "title": "昆明天气预报,昆明7天天气预报,昆明15天天气预报,昆明天气查询",
+              "url": "https://www.weather.com.cn/weather/101290101.shtml"
+            },
+            {
+              "rank": 2,
+              "title": "【昆明天气预报】昆明天气预报一周,昆明天气预报15天,30天,今天,明天,7天,10天,未来昆明一周天气预报查询—天气网",
+              "url": "https://www.tianqi.com/kunming/"
+            },
+            {
+              "rank": 3,
+              "title": "昆明天气预报,昆明7天天气预报,昆明15天天气预报,昆明天气查询 - 中国天气网",
+              "url": "https://www.weather.com.cn/weather15dn/101290101.shtml"
+            },
+            {
+              "rank": 4,
+              "title": "【昆明天气预报】昆明天气预报一周_昆明天气预报今天、7天、15天、30天、40天气预报查询—天气网",
+              "url": "https://www.tianqi.com/yunnan-kunming/43678/"
+            },
+            {
+              "rank": 5,
+              "title": "昆明-天气预报",
+              "url": "http://www.nmc.cn/publish/forecast/AYN/kunming.html"
+            },
+            {
+              "rank": 6,
+              "title": "昆明, 雲南省, 中國 每小時天氣 |AccuWeather",
+              "url": "https://www.accuweather.com/zh/cn/kunming/106812/hourly-weather-forecast/106812"
+            },
+            {
+              "rank": 7,
+              "title": "【昆明天气预报】昆明今天天气预报_昆明天气预报7天、15天、40天查询_中国天气网",
+              "url": "https://m.weather.com.cn/mweather1d/101290101.shtml"
+            },
+            {
+              "rank": 8,
+              "title": "【昆明昆明天气】昆明昆明今天天气预报,今天,今天天气,7天,15天天气预报,天气预报一周,天气…",
+              "url": "https://forecast.weather.com.cn/town/weather1dn/101290101.shtml"
+            },
+            {
+              "rank": 9,
+              "title": "昆明天气预报 - Weather-Forecast.com",
+              "url": "https://zh.weather-forecast.com/locations/Kunming/forecasts/latest"
+            },
+            {
+              "rank": 10,
+              "title": "昆明15天预报 - wy.weather.com.cn",
+              "url": "http://wy.weather.com.cn/mweather15d/101290101.shtml"
+            }
+          ]
+        },
+        {
+          "purpose": "weather_page",
+          "url": "https://www.tianqi.com/kunming/",
+          "params": {},
+          "attempt": 1,
+          "status": "ok",
+          "final_url": "https://www.tianqi.com/kunming/"
+        }
+      ],
+      "finished_at": "2026-11-01T20:18:29.855276+08:00",
+      "selected_sources": [
+        "bing_snippet",
+        "weather_page"
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "prompt_tokens": 1017,
+      "completion_tokens": 18,
+      "total_tokens": 1035,
+      "status": "ok",
+      "temperature": 0.3
+    },
+    {
+      "prompt_tokens": 1434,
+      "completion_tokens": 89,
+      "total_tokens": 1523,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:18:31.268723+08:00",
+  "seconds": 5.853,
+  "prompt_tokens": 2451,
+  "completion_tokens": 107,
+  "total_tokens": 2558
+}

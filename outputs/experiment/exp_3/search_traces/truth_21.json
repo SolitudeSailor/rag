@@ -1,0 +1,9 @@
+{
+  "type": "fx",
+  "item": "瑞士法郎",
+  "value": 8.0692,
+  "status": "ok",
+  "started_at": "2026-11-01T20:19:07.343488+08:00",
+  "source": "新版教师get_ground_truth：中国银行官网 → open.er-api.com → currency-api备用",
+  "finished_at": "2026-11-01T20:19:10.395711+08:00"
+}

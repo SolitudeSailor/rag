@@ -1,0 +1,144 @@
+{
+  "question": "南京现在的气温是多少摄氏度？",
+  "mode": "rag",
+  "answer": "南京当前气温16℃。该数据来自天气网页面“当前气温”栏，页面日期为2026年11月1日，抓取时间为北京时间20:18；页面未提供具体观测时刻，不能视为独立现场实测。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:14.261889+08:00",
+  "search_log": [
+    [
+      "南京天气",
+      [
+        "【天气网页当前栏】城市：南京；当前气温：16℃；页面日期：2026年11月01日；抓取时间：2026-11-01 20:18:18（北京时间）。页面未提供具体观测时刻，不能视为独立现场实测。来源：https://www.tianqi.com/nanjing/",
+        "【南京天气预报,南京7天天气预报,南京15天天气预报,南京天气查询】南京天气预报，及时准确发布中央气象台天气信息，便捷查询南京今日天气，南京周末天气，南京一周天气预报，南京蓝天预报，南 … 来源：https://www.weather.com.cn/weather/101190101.shtml",
+        "【【南京天气预报】南京天气预报一周,南京天气预报15天,30天,今天,明天,7天,10天,未来南京一周天气预报查询—天气网】天气网提供南京天气预报15天,30天,今日天气,明天天气,南京未来一周的天气预报,江苏南京天气,南京实时天气查询,南京天气预报一 … 来源：https://www.tianqi.com/nanjing/",
+        "【南京-天气预报】南京 日落 降水量 相对湿度 体感温度 雷达图 24小时预报 7天预报 10天预报 11-30天预报 发布时间：11-01 12:00 11/01 周日 小雨 西 … 来源：http://www.nmc.cn/publish/forecast/AJS/nanjing.html",
+        "【南京天气预报,南京7天天气预报,南京15天天气预报,南京天气查询 - 中国天气网】南京天气预报，及时准确发布中央气象台天气信息，便捷查询北京今日天气，南京周末天气，南京一周天气预报，南京15日天气预 … 来源：https://www.weather.com.cn/weathern/101190101.shtml"
+      ]
+    ]
+  ],
+  "search_events": [
+    {
+      "query": "南京天气",
+      "started_at": "2026-11-01T20:18:16.074296+08:00",
+      "status": "ok",
+      "snippets": [
+        "【天气网页当前栏】城市：南京；当前气温：16℃；页面日期：2026年11月01日；抓取时间：2026-11-01 20:18:18（北京时间）。页面未提供具体观测时刻，不能视为独立现场实测。来源：https://www.tianqi.com/nanjing/",
+        "【南京天气预报,南京7天天气预报,南京15天天气预报,南京天气查询】南京天气预报，及时准确发布中央气象台天气信息，便捷查询南京今日天气，南京周末天气，南京一周天气预报，南京蓝天预报，南 … 来源：https://www.weather.com.cn/weather/101190101.shtml",
+        "【【南京天气预报】南京天气预报一周,南京天气预报15天,30天,今天,明天,7天,10天,未来南京一周天气预报查询—天气网】天气网提供南京天气预报15天,30天,今日天气,明天天气,南京未来一周的天气预报,江苏南京天气,南京实时天气查询,南京天气预报一 … 来源：https://www.tianqi.com/nanjing/",
+        "【南京-天气预报】南京 日落 降水量 相对湿度 体感温度 雷达图 24小时预报 7天预报 10天预报 11-30天预报 发布时间：11-01 12:00 11/01 周日 小雨 西 … 来源：http://www.nmc.cn/publish/forecast/AJS/nanjing.html",
+        "【南京天气预报,南京7天天气预报,南京15天天气预报,南京天气查询 - 中国天气网】南京天气预报，及时准确发布中央气象台天气信息，便捷查询北京今日天气，南京周末天气，南京一周天气预报，南京15日天气预 … 来源：https://www.weather.com.cn/weathern/101190101.shtml"
+      ],
+      "source_attempts": [
+        {
+          "source": "bing_snippet",
+          "status": "accepted"
+        },
+        {
+          "source": "weather_page",
+          "status": "accepted"
+        }
+      ],
+      "request_attempts": [
+        {
+          "purpose": "bing",
+          "url": "https://www.bing.com/search",
+          "params": {
+            "q": "南京天气",
+            "mkt": "zh-CN",
+            "setlang": "zh-hans",
+            "ensearch": "1"
+          },
+          "attempt": 1,
+          "status": "ok",
+          "final_url": "https://www.bing.com/search?q=%E5%8D%97%E4%BA%AC%E5%A4%A9%E6%B0%94&mkt=zh-CN&setlang=zh-hans&ensearch=1",
+          "organic_results": [
+            {
+              "rank": 1,
+              "title": "南京天气预报,南京7天天气预报,南京15天天气预报,南京天气查询",
+              "url": "https://www.weather.com.cn/weather/101190101.shtml"
+            },
+            {
+              "rank": 2,
+              "title": "【南京天气预报】南京天气预报一周,南京天气预报15天,30天,今天,明天,7天,10天,未来南京一周天气预报查询—天气网",
+              "url": "https://www.tianqi.com/nanjing/"
+            },
+            {
+              "rank": 3,
+              "title": "南京-天气预报",
+              "url": "http://www.nmc.cn/publish/forecast/AJS/nanjing.html"
+            },
+            {
+              "rank": 4,
+              "title": "南京天气预报,南京7天天气预报,南京15天天气预报,南京天气查询 - 中国天气网",
+              "url": "https://www.weather.com.cn/weathern/101190101.shtml"
+            },
+            {
+              "rank": 5,
+              "title": "南京, 江蘇省, 中國 每小時天氣 |AccuWeather",
+              "url": "https://www.accuweather.com/zh/cn/nanjing/105570/hourly-weather-forecast/105570"
+            },
+            {
+              "rank": 6,
+              "title": "国内天气预报",
+              "url": "https://www.nmc.cn/publish/forecast"
+            },
+            {
+              "rank": 7,
+              "title": "【南京今天天气预报】南京天气预报24小时详情_南京天气网",
+              "url": "https://www.tianqi.com/nanjing/today/"
+            },
+            {
+              "rank": 8,
+              "title": "南京天气_南京天气预报实时查询_未来7天15天天气与空气质量 -南京天气",
+              "url": "https://nanjyt.hl.cn/"
+            },
+            {
+              "rank": 9,
+              "title": "南京天气_南京天气预报_南京实时天气与一周天气查询_南京天气官网",
+              "url": "https://www.njtq.hl.cn/"
+            },
+            {
+              "rank": 10,
+              "title": "【南京天气预报】南京天气预报7天,10天,15天_全国天气网",
+              "url": "https://tianqi.so.com/weather/101190101"
+            }
+          ]
+        },
+        {
+          "purpose": "weather_page",
+          "url": "https://www.tianqi.com/nanjing/",
+          "params": {},
+          "attempt": 1,
+          "status": "ok",
+          "final_url": "https://www.tianqi.com/nanjing/"
+        }
+      ],
+      "finished_at": "2026-11-01T20:18:18.812821+08:00",
+      "selected_sources": [
+        "bing_snippet",
+        "weather_page"
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "prompt_tokens": 1017,
+      "completion_tokens": 27,
+      "total_tokens": 1044,
+      "status": "ok",
+      "temperature": 0.3
+    },
+    {
+      "prompt_tokens": 1424,
+      "completion_tokens": 99,
+      "total_tokens": 1523,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:18:20.175091+08:00",
+  "seconds": 5.913,
+  "prompt_tokens": 2441,
+  "completion_tokens": 126,
+  "total_tokens": 2567
+}

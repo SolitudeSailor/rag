@@ -1,0 +1,23 @@
+{
+  "question": "拉萨现在的气温是多少摄氏度？",
+  "mode": "blind",
+  "answer": "我无法实时获取天气数据，因此不能准确告诉你拉萨“现在”的气温。建议查看中国天气网、天气类App，或当地气象台实时信息。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:34.985076+08:00",
+  "search_log": [],
+  "search_events": [],
+  "usage": [
+    {
+      "prompt_tokens": 73,
+      "completion_tokens": 165,
+      "total_tokens": 238,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:18:36.850088+08:00",
+  "seconds": 1.865,
+  "prompt_tokens": 73,
+  "completion_tokens": 165,
+  "total_tokens": 238
+}

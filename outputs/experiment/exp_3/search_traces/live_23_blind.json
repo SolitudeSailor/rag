@@ -1,0 +1,23 @@
+{
+  "question": "现在1新加坡元兑换多少人民币？",
+  "mode": "blind",
+  "answer": "我无法获取实时外汇行情，因此不能准确告诉你“现在”1新加坡元兑多少人民币。汇率实时变动，建议查看中国银行、工商银行等银行外汇牌价，或支付宝/微信外汇、XE、路透等平台的最新报价。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:19:18.879116+08:00",
+  "search_log": [],
+  "search_events": [],
+  "usage": [
+    {
+      "prompt_tokens": 75,
+      "completion_tokens": 208,
+      "total_tokens": 283,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:19:21.188549+08:00",
+  "seconds": 2.309,
+  "prompt_tokens": 75,
+  "completion_tokens": 208,
+  "total_tokens": 283
+}

@@ -1,0 +1,9 @@
+{
+  "type": "weather",
+  "item": "昆明",
+  "value": 21,
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:21.206114+08:00",
+  "source": "教师get_ground_truth：wttr.in",
+  "finished_at": "2026-11-01T20:18:23.756634+08:00"
+}

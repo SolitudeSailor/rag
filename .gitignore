@@ -2,6 +2,9 @@
 .env
 __pycache__/
 *.py[cod]
-outputs/
+outputs/*
+!outputs/experiment/
+outputs/experiment/*
+!outputs/experiment/exp_3/
 reports/
 ~$*.docx

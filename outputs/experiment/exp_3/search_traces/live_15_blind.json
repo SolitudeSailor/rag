@@ -1,0 +1,23 @@
+{
+  "question": "现在1美元兑换多少人民币？",
+  "mode": "blind",
+  "answer": "我无法获取实时汇率，因此不能准确告诉你“现在”1美元兑换多少人民币。汇率实时变动，请以银行或外汇平台（如中国银行、工商银行、支付宝/微信外汇牌价、XE等）的即时报价为准。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:43.809032+08:00",
+  "search_log": [],
+  "search_events": [],
+  "usage": [
+    {
+      "prompt_tokens": 74,
+      "completion_tokens": 150,
+      "total_tokens": 224,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:18:46.540698+08:00",
+  "seconds": 2.732,
+  "prompt_tokens": 74,
+  "completion_tokens": 150,
+  "total_tokens": 224
+}

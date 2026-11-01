@@ -1,0 +1,144 @@
+{
+  "question": "杭州现在的气温是多少摄氏度？",
+  "mode": "rag",
+  "answer": "杭州当前气温17℃。数据来自天气网页“当前栏”，页面日期为2026年11月1日，抓取时间20:18（北京时间）；页面未提供具体观测时刻，不能视为现场实测。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:02.297086+08:00",
+  "search_log": [
+    [
+      "杭州天气",
+      [
+        "【天气网页当前栏】城市：杭州；当前气温：17℃；页面日期：2026年11月01日；抓取时间：2026-11-01 20:18:07（北京时间）。页面未提供具体观测时刻，不能视为独立现场实测。来源：https://www.tianqi.com/hangzhou/",
+        "【杭州天气预报,杭州7天天气预报,杭州15天天气预报,杭州天气查询】杭州天气预报，及时准确发布中央气象台天气信息，便捷查询杭州今日天气，杭州周末天气，杭州一周天气预报，杭州蓝天预报，杭 … 来源：https://www.weather.com.cn/weather/101210101.shtml",
+        "【杭州-天气预报】杭州 日落 降水量 相对湿度 体感温度 雷达图 24小时预报 7天预报 10天预报 11-30天预报 发布时间：11-01 12:00 11/01 周日 小雨 西 … 来源：http://www.nmc.cn/publish/forecast/AZJ/hangzhou.html",
+        "【杭州天气预报15天_杭州天气预报15天查询,杭州未来15天天气预报-杭州天气网】12 hours ago· 杭州天气网提供杭州天气预报15天，杭州天气预报15天查询，杭州未来15天天气预报，通过杭州天气预报15天查询， … 来源：https://www.tianqi.com/hangzhou/15/",
+        "【【杭州天气】杭州40天天气预报,杭州更长预报,杭州天气日历,杭州日历,15天天气预报,天气…】16-40天预报数据来源于国家气候中心，是根据全球数值天气预报模式客观预报系统加工而成，未经预报员主观订正，反应未来一段时 … 来源：https://www.weather.com.cn/weather40d/101210101.shtml"
+      ]
+    ]
+  ],
+  "search_events": [
+    {
+      "query": "杭州天气",
+      "started_at": "2026-11-01T20:18:03.734107+08:00",
+      "status": "ok",
+      "snippets": [
+        "【天气网页当前栏】城市：杭州；当前气温：17℃；页面日期：2026年11月01日；抓取时间：2026-11-01 20:18:07（北京时间）。页面未提供具体观测时刻，不能视为独立现场实测。来源：https://www.tianqi.com/hangzhou/",
+        "【杭州天气预报,杭州7天天气预报,杭州15天天气预报,杭州天气查询】杭州天气预报，及时准确发布中央气象台天气信息，便捷查询杭州今日天气，杭州周末天气，杭州一周天气预报，杭州蓝天预报，杭 … 来源：https://www.weather.com.cn/weather/101210101.shtml",
+        "【杭州-天气预报】杭州 日落 降水量 相对湿度 体感温度 雷达图 24小时预报 7天预报 10天预报 11-30天预报 发布时间：11-01 12:00 11/01 周日 小雨 西 … 来源：http://www.nmc.cn/publish/forecast/AZJ/hangzhou.html",
+        "【杭州天气预报15天_杭州天气预报15天查询,杭州未来15天天气预报-杭州天气网】12 hours ago· 杭州天气网提供杭州天气预报15天，杭州天气预报15天查询，杭州未来15天天气预报，通过杭州天气预报15天查询， … 来源：https://www.tianqi.com/hangzhou/15/",
+        "【【杭州天气】杭州40天天气预报,杭州更长预报,杭州天气日历,杭州日历,15天天气预报,天气…】16-40天预报数据来源于国家气候中心，是根据全球数值天气预报模式客观预报系统加工而成，未经预报员主观订正，反应未来一段时 … 来源：https://www.weather.com.cn/weather40d/101210101.shtml"
+      ],
+      "source_attempts": [
+        {
+          "source": "bing_snippet",
+          "status": "accepted"
+        },
+        {
+          "source": "weather_page",
+          "status": "accepted"
+        }
+      ],
+      "request_attempts": [
+        {
+          "purpose": "bing",
+          "url": "https://www.bing.com/search",
+          "params": {
+            "q": "杭州天气",
+            "mkt": "zh-CN",
+            "setlang": "zh-hans",
+            "ensearch": "1"
+          },
+          "attempt": 1,
+          "status": "ok",
+          "final_url": "https://www.bing.com/search?q=%E6%9D%AD%E5%B7%9E%E5%A4%A9%E6%B0%94&mkt=zh-CN&setlang=zh-hans&ensearch=1",
+          "organic_results": [
+            {
+              "rank": 1,
+              "title": "杭州天气预报,杭州7天天气预报,杭州15天天气预报,杭州天气查询",
+              "url": "https://www.weather.com.cn/weather/101210101.shtml"
+            },
+            {
+              "rank": 2,
+              "title": "杭州-天气预报",
+              "url": "http://www.nmc.cn/publish/forecast/AZJ/hangzhou.html"
+            },
+            {
+              "rank": 3,
+              "title": "杭州天气预报15天_杭州天气预报15天查询,杭州未来15天天气预报-杭州天气网",
+              "url": "https://www.tianqi.com/hangzhou/15/"
+            },
+            {
+              "rank": 4,
+              "title": "【杭州天气】杭州40天天气预报,杭州更长预报,杭州天气日历,杭州日历,15天天气预报,天气…",
+              "url": "https://www.weather.com.cn/weather40d/101210101.shtml"
+            },
+            {
+              "rank": 5,
+              "title": "【杭州天气预报】杭州天气预报一周,杭州天气预报15天,30天,今天,明天,7天,10天,未来杭州一周天气预报查询—天气网",
+              "url": "https://www.tianqi.com/hangzhou/"
+            },
+            {
+              "rank": 6,
+              "title": "杭州 天气预报 | MSN天气",
+              "url": "https://www.msn.cn/zh-cn/weather/forecast/in-%E6%9D%AD%E5%B7%9E"
+            },
+            {
+              "rank": 7,
+              "title": "【杭州市天气】_杭州市天气预报_天气查询 - 墨迹天气",
+              "url": "https://tianqi.moji.com/weather/china/zhejiang/hangzhou/getHour24"
+            },
+            {
+              "rank": 8,
+              "title": "杭州天气_杭州天气预报实时查询_杭州一周天气与空气质量 -杭州天气网",
+              "url": "https://www.hztiq.net.cn/"
+            },
+            {
+              "rank": 9,
+              "title": "杭州气象",
+              "url": "https://www.hzqx.cn/pc/hztq/"
+            },
+            {
+              "rank": 10,
+              "title": "杭州市, 浙江省 10 天天气预报 - The Weather Channel | Weather.com",
+              "url": "https://weather.com/zh-CN/cn/zhejiang/city/hangzhou/tenday"
+            }
+          ]
+        },
+        {
+          "purpose": "weather_page",
+          "url": "https://www.tianqi.com/hangzhou/",
+          "params": {},
+          "attempt": 1,
+          "status": "ok",
+          "final_url": "https://www.tianqi.com/hangzhou/"
+        }
+      ],
+      "finished_at": "2026-11-01T20:18:07.099855+08:00",
+      "selected_sources": [
+        "bing_snippet",
+        "weather_page"
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "prompt_tokens": 1017,
+      "completion_tokens": 22,
+      "total_tokens": 1039,
+      "status": "ok",
+      "temperature": 0.3
+    },
+    {
+      "prompt_tokens": 1419,
+      "completion_tokens": 81,
+      "total_tokens": 1500,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:18:08.671434+08:00",
+  "seconds": 6.374,
+  "prompt_tokens": 2436,
+  "completion_tokens": 103,
+  "total_tokens": 2539
+}

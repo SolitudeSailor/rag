@@ -1,0 +1,23 @@
+{
+  "question": "现在1南非兰特兑换多少人民币？",
+  "mode": "blind",
+  "answer": "我无法实时获取外汇行情，因此不能确认“现在”的精确汇率。1 南非兰特（ZAR）兑人民币（CNY）是实时波动的，请以中国银行、外汇交易平台或中国人民银行授权机构的最新牌价为准。\n\n参考换算方式：若平台显示 `1 ZAR = X CNY`，则 1 南非兰特可兑换 X 元人民币。近期大致在 1 ZAR ≈ 0.39～0.40 CNY 附近，但这不能作为当前成交价。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:19:32.407727+08:00",
+  "search_log": [],
+  "search_events": [],
+  "usage": [
+    {
+      "prompt_tokens": 75,
+      "completion_tokens": 349,
+      "total_tokens": 424,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:19:36.369888+08:00",
+  "seconds": 3.962,
+  "prompt_tokens": 75,
+  "completion_tokens": 349,
+  "total_tokens": 424
+}

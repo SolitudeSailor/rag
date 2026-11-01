@@ -1,0 +1,23 @@
+{
+  "question": "现在1英镑兑换多少人民币？",
+  "mode": "blind",
+  "answer": "我无法获取实时汇率，因此不能准确告诉你“现在”1英镑兑换多少人民币。汇率会随市场实时波动，且银行现汇/现钞价不同。\n\n建议你查看：中国银行外汇牌价、工商银行等银行App，或支付宝/微信外汇服务、XE、Wise 等平台的实时报价。以交易时银行实际成交价为准。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:50.866212+08:00",
+  "search_log": [],
+  "search_events": [],
+  "usage": [
+    {
+      "prompt_tokens": 74,
+      "completion_tokens": 252,
+      "total_tokens": 326,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:18:53.675064+08:00",
+  "seconds": 2.809,
+  "prompt_tokens": 74,
+  "completion_tokens": 252,
+  "total_tokens": 326
+}

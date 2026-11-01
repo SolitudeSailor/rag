@@ -1,0 +1,16 @@
+{
+  "filename": "search_rag_weather_fx.py",
+  "provided_path": "E:/Google/1/search_rag_weather_fx.py",
+  "sha256": "e49a1b9e0cb7d3975e6a13c70a1a4f44e5aa6e5560827c9d14e40bda5a091c99",
+  "protected_functions_ast_sha256": {
+    "get_current_temp": "8fda12302b0ad08fa8b0c080e448c48412163b3d13c2338ff016d990bfc72135",
+    "_rate_from_erapi": "a458e1bce9f530829ded59d88cc37cf3ed879f9c4dc287a7c3cbc7d27dab6076",
+    "_rate_from_boc": "a8019f0ecbc0480eabbdadb150ddfd7ca0ab9fb2d26daeddd2d648dd1156ed6c",
+    "_rate_from_jsdelivr": "11ec018b03497f4f055612555b111049d90aed10afa5aa0ec9bc7226066f365e",
+    "get_current_rate": "a4e4bb7c6f4432fd7451ce4ea2586e3ae60e67fc63ad74e503284ab1b041ca08",
+    "load_testset": "53f9afaccaecbfcb89bb52df2f5a0a0758af596d670d2607b7cc0beb7287f270",
+    "get_ground_truth": "f62f630f45928b356549b0d5b4a88d82a06bb78de0bdb4b1a9f04395a63a6cc6",
+    "answer_correct": "73610134b9f241a97b5c9395212da71695788b52f943404cf664c41902fbc314"
+  },
+  "note": "新版教师评测区逐字保留。answer_correct文档写±4℃，实际代码仍为±3℃，不改评分。检索保留项目约定的Bing及单页有界深读，不启用评分函数作为模型工具。"
+}

@@ -1,0 +1,144 @@
+{
+  "question": "成都现在的气温是多少摄氏度？",
+  "mode": "rag",
+  "answer": "成都当前气温为17℃。来源为天气网成都页面当前栏，页面日期2026年11月01日，抓取时间20:18:07（北京时间）；页面未提供具体观测时刻，不能视为独立现场实测。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:02.502679+08:00",
+  "search_log": [
+    [
+      "成都天气",
+      [
+        "【天气网页当前栏】城市：成都；当前气温：17℃；页面日期：2026年11月01日；抓取时间：2026-11-01 20:18:07（北京时间）。页面未提供具体观测时刻，不能视为独立现场实测。来源：https://www.tianqi.com/chengdu/",
+        "【成都天气预报,成都7天天气预报,成都15天天气预报,成都天气查询】成都天气预报，及时准确发布中央气象台天气信息，便捷查询成都今日天气，成都周末天气，成都一周天气预报，成都蓝天预报，成 … 来源：https://www.weather.com.cn/weather/101270101.shtml",
+        "【【成都天气预报】成都天气预报一周,成都天气预报15天,30天,今天,明天,7天,10天,未来成都一周天气预报查询—天气网】天气网提供成都天气预报15天,30天,今日天气,明天天气,成都未来一周的天气预报,四川成都天气,成都实时天气查询,成都天气预报一 … 来源：https://www.tianqi.com/chengdu/",
+        "【成都-天气预报】成都 日落 降水量 相对湿度 体感温度 雷达图 24小时预报 7天预报 10天预报 11-30天预报 发布时间：11-01 12:00 11/01 周日 多云 无 … 来源：http://www.nmc.cn/publish/forecast/ASC/chengdu.html",
+        "【成都天气预报,成都7天天气预报,成都15天天气预报,成都天气查询】提供【成都天气预报】,一周,15天查询,40天查询,气象云图,空气质量,天气实况,温度,降水,风力,气压,紫外线等及时准确发布,是中央气象 … 来源：https://www.weather.com.cn/weather15d/101270101.shtml"
+      ]
+    ]
+  ],
+  "search_events": [
+    {
+      "query": "成都天气",
+      "started_at": "2026-11-01T20:18:04.806493+08:00",
+      "status": "ok",
+      "snippets": [
+        "【天气网页当前栏】城市：成都；当前气温：17℃；页面日期：2026年11月01日；抓取时间：2026-11-01 20:18:07（北京时间）。页面未提供具体观测时刻，不能视为独立现场实测。来源：https://www.tianqi.com/chengdu/",
+        "【成都天气预报,成都7天天气预报,成都15天天气预报,成都天气查询】成都天气预报，及时准确发布中央气象台天气信息，便捷查询成都今日天气，成都周末天气，成都一周天气预报，成都蓝天预报，成 … 来源：https://www.weather.com.cn/weather/101270101.shtml",
+        "【【成都天气预报】成都天气预报一周,成都天气预报15天,30天,今天,明天,7天,10天,未来成都一周天气预报查询—天气网】天气网提供成都天气预报15天,30天,今日天气,明天天气,成都未来一周的天气预报,四川成都天气,成都实时天气查询,成都天气预报一 … 来源：https://www.tianqi.com/chengdu/",
+        "【成都-天气预报】成都 日落 降水量 相对湿度 体感温度 雷达图 24小时预报 7天预报 10天预报 11-30天预报 发布时间：11-01 12:00 11/01 周日 多云 无 … 来源：http://www.nmc.cn/publish/forecast/ASC/chengdu.html",
+        "【成都天气预报,成都7天天气预报,成都15天天气预报,成都天气查询】提供【成都天气预报】,一周,15天查询,40天查询,气象云图,空气质量,天气实况,温度,降水,风力,气压,紫外线等及时准确发布,是中央气象 … 来源：https://www.weather.com.cn/weather15d/101270101.shtml"
+      ],
+      "source_attempts": [
+        {
+          "source": "bing_snippet",
+          "status": "accepted"
+        },
+        {
+          "source": "weather_page",
+          "status": "accepted"
+        }
+      ],
+      "request_attempts": [
+        {
+          "purpose": "bing",
+          "url": "https://www.bing.com/search",
+          "params": {
+            "q": "成都天气",
+            "mkt": "zh-CN",
+            "setlang": "zh-hans",
+            "ensearch": "1"
+          },
+          "attempt": 1,
+          "status": "ok",
+          "final_url": "https://www.bing.com/search?q=%E6%88%90%E9%83%BD%E5%A4%A9%E6%B0%94&mkt=zh-CN&setlang=zh-hans&ensearch=1",
+          "organic_results": [
+            {
+              "rank": 1,
+              "title": "成都天气预报,成都7天天气预报,成都15天天气预报,成都天气查询",
+              "url": "https://www.weather.com.cn/weather/101270101.shtml"
+            },
+            {
+              "rank": 2,
+              "title": "【成都天气预报】成都天气预报一周,成都天气预报15天,30天,今天,明天,7天,10天,未来成都一周天气预报查询—天气网",
+              "url": "https://www.tianqi.com/chengdu/"
+            },
+            {
+              "rank": 3,
+              "title": "成都-天气预报",
+              "url": "http://www.nmc.cn/publish/forecast/ASC/chengdu.html"
+            },
+            {
+              "rank": 4,
+              "title": "成都天气预报,成都7天天气预报,成都15天天气预报,成都天气查询",
+              "url": "https://www.weather.com.cn/weather15d/101270101.shtml"
+            },
+            {
+              "rank": 5,
+              "title": "成都, 四川省, 中國 每小時天氣 |AccuWeather",
+              "url": "https://www.accuweather.com/zh/cn/chengdu/106774/hourly-weather-forecast/106774"
+            },
+            {
+              "rank": 6,
+              "title": "【成都今天天气预报】成都天气预报24小时详情_成都天气网",
+              "url": "https://www.tianqi.com/chengdu/today/"
+            },
+            {
+              "rank": 7,
+              "title": "国内天气预报",
+              "url": "https://www.nmc.cn/publish/forecast"
+            },
+            {
+              "rank": 8,
+              "title": "成都市天气预报 | MSN天气",
+              "url": "https://www.msn.com/zh-cn/weather/forecast/in-%E6%88%90%E9%83%BD%E5%B8%82"
+            },
+            {
+              "rank": 9,
+              "title": "成都天气预报 - weather.com.cn",
+              "url": "https://wx.weather.com.cn/mweather/101270101.shtml"
+            },
+            {
+              "rank": 10,
+              "title": "【成都市天气】_成都市天气预报_天气查询 - 墨迹天气",
+              "url": "https://tianqi.moji.com/weather/china/sichuan/chengdu"
+            }
+          ]
+        },
+        {
+          "purpose": "weather_page",
+          "url": "https://www.tianqi.com/chengdu/",
+          "params": {},
+          "attempt": 1,
+          "status": "ok",
+          "final_url": "https://www.tianqi.com/chengdu/"
+        }
+      ],
+      "finished_at": "2026-11-01T20:18:07.869983+08:00",
+      "selected_sources": [
+        "bing_snippet",
+        "weather_page"
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "prompt_tokens": 1017,
+      "completion_tokens": 29,
+      "total_tokens": 1046,
+      "status": "ok",
+      "temperature": 0.3
+    },
+    {
+      "prompt_tokens": 1432,
+      "completion_tokens": 113,
+      "total_tokens": 1545,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:18:09.957777+08:00",
+  "seconds": 7.455,
+  "prompt_tokens": 2449,
+  "completion_tokens": 142,
+  "total_tokens": 2591
+}

@@ -1,0 +1,9 @@
+{
+  "type": "fx",
+  "item": "俄罗斯卢布",
+  "value": 0.0804,
+  "status": "ok",
+  "started_at": "2026-11-01T20:19:25.943686+08:00",
+  "source": "新版教师get_ground_truth：中国银行官网 → open.er-api.com → currency-api备用",
+  "finished_at": "2026-11-01T20:19:28.638853+08:00"
+}

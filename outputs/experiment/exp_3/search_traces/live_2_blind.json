@@ -1,0 +1,23 @@
+{
+  "question": "广州现在的气温是多少摄氏度？",
+  "mode": "blind",
+  "answer": "我无法实时获取天气数据，因此不能准确告诉你广州当前的气温。建议查看手机天气应用或中国天气网等实时来源。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:17:48.041454+08:00",
+  "search_log": [],
+  "search_events": [],
+  "usage": [
+    {
+      "prompt_tokens": 73,
+      "completion_tokens": 101,
+      "total_tokens": 174,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:17:50.977916+08:00",
+  "seconds": 2.936,
+  "prompt_tokens": 73,
+  "completion_tokens": 101,
+  "total_tokens": 174
+}

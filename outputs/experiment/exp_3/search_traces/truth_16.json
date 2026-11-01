@@ -1,0 +1,9 @@
+{
+  "type": "fx",
+  "item": "欧元",
+  "value": 7.4323,
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:43.892639+08:00",
+  "source": "新版教师get_ground_truth：中国银行官网 → open.er-api.com → currency-api备用",
+  "finished_at": "2026-11-01T20:18:46.495791+08:00"
+}

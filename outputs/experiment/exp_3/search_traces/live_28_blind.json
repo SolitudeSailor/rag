@@ -1,0 +1,23 @@
+{
+  "question": "现在1菲律宾比索兑换多少人民币？",
+  "mode": "blind",
+  "answer": "我无法获取实时外汇行情，因此不能准确告诉你“现在”1菲律宾比索兑换多少人民币。汇率会随市场实时波动，建议你查看银行App、外汇交易平台或搜索引擎的实时报价（如搜索“PHP to CNY”）。\n\n换算时注意：若报价是“1人民币兑多少菲律宾比索”，需取倒数。例如若1人民币≈8 PHP，则1 PHP≈0.125人民币。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:19:41.725986+08:00",
+  "search_log": [],
+  "search_events": [],
+  "usage": [
+    {
+      "prompt_tokens": 76,
+      "completion_tokens": 219,
+      "total_tokens": 295,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:19:44.499101+08:00",
+  "seconds": 2.773,
+  "prompt_tokens": 76,
+  "completion_tokens": 219,
+  "total_tokens": 295
+}

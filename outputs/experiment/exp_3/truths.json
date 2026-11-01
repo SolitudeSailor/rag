@@ -1,0 +1,272 @@
+{
+  "0": {
+    "type": "weather",
+    "item": "北京",
+    "value": 11,
+    "status": "ok",
+    "started_at": "2026-11-01T20:17:45.340639+08:00",
+    "source": "教师get_ground_truth：wttr.in",
+    "finished_at": "2026-11-01T20:17:48.138134+08:00"
+  },
+  "1": {
+    "type": "weather",
+    "item": "上海",
+    "value": 17,
+    "status": "ok",
+    "started_at": "2026-11-01T20:17:45.341057+08:00",
+    "source": "教师get_ground_truth：wttr.in",
+    "finished_at": "2026-11-01T20:17:48.714233+08:00"
+  },
+  "2": {
+    "type": "weather",
+    "item": "广州",
+    "value": 31,
+    "status": "ok",
+    "started_at": "2026-11-01T20:17:45.341353+08:00",
+    "source": "教师get_ground_truth：wttr.in",
+    "finished_at": "2026-11-01T20:17:48.040329+08:00"
+  },
+  "3": {
+    "type": "weather",
+    "item": "深圳",
+    "value": 27,
+    "status": "ok",
+    "started_at": "2026-11-01T20:17:57.545167+08:00",
+    "source": "教师get_ground_truth：wttr.in",
+    "finished_at": "2026-11-01T20:18:01.356080+08:00"
+  },
+  "4": {
+    "type": "weather",
+    "item": "成都",
+    "value": 18,
+    "status": "ok",
+    "started_at": "2026-11-01T20:17:57.601548+08:00",
+    "source": "教师get_ground_truth：wttr.in",
+    "finished_at": "2026-11-01T20:18:00.535809+08:00"
+  },
+  "5": {
+    "type": "weather",
+    "item": "杭州",
+    "value": 18,
+    "status": "ok",
+    "started_at": "2026-11-01T20:17:58.702151+08:00",
+    "source": "教师get_ground_truth：wttr.in",
+    "finished_at": "2026-11-01T20:18:00.365815+08:00"
+  },
+  "6": {
+    "type": "weather",
+    "item": "西安",
+    "value": 11,
+    "status": "ok",
+    "started_at": "2026-11-01T20:18:08.674024+08:00",
+    "source": "教师get_ground_truth：wttr.in",
+    "finished_at": "2026-11-01T20:18:11.550396+08:00"
+  },
+  "7": {
+    "type": "weather",
+    "item": "武汉",
+    "value": 14,
+    "status": "ok",
+    "started_at": "2026-11-01T20:18:09.385852+08:00",
+    "source": "教师get_ground_truth：wttr.in",
+    "finished_at": "2026-11-01T20:18:11.336355+08:00"
+  },
+  "8": {
+    "type": "weather",
+    "item": "南京",
+    "value": 15,
+    "status": "ok",
+    "started_at": "2026-11-01T20:18:09.959709+08:00",
+    "source": "教师get_ground_truth：wttr.in",
+    "finished_at": "2026-11-01T20:18:12.362086+08:00"
+  },
+  "9": {
+    "type": "weather",
+    "item": "重庆",
+    "value": 16,
+    "status": "ok",
+    "started_at": "2026-11-01T20:18:19.803104+08:00",
+    "source": "教师get_ground_truth：wttr.in",
+    "finished_at": "2026-11-01T20:18:21.441362+08:00"
+  },
+  "10": {
+    "type": "weather",
+    "item": "哈尔滨",
+    "value": -5,
+    "status": "ok",
+    "started_at": "2026-11-01T20:18:20.177257+08:00",
+    "source": "教师get_ground_truth：wttr.in",
+    "finished_at": "2026-11-01T20:18:22.100197+08:00"
+  },
+  "11": {
+    "type": "weather",
+    "item": "昆明",
+    "value": 21,
+    "status": "ok",
+    "started_at": "2026-11-01T20:18:21.206114+08:00",
+    "source": "教师get_ground_truth：wttr.in",
+    "finished_at": "2026-11-01T20:18:23.756634+08:00"
+  },
+  "12": {
+    "type": "weather",
+    "item": "青岛",
+    "value": 15,
+    "status": "ok",
+    "started_at": "2026-11-01T20:18:29.309484+08:00",
+    "source": "教师get_ground_truth：wttr.in",
+    "finished_at": "2026-11-01T20:18:31.463622+08:00"
+  },
+  "13": {
+    "type": "weather",
+    "item": "厦门",
+    "value": 24,
+    "status": "ok",
+    "started_at": "2026-11-01T20:18:31.270913+08:00",
+    "source": "教师get_ground_truth：wttr.in",
+    "finished_at": "2026-11-01T20:18:33.198881+08:00"
+  },
+  "14": {
+    "type": "weather",
+    "item": "拉萨",
+    "value": 2,
+    "status": "ok",
+    "started_at": "2026-11-01T20:18:33.349765+08:00",
+    "source": "教师get_ground_truth：wttr.in",
+    "finished_at": "2026-11-01T20:18:34.983149+08:00"
+  },
+  "15": {
+    "type": "fx",
+    "item": "美元",
+    "value": 6.65885,
+    "status": "ok",
+    "started_at": "2026-11-01T20:18:41.292554+08:00",
+    "source": "新版教师get_ground_truth：中国银行官网 → open.er-api.com → currency-api备用",
+    "finished_at": "2026-11-01T20:18:43.807311+08:00"
+  },
+  "16": {
+    "type": "fx",
+    "item": "欧元",
+    "value": 7.4323,
+    "status": "ok",
+    "started_at": "2026-11-01T20:18:43.892639+08:00",
+    "source": "新版教师get_ground_truth：中国银行官网 → open.er-api.com → currency-api备用",
+    "finished_at": "2026-11-01T20:18:46.495791+08:00"
+  },
+  "17": {
+    "type": "fx",
+    "item": "英镑",
+    "value": 8.9166,
+    "status": "ok",
+    "started_at": "2026-11-01T20:18:44.906431+08:00",
+    "source": "新版教师get_ground_truth：中国银行官网 → open.er-api.com → currency-api备用",
+    "finished_at": "2026-11-01T20:18:50.865341+08:00"
+  },
+  "18": {
+    "type": "fx",
+    "item": "港元",
+    "value": 0.8485,
+    "status": "ok",
+    "started_at": "2026-11-01T20:18:54.510195+08:00",
+    "source": "新版教师get_ground_truth：中国银行官网 → open.er-api.com → currency-api备用",
+    "finished_at": "2026-11-01T20:18:57.490717+08:00"
+  },
+  "19": {
+    "type": "fx",
+    "item": "澳元",
+    "value": 4.6842,
+    "status": "ok",
+    "started_at": "2026-11-01T20:18:56.449138+08:00",
+    "source": "新版教师get_ground_truth：中国银行官网 → open.er-api.com → currency-api备用",
+    "finished_at": "2026-11-01T20:18:59.263076+08:00"
+  },
+  "20": {
+    "type": "fx",
+    "item": "加元",
+    "value": 4.76405,
+    "status": "ok",
+    "started_at": "2026-11-01T20:19:03.035198+08:00",
+    "source": "新版教师get_ground_truth：中国银行官网 → open.er-api.com → currency-api备用",
+    "finished_at": "2026-11-01T20:19:05.843127+08:00"
+  },
+  "21": {
+    "type": "fx",
+    "item": "瑞士法郎",
+    "value": 8.0692,
+    "status": "ok",
+    "started_at": "2026-11-01T20:19:07.343488+08:00",
+    "source": "新版教师get_ground_truth：中国银行官网 → open.er-api.com → currency-api备用",
+    "finished_at": "2026-11-01T20:19:10.395711+08:00"
+  },
+  "22": {
+    "type": "fx",
+    "item": "新西兰元",
+    "value": 3.75005,
+    "status": "ok",
+    "started_at": "2026-11-01T20:19:09.197223+08:00",
+    "source": "新版教师get_ground_truth：中国银行官网 → open.er-api.com → currency-api备用",
+    "finished_at": "2026-11-01T20:19:11.954113+08:00"
+  },
+  "23": {
+    "type": "fx",
+    "item": "新加坡元",
+    "value": 5.2091,
+    "status": "ok",
+    "started_at": "2026-11-01T20:19:15.978683+08:00",
+    "source": "新版教师get_ground_truth：中国银行官网 → open.er-api.com → currency-api备用",
+    "finished_at": "2026-11-01T20:19:18.877485+08:00"
+  },
+  "24": {
+    "type": "fx",
+    "item": "泰铢",
+    "value": 0.1973,
+    "status": "ok",
+    "started_at": "2026-11-01T20:19:21.069793+08:00",
+    "source": "新版教师get_ground_truth：中国银行官网 → open.er-api.com → currency-api备用",
+    "finished_at": "2026-11-01T20:19:23.685127+08:00"
+  },
+  "25": {
+    "type": "fx",
+    "item": "俄罗斯卢布",
+    "value": 0.0804,
+    "status": "ok",
+    "started_at": "2026-11-01T20:19:25.943686+08:00",
+    "source": "新版教师get_ground_truth：中国银行官网 → open.er-api.com → currency-api备用",
+    "finished_at": "2026-11-01T20:19:28.638853+08:00"
+  },
+  "26": {
+    "type": "fx",
+    "item": "南非兰特",
+    "value": 0.39845,
+    "status": "ok",
+    "started_at": "2026-11-01T20:19:29.277762+08:00",
+    "source": "新版教师get_ground_truth：中国银行官网 → open.er-api.com → currency-api备用",
+    "finished_at": "2026-11-01T20:19:32.406500+08:00"
+  },
+  "27": {
+    "type": "fx",
+    "item": "马来西亚林吉特",
+    "value": 1.64215,
+    "status": "ok",
+    "started_at": "2026-11-01T20:19:33.665524+08:00",
+    "source": "新版教师get_ground_truth：中国银行官网 → open.er-api.com → currency-api备用",
+    "finished_at": "2026-11-01T20:19:36.562816+08:00"
+  },
+  "28": {
+    "type": "fx",
+    "item": "菲律宾比索",
+    "value": 0.1045,
+    "status": "ok",
+    "started_at": "2026-11-01T20:19:38.309301+08:00",
+    "source": "新版教师get_ground_truth：中国银行官网 → open.er-api.com → currency-api备用",
+    "finished_at": "2026-11-01T20:19:41.723564+08:00"
+  },
+  "29": {
+    "type": "fx",
+    "item": "丹麦克朗",
+    "value": 0.9944,
+    "status": "ok",
+    "started_at": "2026-11-01T20:19:47.839713+08:00",
+    "source": "新版教师get_ground_truth：中国银行官网 → open.er-api.com → currency-api备用",
+    "finished_at": "2026-11-01T20:19:51.393494+08:00"
+  }
+}

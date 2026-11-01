@@ -1,0 +1,23 @@
+{
+  "question": "武汉现在的气温是多少摄氏度？",
+  "mode": "blind",
+  "answer": "我无法实时获取武汉当前气温，建议查看中国天气网、湖北气象或手机天气App获取此刻准确温度。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:11.337515+08:00",
+  "search_log": [],
+  "search_events": [],
+  "usage": [
+    {
+      "prompt_tokens": 73,
+      "completion_tokens": 126,
+      "total_tokens": 199,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:18:13.251361+08:00",
+  "seconds": 1.914,
+  "prompt_tokens": 73,
+  "completion_tokens": 126,
+  "total_tokens": 199
+}

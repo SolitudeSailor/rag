@@ -1,0 +1,23 @@
+{
+  "question": "现在1新西兰元兑换多少人民币？",
+  "mode": "blind",
+  "answer": "我无法获取实时汇率，因此不能准确告诉你“现在”1 新西兰元兑换多少人民币。建议你查看中国银行、工商银行等银行 App 的外汇牌价，或使用支付宝/微信汇率、XE 等实时汇率工具。汇率实时波动，以交易时银行成交价为准。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:19:11.955113+08:00",
+  "search_log": [],
+  "search_events": [],
+  "usage": [
+    {
+      "prompt_tokens": 75,
+      "completion_tokens": 161,
+      "total_tokens": 236,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:19:13.986561+08:00",
+  "seconds": 2.031,
+  "prompt_tokens": 75,
+  "completion_tokens": 161,
+  "total_tokens": 236
+}

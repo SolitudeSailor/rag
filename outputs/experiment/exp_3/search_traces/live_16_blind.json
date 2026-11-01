@@ -1,0 +1,23 @@
+{
+  "question": "现在1欧元兑换多少人民币？",
+  "mode": "blind",
+  "answer": "我无法实时查询外汇行情，不能准确告诉你“现在”的欧元兑人民币汇率。请以银行App/网银的“外汇牌价”或权威财经平台的实时报价为准；如果你把当前报价发我，我可以帮你换算。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:46.497558+08:00",
+  "search_log": [],
+  "search_events": [],
+  "usage": [
+    {
+      "prompt_tokens": 74,
+      "completion_tokens": 234,
+      "total_tokens": 308,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:18:49.235927+08:00",
+  "seconds": 2.738,
+  "prompt_tokens": 74,
+  "completion_tokens": 234,
+  "total_tokens": 308
+}

@@ -1,0 +1,2 @@
+# 实验源码按原始字节保存，防止Windows换行转换破坏归档SHA-256。
+outputs/experiment/*/source/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

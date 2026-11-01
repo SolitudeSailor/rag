@@ -1,0 +1,9 @@
+{
+  "type": "weather",
+  "item": "上海",
+  "value": 17,
+  "status": "ok",
+  "started_at": "2026-11-01T20:17:45.341057+08:00",
+  "source": "教师get_ground_truth：wttr.in",
+  "finished_at": "2026-11-01T20:17:48.714233+08:00"
+}

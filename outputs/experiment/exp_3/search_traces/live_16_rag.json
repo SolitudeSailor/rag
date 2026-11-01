@@ -1,0 +1,144 @@
+{
+  "question": "现在1欧元兑换多少人民币？",
+  "mode": "rag",
+  "answer": "1欧元约合7.4323人民币（按现汇买入价740.52与卖出价745.94的均值除以100计算）。来源为中国银行外汇牌价，发布时间为2026-11-01 10:30（北京时间）；该值为参考中间值，不是银行成交报价，也不代表当前实时成交价。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:49.238612+08:00",
+  "search_log": [
+    [
+      "中国银行外汇牌价 欧元",
+      [
+        "【银行汇率网页】币种：欧元；原表单位：100外币兑人民币；现汇买入价：740.52；现汇卖出价：745.94。据两价均值并除以100计算参考值：1欧元约合7.4323人民币。这是计算参考中间值，不是银行公布的成交报价。银行发布时间：2026-11-01 10:30:00（北京时间）；抓取时间：2026-11-01 20:18:54；来源：https://www.boc.cn/sourcedb/whpj/",
+        "【中国银行网站_金融市场_外汇牌价】3.中国银行外汇牌价业务系统于2011年10月30日进行了升级，本汇率表原有的\"卖出价\"细分为\"现汇卖出价\"和\"现钞卖出价\"，此前各货 … 来源：https://www.boc.cn/sourcedb/whpj/",
+        "【中国银行外汇牌价】查询日期： 牌价选择： 【关于远离违法违规外汇交易的风险提示】 ... 客户服务与投诉热线：95566 (中国境内)； +86 (区号)95566 ( … 来源：https://www.boc.cn/sourcedb/whpjSearch/index.html",
+        "【中国银行外汇牌价_今日最新中行汇率表查询 - 人民币汇率网 …】12 hours ago· 人民币汇率网提供今天中国银行外汇牌价，最新美元、欧元、日元、英镑、新加坡元、瑞士法郎、新西兰元、加拿大元 … 来源：https://www.cnyrate.com/",
+        "【中国银行外汇牌价- 今日中行汇率表 - 我查】中国银行外汇牌价表 中国银行外汇牌价： 100外币兑换人民币，2026/11/01 10:30:00（星期日） ... 央行汇率中间价： 星期日，无发 … 来源：https://chl.cn/huilv/?zh"
+      ]
+    ]
+  ],
+  "search_events": [
+    {
+      "query": "中国银行外汇牌价 欧元",
+      "started_at": "2026-11-01T20:18:50.358972+08:00",
+      "status": "ok",
+      "snippets": [
+        "【银行汇率网页】币种：欧元；原表单位：100外币兑人民币；现汇买入价：740.52；现汇卖出价：745.94。据两价均值并除以100计算参考值：1欧元约合7.4323人民币。这是计算参考中间值，不是银行公布的成交报价。银行发布时间：2026-11-01 10:30:00（北京时间）；抓取时间：2026-11-01 20:18:54；来源：https://www.boc.cn/sourcedb/whpj/",
+        "【中国银行网站_金融市场_外汇牌价】3.中国银行外汇牌价业务系统于2011年10月30日进行了升级，本汇率表原有的\"卖出价\"细分为\"现汇卖出价\"和\"现钞卖出价\"，此前各货 … 来源：https://www.boc.cn/sourcedb/whpj/",
+        "【中国银行外汇牌价】查询日期： 牌价选择： 【关于远离违法违规外汇交易的风险提示】 ... 客户服务与投诉热线：95566 (中国境内)； +86 (区号)95566 ( … 来源：https://www.boc.cn/sourcedb/whpjSearch/index.html",
+        "【中国银行外汇牌价_今日最新中行汇率表查询 - 人民币汇率网 …】12 hours ago· 人民币汇率网提供今天中国银行外汇牌价，最新美元、欧元、日元、英镑、新加坡元、瑞士法郎、新西兰元、加拿大元 … 来源：https://www.cnyrate.com/",
+        "【中国银行外汇牌价- 今日中行汇率表 - 我查】中国银行外汇牌价表 中国银行外汇牌价： 100外币兑换人民币，2026/11/01 10:30:00（星期日） ... 央行汇率中间价： 星期日，无发 … 来源：https://chl.cn/huilv/?zh"
+      ],
+      "source_attempts": [
+        {
+          "source": "bing_snippet",
+          "status": "accepted"
+        },
+        {
+          "source": "bank_fx_page",
+          "status": "accepted"
+        }
+      ],
+      "request_attempts": [
+        {
+          "purpose": "bing",
+          "url": "https://www.bing.com/search",
+          "params": {
+            "q": "中国银行外汇牌价 欧元",
+            "mkt": "zh-CN",
+            "setlang": "zh-hans",
+            "ensearch": "1"
+          },
+          "attempt": 1,
+          "status": "ok",
+          "final_url": "https://www.bing.com/search?q=%E4%B8%AD%E5%9B%BD%E9%93%B6%E8%A1%8C%E5%A4%96%E6%B1%87%E7%89%8C%E4%BB%B7+%E6%AC%A7%E5%85%83&mkt=zh-CN&setlang=zh-hans&ensearch=1",
+          "organic_results": [
+            {
+              "rank": 1,
+              "title": "中国银行网站_金融市场_外汇牌价",
+              "url": "https://www.boc.cn/sourcedb/whpj/"
+            },
+            {
+              "rank": 2,
+              "title": "中国银行外汇牌价",
+              "url": "https://www.boc.cn/sourcedb/whpjSearch/index.html"
+            },
+            {
+              "rank": 3,
+              "title": "中国银行外汇牌价_今日最新中行汇率表查询 - 人民币汇率网 …",
+              "url": "https://www.cnyrate.com/"
+            },
+            {
+              "rank": 4,
+              "title": "中国银行外汇牌价- 今日中行汇率表 - 我查",
+              "url": "https://chl.cn/huilv/?zh"
+            },
+            {
+              "rank": 5,
+              "title": "中国银行手机网站 - BOC",
+              "url": "https://wap.boc.cn/data/fx/"
+            },
+            {
+              "rank": 6,
+              "title": "中国银行外汇牌价今日中国银行外汇牌价查询 中行外汇牌价- ip.cn",
+              "url": "https://ip.cn/paijia/boc.html"
+            },
+            {
+              "rank": 7,
+              "title": "中国银行牌价中行外汇牌价查询中国银行今日最新汇率牌价表 实时汇 …",
+              "url": "https://www.shishihuilv.com/boc.html"
+            },
+            {
+              "rank": 8,
+              "title": "中国银行网站_全球门户首页",
+              "url": "https://www.bank-of-china.com/?from=www.13dh.com"
+            },
+            {
+              "rank": 9,
+              "title": "中国银行外汇牌价中行外汇牌价 中国银行今日外汇牌价",
+              "url": "https://www.ip138.com/paijia/boc.htm"
+            },
+            {
+              "rank": 10,
+              "title": "中国银行外汇牌价,中国银行外汇汇率,中国银行汇率查询",
+              "url": "http://www.cnhuilv.com/bank/boc/"
+            }
+          ]
+        },
+        {
+          "purpose": "bank_page",
+          "url": "https://www.boc.cn/sourcedb/whpj/",
+          "params": {},
+          "attempt": 1,
+          "status": "ok",
+          "final_url": "https://www.boc.cn/sourcedb/whpj/"
+        }
+      ],
+      "finished_at": "2026-11-01T20:18:54.631909+08:00",
+      "selected_sources": [
+        "bing_snippet",
+        "bank_fx_page"
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "prompt_tokens": 1018,
+      "completion_tokens": 11,
+      "total_tokens": 1029,
+      "status": "ok",
+      "temperature": 0.3
+    },
+    {
+      "prompt_tokens": 1462,
+      "completion_tokens": 135,
+      "total_tokens": 1597,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:18:56.447021+08:00",
+  "seconds": 7.208,
+  "prompt_tokens": 2480,
+  "completion_tokens": 146,
+  "total_tokens": 2626
+}

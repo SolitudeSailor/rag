@@ -1,0 +1,23 @@
+{
+  "question": "青岛现在的气温是多少摄氏度？",
+  "mode": "blind",
+  "answer": "我无法实时获取青岛当前的气温数据。建议你打开天气 App、中国天气网或搜索“青岛实时天气”查看最新气温。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:31.465381+08:00",
+  "search_log": [],
+  "search_events": [],
+  "usage": [
+    {
+      "prompt_tokens": 73,
+      "completion_tokens": 140,
+      "total_tokens": 213,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:18:34.248672+08:00",
+  "seconds": 2.783,
+  "prompt_tokens": 73,
+  "completion_tokens": 140,
+  "total_tokens": 213
+}

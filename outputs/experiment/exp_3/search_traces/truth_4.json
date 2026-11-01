@@ -1,0 +1,9 @@
+{
+  "type": "weather",
+  "item": "成都",
+  "value": 18,
+  "status": "ok",
+  "started_at": "2026-11-01T20:17:57.601548+08:00",
+  "source": "教师get_ground_truth：wttr.in",
+  "finished_at": "2026-11-01T20:18:00.535809+08:00"
+}

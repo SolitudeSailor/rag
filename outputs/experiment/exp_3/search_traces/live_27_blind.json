@@ -1,0 +1,23 @@
+{
+  "question": "现在1马来西亚林吉特兑换多少人民币？",
+  "mode": "blind",
+  "answer": "我无法获取实时汇率数据，因此不能给出2026年11月1日当下准确的马来西亚林吉特兑人民币汇率。汇率会随市场实时波动，建议你通过以下渠道查询最新牌价：\n\n- 银行官网或手机银行的外汇牌价（如中国银行、工商银行等）\n- 外汇交易平台或财经数据网站\n- 搜索引擎直接搜索“MYR CNY 汇率”\n\n如果你需要，我也可以帮你说明如何换算，或介绍影响林吉特与人民币汇率的常见因素。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:19:36.576093+08:00",
+  "search_log": [],
+  "search_events": [],
+  "usage": [
+    {
+      "prompt_tokens": 77,
+      "completion_tokens": 215,
+      "total_tokens": 292,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:19:39.083401+08:00",
+  "seconds": 2.507,
+  "prompt_tokens": 77,
+  "completion_tokens": 215,
+  "total_tokens": 292
+}

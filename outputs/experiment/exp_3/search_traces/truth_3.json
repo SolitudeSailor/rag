@@ -1,0 +1,9 @@
+{
+  "type": "weather",
+  "item": "深圳",
+  "value": 27,
+  "status": "ok",
+  "started_at": "2026-11-01T20:17:57.545167+08:00",
+  "source": "教师get_ground_truth：wttr.in",
+  "finished_at": "2026-11-01T20:18:01.356080+08:00"
+}

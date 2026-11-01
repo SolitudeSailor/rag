@@ -1,0 +1,23 @@
+{
+  "question": "深圳现在的气温是多少摄氏度？",
+  "mode": "blind",
+  "answer": "我无法实时获取深圳当前的气温数据。建议你查看深圳气象台或手机天气应用以获取准确温度。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:01.357177+08:00",
+  "search_log": [],
+  "search_events": [],
+  "usage": [
+    {
+      "prompt_tokens": 73,
+      "completion_tokens": 146,
+      "total_tokens": 219,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:18:03.482192+08:00",
+  "seconds": 2.125,
+  "prompt_tokens": 73,
+  "completion_tokens": 146,
+  "total_tokens": 219
+}

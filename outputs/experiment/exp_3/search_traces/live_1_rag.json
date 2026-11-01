@@ -1,0 +1,144 @@
+{
+  "question": "上海现在的气温是多少摄氏度？",
+  "mode": "rag",
+  "answer": "上海当前气温为18℃，来源天气网上海页面；该页标注页面日期2026年11月01日、抓取时间20:17（北京时间），未提供具体观测时刻，不能视为独立现场实测。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:17:51.391741+08:00",
+  "search_log": [
+    [
+      "上海天气",
+      [
+        "【天气网页当前栏】城市：上海；当前气温：18℃；页面日期：2026年11月01日；抓取时间：2026-11-01 20:17:56（北京时间）。页面未提供具体观测时刻，不能视为独立现场实测。来源：https://www.tianqi.com/shanghai/",
+        "【上海天气预报,上海7天天气预报,上海15天天气预报,上海天气查询】上海天气预报，及时准确发布中央气象台天气信息，便捷查询上海今日天气，上海周末天气，上海一周天气预报，上海蓝天预报，上 … 来源：https://www.weather.com.cn/weather/101020100.shtml",
+        "【【上海天气预报】上海天气预报一周,上海天气预报15天,30天,今天,明天,7天,10天,未来上海一周天气预报查询—天气网】天气网提供上海天气预报15天,30天,今日天气,明天天气,上海未来一周的天气预报,上海天气,上海实时天气查询,上海天气预报一周,7 … 来源：https://www.tianqi.com/shanghai/",
+        "【【上海天气】上海40天天气预报,上海更长预报,上海天气日历,上海日历,15天天气预报,天气…】16-40天预报数据来源于国家气候中心，是根据全球数值天气预报模式客观预报系统加工而成，未经预报员主观订正，反应未来一段时 … 来源：https://www.weather.com.cn/weather40d/101020100.shtml",
+        "【今日天气-上海市气象局】当前位置： 首页 > 上海市气象局 > 气象服务 > 今日天气 灾害天气预警 上海今日天气 上海中心气象台 >>返回 徐家汇 浦东 宝山 闵行  … 来源：http://sh.cma.gov.cn/sh/tqyb/jrtq/"
+      ]
+    ]
+  ],
+  "search_events": [
+    {
+      "query": "上海天气",
+      "started_at": "2026-11-01T20:17:52.432318+08:00",
+      "status": "ok",
+      "snippets": [
+        "【天气网页当前栏】城市：上海；当前气温：18℃；页面日期：2026年11月01日；抓取时间：2026-11-01 20:17:56（北京时间）。页面未提供具体观测时刻，不能视为独立现场实测。来源：https://www.tianqi.com/shanghai/",
+        "【上海天气预报,上海7天天气预报,上海15天天气预报,上海天气查询】上海天气预报，及时准确发布中央气象台天气信息，便捷查询上海今日天气，上海周末天气，上海一周天气预报，上海蓝天预报，上 … 来源：https://www.weather.com.cn/weather/101020100.shtml",
+        "【【上海天气预报】上海天气预报一周,上海天气预报15天,30天,今天,明天,7天,10天,未来上海一周天气预报查询—天气网】天气网提供上海天气预报15天,30天,今日天气,明天天气,上海未来一周的天气预报,上海天气,上海实时天气查询,上海天气预报一周,7 … 来源：https://www.tianqi.com/shanghai/",
+        "【【上海天气】上海40天天气预报,上海更长预报,上海天气日历,上海日历,15天天气预报,天气…】16-40天预报数据来源于国家气候中心，是根据全球数值天气预报模式客观预报系统加工而成，未经预报员主观订正，反应未来一段时 … 来源：https://www.weather.com.cn/weather40d/101020100.shtml",
+        "【今日天气-上海市气象局】当前位置： 首页 > 上海市气象局 > 气象服务 > 今日天气 灾害天气预警 上海今日天气 上海中心气象台 >>返回 徐家汇 浦东 宝山 闵行  … 来源：http://sh.cma.gov.cn/sh/tqyb/jrtq/"
+      ],
+      "source_attempts": [
+        {
+          "source": "bing_snippet",
+          "status": "accepted"
+        },
+        {
+          "source": "weather_page",
+          "status": "accepted"
+        }
+      ],
+      "request_attempts": [
+        {
+          "purpose": "bing",
+          "url": "https://www.bing.com/search",
+          "params": {
+            "q": "上海天气",
+            "mkt": "zh-CN",
+            "setlang": "zh-hans",
+            "ensearch": "1"
+          },
+          "attempt": 1,
+          "status": "ok",
+          "final_url": "https://www.bing.com/search?q=%E4%B8%8A%E6%B5%B7%E5%A4%A9%E6%B0%94&mkt=zh-CN&setlang=zh-hans&ensearch=1",
+          "organic_results": [
+            {
+              "rank": 1,
+              "title": "上海天气预报,上海7天天气预报,上海15天天气预报,上海天气查询",
+              "url": "https://www.weather.com.cn/weather/101020100.shtml"
+            },
+            {
+              "rank": 2,
+              "title": "【上海天气预报】上海天气预报一周,上海天气预报15天,30天,今天,明天,7天,10天,未来上海一周天气预报查询—天气网",
+              "url": "https://www.tianqi.com/shanghai/"
+            },
+            {
+              "rank": 3,
+              "title": "【上海天气】上海40天天气预报,上海更长预报,上海天气日历,上海日历,15天天气预报,天气…",
+              "url": "https://www.weather.com.cn/weather40d/101020100.shtml"
+            },
+            {
+              "rank": 4,
+              "title": "今日天气-上海市气象局",
+              "url": "http://sh.cma.gov.cn/sh/tqyb/jrtq/"
+            },
+            {
+              "rank": 5,
+              "title": "上海天气",
+              "url": "https://sh.weather.com.cn/"
+            },
+            {
+              "rank": 6,
+              "title": "首页-上海市气象局",
+              "url": "http://sh.cma.gov.cn/"
+            },
+            {
+              "rank": 7,
+              "title": "上海-天气预报",
+              "url": "http://www.nmc.cn/publish/forecast/ASH/shanghai.html"
+            },
+            {
+              "rank": 8,
+              "title": "【上海今天天气预报】上海天气预报24小时详情_上海天气网",
+              "url": "https://www.tianqi.com/shanghai/today/"
+            },
+            {
+              "rank": 9,
+              "title": "上海,上海市, 中國 每小時天氣 |AccuWeather",
+              "url": "https://www.accuweather.com/zh/cn/shanghai/106577/hourly-weather-forecast/106577"
+            },
+            {
+              "rank": 10,
+              "title": "【上海市天气】_上海市天气预报_天气查询 - 墨迹天气",
+              "url": "https://tianqi.moji.com/weather/china/shanghai/shanghai"
+            }
+          ]
+        },
+        {
+          "purpose": "weather_page",
+          "url": "https://www.tianqi.com/shanghai/",
+          "params": {},
+          "attempt": 1,
+          "status": "ok",
+          "final_url": "https://www.tianqi.com/shanghai/"
+        }
+      ],
+      "finished_at": "2026-11-01T20:17:56.416518+08:00",
+      "selected_sources": [
+        "bing_snippet",
+        "weather_page"
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "prompt_tokens": 1017,
+      "completion_tokens": 41,
+      "total_tokens": 1058,
+      "status": "ok",
+      "temperature": 0.3
+    },
+    {
+      "prompt_tokens": 1426,
+      "completion_tokens": 50,
+      "total_tokens": 1476,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:17:57.600026+08:00",
+  "seconds": 6.208,
+  "prompt_tokens": 2443,
+  "completion_tokens": 91,
+  "total_tokens": 2534
+}

@@ -1,0 +1,23 @@
+{
+  "question": "厦门现在的气温是多少摄氏度？",
+  "mode": "blind",
+  "answer": "我无法获取实时天气数据，因此不能准确告诉你厦门此刻的气温。建议查看中国天气网、厦门气象台或手机天气应用获取实时温度。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:33.200723+08:00",
+  "search_log": [],
+  "search_events": [],
+  "usage": [
+    {
+      "prompt_tokens": 73,
+      "completion_tokens": 133,
+      "total_tokens": 206,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:18:36.134180+08:00",
+  "seconds": 2.933,
+  "prompt_tokens": 73,
+  "completion_tokens": 133,
+  "total_tokens": 206
+}

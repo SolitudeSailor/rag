@@ -1,0 +1,6 @@
+﻿sample,type,question,blind_prompt_tokens,rag_prompt_tokens,rag_calls,rag_searches
+1,weather,北京现在的气温是多少摄氏度？,73,2446,2,1
+2,weather,上海现在的气温是多少摄氏度？,73,2443,2,1
+3,weather,广州现在的气温是多少摄氏度？,73,2432,2,1
+16,fx,现在1美元兑换多少人民币？,74,2480,2,1
+17,fx,现在1欧元兑换多少人民币？,74,2480,2,1

@@ -1,0 +1,23 @@
+{
+  "question": "西安现在的气温是多少摄氏度？",
+  "mode": "blind",
+  "answer": "我无法获取实时天气数据，无法准确告诉你西安此刻的气温。建议查看中国天气网、当地气象台或手机天气App获取实时温度。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:11.552005+08:00",
+  "search_log": [],
+  "search_events": [],
+  "usage": [
+    {
+      "prompt_tokens": 73,
+      "completion_tokens": 136,
+      "total_tokens": 209,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:18:13.145391+08:00",
+  "seconds": 1.593,
+  "prompt_tokens": 73,
+  "completion_tokens": 136,
+  "total_tokens": 209
+}

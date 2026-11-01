@@ -60,17 +60,35 @@ class WeatherExperimentTests(unittest.TestCase):
         # 教师评测规则的语法树指纹，避免为测试保留整份历史源码。
         expected = {
             'get_current_temp': '8fda12302b0ad08fa8b0c080e448c48412163b3d13c2338ff016d990bfc72135',
-            'get_current_rate': '3283fcb5899b3edb8cceea05fc521c05ea5c45d9e4e6e257febf01d9f56ad822',
+            '_rate_from_erapi': 'a458e1bce9f530829ded59d88cc37cf3ed879f9c4dc287a7c3cbc7d27dab6076',
+            '_rate_from_boc': 'a8019f0ecbc0480eabbdadb150ddfd7ca0ab9fb2d26daeddd2d648dd1156ed6c',
+            '_rate_from_jsdelivr': '11ec018b03497f4f055612555b111049d90aed10afa5aa0ec9bc7226066f365e',
+            'get_current_rate': 'a4e4bb7c6f4432fd7451ce4ea2586e3ae60e67fc63ad74e503284ab1b041ca08',
             'load_testset': '53f9afaccaecbfcb89bb52df2f5a0a0758af596d670d2607b7cc0beb7287f270',
             'get_ground_truth': 'f62f630f45928b356549b0d5b4a88d82a06bb78de0bdb4b1a9f04395a63a6cc6',
-            'answer_correct': 'dca0723c8b45d1128da1de080ffeae6ccf041b54a6db1cd90f9378d859af481b',
+            'answer_correct': '73610134b9f241a97b5c9395212da71695788b52f943404cf664c41902fbc314',
         }
+        reference = json.loads((ROOT/'scripts/teacher_reference.json').read_text(encoding='utf-8'))
+        self.assertEqual(reference['sha256'], 'e49a1b9e0cb7d3975e6a13c70a1a4f44e5aa6e5560827c9d14e40bda5a091c99')
+        self.assertEqual(reference['protected_functions_ast_sha256'], expected)
         for name, digest in expected.items():
             node = next(n for n in current.body if isinstance(n, ast.FunctionDef) and n.name == name)
             self.assertEqual(hashlib.sha256(ast.dump(node).encode()).hexdigest(), digest)
         self.assertEqual(hashlib.sha256(PROMPTS['V1'].encode()).hexdigest(),
                          'be1d7b9a7a99b3ca990a54c426e7de6f4ac87f407f349bf8adf50893f31e6680')
         self.assertEqual(rag.SYSTEM_PROMPT, PROMPTS['V3'])
+
+    def test_query_cleanup_preserves_dates_names_and_retry_word_spacing(self):
+        for query, expected in [
+            ('1美元兑换人民币', '美元兑换人民币'),
+            ('100 澳大利亚元兑换人民币', '澳大利亚元兑换人民币'),
+            ('2027年春节是哪天', '2027年春节是哪天'),
+            ('2026年10月15日美元汇率', '2026年10月15日美元汇率'),
+            (' 青岛   天气 ', '青岛 天气'),
+            ('"中国银行外汇牌价" "新西兰元"', '"中国银行外汇牌价" "新西兰元"'),
+        ]:
+            with self.subTest(query=query):
+                self.assertEqual(rag.sanitize_query(query), expected)
 
     def test_teacher_tolerances_and_interfering_numbers(self):
         for text, truth, kind, expected in [

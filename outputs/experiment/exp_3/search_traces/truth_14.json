@@ -1,0 +1,9 @@
+{
+  "type": "weather",
+  "item": "拉萨",
+  "value": 2,
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:33.349765+08:00",
+  "source": "教师get_ground_truth：wttr.in",
+  "finished_at": "2026-11-01T20:18:34.983149+08:00"
+}

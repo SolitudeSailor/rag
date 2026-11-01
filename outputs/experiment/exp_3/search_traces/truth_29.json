@@ -1,0 +1,9 @@
+{
+  "type": "fx",
+  "item": "丹麦克朗",
+  "value": 0.9944,
+  "status": "ok",
+  "started_at": "2026-11-01T20:19:47.839713+08:00",
+  "source": "新版教师get_ground_truth：中国银行官网 → open.er-api.com → currency-api备用",
+  "finished_at": "2026-11-01T20:19:51.393494+08:00"
+}

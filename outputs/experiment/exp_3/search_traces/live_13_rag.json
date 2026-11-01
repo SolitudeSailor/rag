@@ -1,0 +1,144 @@
+{
+  "question": "厦门现在的气温是多少摄氏度？",
+  "mode": "rag",
+  "answer": "厦门当前气温25℃。来源天气网页“当前气温”栏，页面日期为2026年11月1日，抓取时间为北京时间20:18:40；页面未提供具体观测时刻，不能视为现场实测。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:36.136538+08:00",
+  "search_log": [
+    [
+      "厦门天气",
+      [
+        "【天气网页当前栏】城市：厦门；当前气温：25℃；页面日期：2026年11月01日；抓取时间：2026-11-01 20:18:40（北京时间）。页面未提供具体观测时刻，不能视为独立现场实测。来源：https://www.tianqi.com/xiamen/",
+        "【厦门天气预报,厦门7天天气预报,厦门15天天气预报,厦门天气查询】厦门天气预报，及时准确发布中央气象台天气信息，便捷查询厦门今日天气，厦门周末天气，厦门一周天气预报，厦门蓝天预报，厦 …Read more 来源：https://www.weather.com.cn/weather/101230201.shtml",
+        "【【厦门天气预报】厦门天气预报一周,厦门天气预报15天,30天,今天,明天,7天,10天,未来厦门一周天气预报查询—天气网】天气网提供厦门天气预报15天,30天,今日天气,明天天气,厦门未来一周的天气预报,福建厦门天气,厦门实时天气查询,厦门天气预报一 … 来源：https://www.tianqi.com/xiamen/",
+        "【厦门天气预报,厦门7天天气预报,厦门15天天气预报,厦门天气查询】提供【厦门天气预报】,一周,15天查询,40天查询,气象云图,空气质量,天气实况,温度,降水,风力,气压,紫外线等及时准确发布,是中央气象 … 来源：https://www.weather.com.cn/weather15d/101230201.shtml",
+        "【厦门-天气预报】厦门 日落 降水量 相对湿度 体感温度 雷达图 24小时预报 7天预报 10天预报 11-30天预报 发布时间：11-01 12:00 11/01 周日 晴 南风 … 来源：http://www.nmc.cn/publish/forecast/AFJ/xiamen.html"
+      ]
+    ]
+  ],
+  "search_events": [
+    {
+      "query": "厦门天气",
+      "started_at": "2026-11-01T20:18:37.313987+08:00",
+      "status": "ok",
+      "snippets": [
+        "【天气网页当前栏】城市：厦门；当前气温：25℃；页面日期：2026年11月01日；抓取时间：2026-11-01 20:18:40（北京时间）。页面未提供具体观测时刻，不能视为独立现场实测。来源：https://www.tianqi.com/xiamen/",
+        "【厦门天气预报,厦门7天天气预报,厦门15天天气预报,厦门天气查询】厦门天气预报，及时准确发布中央气象台天气信息，便捷查询厦门今日天气，厦门周末天气，厦门一周天气预报，厦门蓝天预报，厦 …Read more 来源：https://www.weather.com.cn/weather/101230201.shtml",
+        "【【厦门天气预报】厦门天气预报一周,厦门天气预报15天,30天,今天,明天,7天,10天,未来厦门一周天气预报查询—天气网】天气网提供厦门天气预报15天,30天,今日天气,明天天气,厦门未来一周的天气预报,福建厦门天气,厦门实时天气查询,厦门天气预报一 … 来源：https://www.tianqi.com/xiamen/",
+        "【厦门天气预报,厦门7天天气预报,厦门15天天气预报,厦门天气查询】提供【厦门天气预报】,一周,15天查询,40天查询,气象云图,空气质量,天气实况,温度,降水,风力,气压,紫外线等及时准确发布,是中央气象 … 来源：https://www.weather.com.cn/weather15d/101230201.shtml",
+        "【厦门-天气预报】厦门 日落 降水量 相对湿度 体感温度 雷达图 24小时预报 7天预报 10天预报 11-30天预报 发布时间：11-01 12:00 11/01 周日 晴 南风 … 来源：http://www.nmc.cn/publish/forecast/AFJ/xiamen.html"
+      ],
+      "source_attempts": [
+        {
+          "source": "bing_snippet",
+          "status": "accepted"
+        },
+        {
+          "source": "weather_page",
+          "status": "accepted"
+        }
+      ],
+      "request_attempts": [
+        {
+          "purpose": "bing",
+          "url": "https://www.bing.com/search",
+          "params": {
+            "q": "厦门天气",
+            "mkt": "zh-CN",
+            "setlang": "zh-hans",
+            "ensearch": "1"
+          },
+          "attempt": 1,
+          "status": "ok",
+          "final_url": "https://www.bing.com/search?q=%E5%8E%A6%E9%97%A8%E5%A4%A9%E6%B0%94&mkt=zh-CN&setlang=zh-hans&ensearch=1",
+          "organic_results": [
+            {
+              "rank": 1,
+              "title": "厦门天气预报,厦门7天天气预报,厦门15天天气预报,厦门天气查询",
+              "url": "https://www.weather.com.cn/weather/101230201.shtml"
+            },
+            {
+              "rank": 2,
+              "title": "【厦门天气预报】厦门天气预报一周,厦门天气预报15天,30天,今天,明天,7天,10天,未来厦门一周天气预报查询—天气网",
+              "url": "https://www.tianqi.com/xiamen/"
+            },
+            {
+              "rank": 3,
+              "title": "厦门天气预报,厦门7天天气预报,厦门15天天气预报,厦门天气查询",
+              "url": "https://www.weather.com.cn/weather15d/101230201.shtml"
+            },
+            {
+              "rank": 4,
+              "title": "厦门-天气预报",
+              "url": "http://www.nmc.cn/publish/forecast/AFJ/xiamen.html"
+            },
+            {
+              "rank": 5,
+              "title": "厦门天气预报30天_厦门天气预报30天查询_厦门天气预报一个月_厦门天气网",
+              "url": "https://www.tianqi.com/xiamen/30/"
+            },
+            {
+              "rank": 6,
+              "title": "【厦门厦门天气】厦门厦门今天天气预报,今天,今天天气,7天,15天天气预报,天气预报一周,天气…",
+              "url": "https://forecast.weather.com.cn/town/weathern/101230201.shtml"
+            },
+            {
+              "rank": 7,
+              "title": "廈門, 福建省, 中國 每小時天氣 |AccuWeather",
+              "url": "https://www.accuweather.com/zh/cn/xiamen/57919/hourly-weather-forecast/57919"
+            },
+            {
+              "rank": 8,
+              "title": "【厦门天气预报】厦门今天天气预报_厦门天气预报7天、15天、40天查询_中国天气网",
+              "url": "https://cnr.weather.com.cn/mweather1d/101230201.shtml"
+            },
+            {
+              "rank": 9,
+              "title": "厦门天气预报_厦门天气预报一周_厦门天气预报7天，10天，15天查询-厦门…",
+              "url": "https://xm.bendibao.com/tianqi/"
+            },
+            {
+              "rank": 10,
+              "title": "天气-厦门市 - 14天预报：气温、风和雷达 | Ventusky",
+              "url": "https://www.ventusky.com/zh/xiamen-city"
+            }
+          ]
+        },
+        {
+          "purpose": "weather_page",
+          "url": "https://www.tianqi.com/xiamen/",
+          "params": {},
+          "attempt": 1,
+          "status": "ok",
+          "final_url": "https://www.tianqi.com/xiamen/"
+        }
+      ],
+      "finished_at": "2026-11-01T20:18:40.071023+08:00",
+      "selected_sources": [
+        "bing_snippet",
+        "weather_page"
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "prompt_tokens": 1017,
+      "completion_tokens": 30,
+      "total_tokens": 1047,
+      "status": "ok",
+      "temperature": 0.3
+    },
+    {
+      "prompt_tokens": 1436,
+      "completion_tokens": 72,
+      "total_tokens": 1508,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:18:41.290687+08:00",
+  "seconds": 5.154,
+  "prompt_tokens": 2453,
+  "completion_tokens": 102,
+  "total_tokens": 2555
+}

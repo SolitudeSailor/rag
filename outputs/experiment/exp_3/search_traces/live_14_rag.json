@@ -1,0 +1,237 @@
+{
+  "question": "拉萨现在的气温是多少摄氏度？",
+  "mode": "rag",
+  "answer": "未找到可靠信息，无法确定拉萨当前的气温。两次搜索结果均与拉萨天气无关，未提供任何当前气温或观测时间。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:36.852021+08:00",
+  "search_log": [
+    [
+      "拉萨天气",
+      [
+        "【Hello, world-Wikipedia】\"Time to hello world\" (TTHW) is the time it takes to author a \"Hello, world\" program in a given programming language. This is one … 来源：https://en.wikipedia.org/wiki/Hello,_world",
+        "【Hello, world! - Wikiversity】Sep 26, 2026· As described in more detail in the related Wikipedia article, Hello, world! is a classic \"first program\" one creates when … 来源：https://en.wikiversity.org/wiki/Hello,_world!",
+        "【Hello World Program: First Program While Learning Programming】Oct 11, 2026· In this article, we will learn how to write our first program in different programming languages. To write and execute a … 来源：https://www.geeksforgeeks.org/dsa/hello-world-program-first-program-while-learning-programming/",
+        "【Arduino -Hello World| Arduino Tutorial】Get started with Arduino by running Hello World program that prints Hello World on Serial Monitor. The detail instruction, code, wiring … 来源：https://arduinogetstarted.com/tutorials/arduino-hello-world",
+        "【Hello, World(photograph) - Wikipedia】Animation of images taken by Wiseman which includes Hello, World. Closeups are shown of aurorae, satellite flares, lightning, urban … 来源：https://en.wikipedia.org/wiki/Hello,_World_(photograph)"
+      ]
+    ],
+    [
+      "拉萨 天气",
+      [
+        "【ScenicRiverCruises Reviews: What Passengers Actually Say】Jun 18, 2026· Scenic river cruises reviews consistently praise the all-inclusive luxury but rarely warn about the river low-water risk or … 来源：https://traveleosolo.com/scenic-river-cruises-reviews/",
+        "【ScenicRiverCruise Reviews|Cruise CriticMemberReviews】This was our 4th river cruise, and our second with Scenic. Last year we took their 11 day Bordeaux cruise on the Scenic Diamond, … 来源：https://www.cruisecritic.com/cruise/scenic-tours/reviews?msockid=1b364e1c2cf8610b0d8156182dea6043",
+        "【ScenicRiverCruises Review: Is It Worth the Premium? |】Sep 29, 2026· The honest answer is yes for specific traveler types and no for others. The determining factor is how you use the … 来源：https://www.acouplefortheroad.com/scenic-river-cruises-review-is-it-worth-the-premium/",
+        "【CompareScenicRiverships-Cruise Critic】Compare all ships in the Scenic River fleet by key info like price, size, and amenities to discover which vessel is the best fit for your … 来源：https://www.cruisecritic.com/cruise/scenic-tours?msockid=1b364e1c2cf8610b0d8156182dea6043",
+        "【115ScenicTour &Cruise Reviews- Global Journeys】The 115 Scenic Tour & Cruise reviews listed below are from past clients of Global Journeys that have travelled with Scenic. Each … 来源：https://www.globaljourneys.com/reviews/scenic"
+      ]
+    ]
+  ],
+  "search_events": [
+    {
+      "query": "拉萨天气",
+      "started_at": "2026-11-01T20:18:38.029252+08:00",
+      "status": "ok",
+      "snippets": [
+        "【Hello, world-Wikipedia】\"Time to hello world\" (TTHW) is the time it takes to author a \"Hello, world\" program in a given programming language. This is one … 来源：https://en.wikipedia.org/wiki/Hello,_world",
+        "【Hello, world! - Wikiversity】Sep 26, 2026· As described in more detail in the related Wikipedia article, Hello, world! is a classic \"first program\" one creates when … 来源：https://en.wikiversity.org/wiki/Hello,_world!",
+        "【Hello World Program: First Program While Learning Programming】Oct 11, 2026· In this article, we will learn how to write our first program in different programming languages. To write and execute a … 来源：https://www.geeksforgeeks.org/dsa/hello-world-program-first-program-while-learning-programming/",
+        "【Arduino -Hello World| Arduino Tutorial】Get started with Arduino by running Hello World program that prints Hello World on Serial Monitor. The detail instruction, code, wiring … 来源：https://arduinogetstarted.com/tutorials/arduino-hello-world",
+        "【Hello, World(photograph) - Wikipedia】Animation of images taken by Wiseman which includes Hello, World. Closeups are shown of aurorae, satellite flares, lightning, urban … 来源：https://en.wikipedia.org/wiki/Hello,_World_(photograph)"
+      ],
+      "source_attempts": [
+        {
+          "source": "bing_snippet",
+          "status": "accepted"
+        }
+      ],
+      "request_attempts": [
+        {
+          "purpose": "bing",
+          "url": "https://www.bing.com/search",
+          "params": {
+            "q": "拉萨天气",
+            "mkt": "zh-CN",
+            "setlang": "zh-hans",
+            "ensearch": "1"
+          },
+          "attempt": 1,
+          "status": "ok",
+          "final_url": "https://www.bing.com/search?q=%E6%8B%89%E8%90%A8%E5%A4%A9%E6%B0%94&mkt=zh-CN&setlang=zh-hans&ensearch=1",
+          "organic_results": [
+            {
+              "rank": 1,
+              "title": "Hello, world-Wikipedia",
+              "url": "https://en.wikipedia.org/wiki/Hello,_world"
+            },
+            {
+              "rank": 2,
+              "title": "Hello, world! - Wikiversity",
+              "url": "https://en.wikiversity.org/wiki/Hello,_world!"
+            },
+            {
+              "rank": 3,
+              "title": "Hello World Program: First Program While Learning Programming",
+              "url": "https://www.geeksforgeeks.org/dsa/hello-world-program-first-program-while-learning-programming/"
+            },
+            {
+              "rank": 4,
+              "title": "Arduino -Hello World| Arduino Tutorial",
+              "url": "https://arduinogetstarted.com/tutorials/arduino-hello-world"
+            },
+            {
+              "rank": 5,
+              "title": "Hello, World(photograph) - Wikipedia",
+              "url": "https://en.wikipedia.org/wiki/Hello,_World_(photograph)"
+            },
+            {
+              "rank": 6,
+              "title": "Hello World- CodeAI",
+              "url": "https://code.org/en-US/hour-of-code/helloworld"
+            },
+            {
+              "rank": 7,
+              "title": "Hello World- Computer Science & AI Curriculum for K-12",
+              "url": "https://www.helloworldcs.org/"
+            },
+            {
+              "rank": 8,
+              "title": "GitHub - agnilondapakou/helloWorld:Hello worldis an Open …",
+              "url": "https://github.com/agnilondapakou/helloWorld"
+            },
+            {
+              "rank": 9,
+              "title": "Hello WorldComputer Science",
+              "url": "https://learn.helloworldcs.org/"
+            },
+            {
+              "rank": 10,
+              "title": "Hello World–Programming Fundamentals",
+              "url": "https://press.rebus.community/programmingfundamentals/chapter/hello-world/"
+            }
+          ]
+        }
+      ],
+      "finished_at": "2026-11-01T20:18:40.361879+08:00",
+      "selected_sources": [
+        "bing_snippet"
+      ]
+    },
+    {
+      "query": "拉萨 天气",
+      "started_at": "2026-11-01T20:18:41.943816+08:00",
+      "status": "ok",
+      "snippets": [
+        "【ScenicRiverCruises Reviews: What Passengers Actually Say】Jun 18, 2026· Scenic river cruises reviews consistently praise the all-inclusive luxury but rarely warn about the river low-water risk or … 来源：https://traveleosolo.com/scenic-river-cruises-reviews/",
+        "【ScenicRiverCruise Reviews|Cruise CriticMemberReviews】This was our 4th river cruise, and our second with Scenic. Last year we took their 11 day Bordeaux cruise on the Scenic Diamond, … 来源：https://www.cruisecritic.com/cruise/scenic-tours/reviews?msockid=1b364e1c2cf8610b0d8156182dea6043",
+        "【ScenicRiverCruises Review: Is It Worth the Premium? |】Sep 29, 2026· The honest answer is yes for specific traveler types and no for others. The determining factor is how you use the … 来源：https://www.acouplefortheroad.com/scenic-river-cruises-review-is-it-worth-the-premium/",
+        "【CompareScenicRiverships-Cruise Critic】Compare all ships in the Scenic River fleet by key info like price, size, and amenities to discover which vessel is the best fit for your … 来源：https://www.cruisecritic.com/cruise/scenic-tours?msockid=1b364e1c2cf8610b0d8156182dea6043",
+        "【115ScenicTour &Cruise Reviews- Global Journeys】The 115 Scenic Tour & Cruise reviews listed below are from past clients of Global Journeys that have travelled with Scenic. Each … 来源：https://www.globaljourneys.com/reviews/scenic"
+      ],
+      "source_attempts": [
+        {
+          "source": "bing_snippet",
+          "status": "accepted"
+        }
+      ],
+      "request_attempts": [
+        {
+          "purpose": "bing",
+          "url": "https://www.bing.com/search",
+          "params": {
+            "q": "拉萨 天气",
+            "mkt": "zh-CN",
+            "setlang": "zh-hans",
+            "ensearch": "1"
+          },
+          "attempt": 1,
+          "status": "ok",
+          "final_url": "https://www.bing.com/search?q=%E6%8B%89%E8%90%A8+%E5%A4%A9%E6%B0%94&mkt=zh-CN&setlang=zh-hans&ensearch=1",
+          "organic_results": [
+            {
+              "rank": 1,
+              "title": "ScenicRiverCruises Reviews: What Passengers Actually Say",
+              "url": "https://traveleosolo.com/scenic-river-cruises-reviews/"
+            },
+            {
+              "rank": 2,
+              "title": "ScenicRiverCruise Reviews|Cruise CriticMemberReviews",
+              "url": "https://www.cruisecritic.com/cruise/scenic-tours/reviews?msockid=1b364e1c2cf8610b0d8156182dea6043"
+            },
+            {
+              "rank": 3,
+              "title": "ScenicRiverCruises Review: Is It Worth the Premium? |",
+              "url": "https://www.acouplefortheroad.com/scenic-river-cruises-review-is-it-worth-the-premium/"
+            },
+            {
+              "rank": 4,
+              "title": "CompareScenicRiverships-Cruise Critic",
+              "url": "https://www.cruisecritic.com/cruise/scenic-tours?msockid=1b364e1c2cf8610b0d8156182dea6043"
+            },
+            {
+              "rank": 5,
+              "title": "115ScenicTour &Cruise Reviews- Global Journeys",
+              "url": "https://www.globaljourneys.com/reviews/scenic"
+            },
+            {
+              "rank": 6,
+              "title": "IsScenicgood value AND Diamond or Sapphire deck?",
+              "url": "https://boards.cruisecritic.com/topic/3045300-is-scenic-good-value-and-diamond-or-sapphire-deck"
+            },
+            {
+              "rank": 7,
+              "title": "ScenicEclipseCruise Review- World's First Discovery Yacht",
+              "url": "https://luxurycolumnist.com/scenic-eclipse-cruise-review-discovery-yacht/"
+            },
+            {
+              "rank": 8,
+              "title": "I took my firstsmall-ship cruiseonScenicEclipse II—and it ...",
+              "url": "https://creators.yahoo.com/lifestyle/story/i-took-my-first-small-ship-cruise-on-scenic-eclipse-iiand-it-completely-changed-how-i-think-about-cruising-023310178.html"
+            },
+            {
+              "rank": 9,
+              "title": "ScenicOpal RiverCruise Review: Ultra Lux or Just Upscale?",
+              "url": "https://yourtimetofly.com/scenic-opal-river-cruise-review/"
+            },
+            {
+              "rank": 10,
+              "title": "ScenicDiscovery YachtReview- TheCruiseAtlas",
+              "url": "https://thecruiseatlas.com/guides/scenic-discovery-yacht-review/"
+            }
+          ]
+        }
+      ],
+      "finished_at": "2026-11-01T20:18:43.413060+08:00",
+      "selected_sources": [
+        "bing_snippet"
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "prompt_tokens": 1017,
+      "completion_tokens": 22,
+      "total_tokens": 1039,
+      "status": "ok",
+      "temperature": 0.3
+    },
+    {
+      "prompt_tokens": 1341,
+      "completion_tokens": 54,
+      "total_tokens": 1395,
+      "status": "ok",
+      "temperature": 0.3
+    },
+    {
+      "prompt_tokens": 1748,
+      "completion_tokens": 70,
+      "total_tokens": 1818,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:18:44.903255+08:00",
+  "seconds": 8.051,
+  "prompt_tokens": 4106,
+  "completion_tokens": 146,
+  "total_tokens": 4252
+}

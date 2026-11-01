@@ -1,0 +1,60 @@
+{
+  "schema": "weather-fx-teacher-tolerance-v1",
+  "started_at": "2026-11-01T20:17:45.312235+08:00",
+  "model": "deepseek-flash",
+  "temperature": 0.3,
+  "api_base_sha256": "a34e2a4708ed1c61008a151688838dcf1c44d4e7f08054633e72ba7c0b16cfc1",
+  "workers": 3,
+  "max_search": 2,
+  "top_k": 5,
+  "time_injection": true,
+  "time_zone": "Asia/Shanghai",
+  "teacher_reference": {
+    "filename": "search_rag_weather_fx.py",
+    "provided_path": "E:/Google/1/search_rag_weather_fx.py",
+    "sha256": "e49a1b9e0cb7d3975e6a13c70a1a4f44e5aa6e5560827c9d14e40bda5a091c99",
+    "protected_functions_ast_sha256": {
+      "get_current_temp": "8fda12302b0ad08fa8b0c080e448c48412163b3d13c2338ff016d990bfc72135",
+      "_rate_from_erapi": "a458e1bce9f530829ded59d88cc37cf3ed879f9c4dc287a7c3cbc7d27dab6076",
+      "_rate_from_boc": "a8019f0ecbc0480eabbdadb150ddfd7ca0ab9fb2d26daeddd2d648dd1156ed6c",
+      "_rate_from_jsdelivr": "11ec018b03497f4f055612555b111049d90aed10afa5aa0ec9bc7226066f365e",
+      "get_current_rate": "a4e4bb7c6f4432fd7451ce4ea2586e3ae60e67fc63ad74e503284ab1b041ca08",
+      "load_testset": "53f9afaccaecbfcb89bb52df2f5a0a0758af596d670d2607b7cc0beb7287f270",
+      "get_ground_truth": "f62f630f45928b356549b0d5b4a88d82a06bb78de0bdb4b1a9f04395a63a6cc6",
+      "answer_correct": "73610134b9f241a97b5c9395212da71695788b52f943404cf664c41902fbc314"
+    },
+    "note": "新版教师评测区逐字保留。answer_correct文档写±4℃，实际代码仍为±3℃，不改评分。检索保留项目约定的Bing及单页有界深读，不启用评分函数作为模型工具。"
+  },
+  "request_timeout_seconds": 60,
+  "sdk_max_retries": 0,
+  "search_configuration": {
+    "provider": "bing_snippets_and_live_pages",
+    "url": "https://www.bing.com/search",
+    "weather_page_host": "www.tianqi.com",
+    "weather_page_limit": 1,
+    "fx_page_host": "www.boc.cn",
+    "fx_page_limit": 1,
+    "fx_reference": "现汇买入卖出价均值除以100，非成交报价",
+    "direct_truth_tool": false,
+    "http_attempt_limit": 2,
+    "weather_root_path": "城市拼音主路径或城市子域名首页，允许有或无末尾斜杠",
+    "request_params": {
+      "mkt": "zh-CN",
+      "setlang": "zh-hans",
+      "ensearch": "1"
+    },
+    "result_link_scope": "all_returned_organic_results"
+  },
+  "extra_body_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+  "source_sha256": {
+    "scripts/evaluate.py": "b56b154aa1339109000778b38f57e86cea26ebe093e77c0243370d181d3bdf24",
+    "scripts/experiment_utils.py": "30c125d7bcedd9c75a35ee2f4a4ff25cb7605814f330d1127d89346b9ea1f828",
+    "scripts/export_experiment_summary.py": "410ecfca9c253e7c6d7ea9ec03a859783815920e4b1a5db969a6c6776bc45059",
+    "scripts/teacher_reference.json": "d5e22c01979daeeb4369a98a36c4c04eb45db51ea1d76dd154ead3aebbe83ed9",
+    "scripts/weather_experiment.py": "d016de7c68e5dd1c07826421503c9242b54ee5f6634b7980603a525e16bb743c",
+    "scripts/weather_prompts.py": "2258d93e8a9a684668e6d9ea3f1dee5af6fd78f49250aafdee3dd77ac322b5fc",
+    "search_rag_weather_fx.py": "0f7d99f34109ef168780789e1a24ea5ee0a0171e29c28067094ebb3fae4b1c5c"
+  },
+  "note": "教师30题全覆盖；同题两模式共享现场标准值。标准值失败不计分并显式报告；模型/检索失败计错。基础绘图路径，无查询改写。",
+  "finished_at": "2026-11-01T20:20:02.102214+08:00"
+}

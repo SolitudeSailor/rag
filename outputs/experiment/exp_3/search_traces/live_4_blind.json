@@ -1,0 +1,23 @@
+{
+  "question": "成都现在的气温是多少摄氏度？",
+  "mode": "blind",
+  "answer": "我无法实时获取天气数据，因此不能准确告诉你成都现在气温。建议查看手机天气App或中国天气网等实时来源。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:00.537286+08:00",
+  "search_log": [],
+  "search_events": [],
+  "usage": [
+    {
+      "prompt_tokens": 73,
+      "completion_tokens": 112,
+      "total_tokens": 185,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:18:02.501438+08:00",
+  "seconds": 1.964,
+  "prompt_tokens": 73,
+  "completion_tokens": 112,
+  "total_tokens": 185
+}

@@ -1,0 +1,23 @@
+{
+  "question": "杭州现在的气温是多少摄氏度？",
+  "mode": "blind",
+  "answer": "我无法直接获取实时天气数据，不能准确给出杭州当前气温。建议打开天气 App 或搜索“杭州实时天气”查看最新温度。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:00.367384+08:00",
+  "search_log": [],
+  "search_events": [],
+  "usage": [
+    {
+      "prompt_tokens": 73,
+      "completion_tokens": 145,
+      "total_tokens": 218,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:18:02.294666+08:00",
+  "seconds": 1.927,
+  "prompt_tokens": 73,
+  "completion_tokens": 145,
+  "total_tokens": 218
+}

@@ -1,0 +1,23 @@
+{
+  "question": "现在1加元兑换多少人民币？",
+  "mode": "blind",
+  "answer": "我无法联网获取此刻的实时汇率。按近期参考区间，**1 加元约合 5.1–5.3 元人民币**；实际兑换请以银行或外汇平台（如中国银行、XE）的实时牌价为准。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:19:05.844299+08:00",
+  "search_log": [],
+  "search_events": [],
+  "usage": [
+    {
+      "prompt_tokens": 75,
+      "completion_tokens": 329,
+      "total_tokens": 404,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:19:08.709632+08:00",
+  "seconds": 2.865,
+  "prompt_tokens": 75,
+  "completion_tokens": 329,
+  "total_tokens": 404
+}

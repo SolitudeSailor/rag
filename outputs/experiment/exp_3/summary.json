@@ -1,0 +1,44 @@
+{
+  "scoring_standard": "weather-fx-teacher-tolerance-v1",
+  "sample_size": 30,
+  "non_ok_tasks": [],
+  "by_type": {
+    "weather": {
+      "total": 15,
+      "scored": 15,
+      "truth_failures": 0,
+      "blind_correct": 0,
+      "rag_correct": 14,
+      "blind_accuracy": 0.0,
+      "rag_accuracy": 93.33333333333333,
+      "difference_pp": 93.33333333333333
+    },
+    "fx": {
+      "total": 15,
+      "scored": 15,
+      "truth_failures": 0,
+      "blind_correct": 3,
+      "rag_correct": 15,
+      "blind_accuracy": 20.0,
+      "rag_accuracy": 100.0,
+      "difference_pp": 80.0
+    }
+  },
+  "total": 30,
+  "scored": 30,
+  "truth_failures": 0,
+  "blind_correct": 3,
+  "rag_correct": 29,
+  "blind_accuracy": 10.0,
+  "rag_accuracy": 96.66666666666667,
+  "difference_pp": 86.66666666666667,
+  "complete_truth": true,
+  "meets_course_threshold": true,
+  "meets_excellent_accuracy_threshold": true,
+  "rag_target_accuracy": 90,
+  "rag_target_correct": 27,
+  "meets_rag_target": true,
+  "search_questions": 30,
+  "search_count": 32,
+  "nonempty_searches": 32
+}

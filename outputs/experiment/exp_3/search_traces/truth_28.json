@@ -1,0 +1,9 @@
+{
+  "type": "fx",
+  "item": "菲律宾比索",
+  "value": 0.1045,
+  "status": "ok",
+  "started_at": "2026-11-01T20:19:38.309301+08:00",
+  "source": "新版教师get_ground_truth：中国银行官网 → open.er-api.com → currency-api备用",
+  "finished_at": "2026-11-01T20:19:41.723564+08:00"
+}

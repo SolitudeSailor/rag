@@ -1,0 +1,9 @@
+{
+  "type": "fx",
+  "item": "澳元",
+  "value": 4.6842,
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:56.449138+08:00",
+  "source": "新版教师get_ground_truth：中国银行官网 → open.er-api.com → currency-api备用",
+  "finished_at": "2026-11-01T20:18:59.263076+08:00"
+}

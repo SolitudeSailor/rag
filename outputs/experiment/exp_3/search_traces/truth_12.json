@@ -1,0 +1,9 @@
+{
+  "type": "weather",
+  "item": "青岛",
+  "value": 15,
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:29.309484+08:00",
+  "source": "教师get_ground_truth：wttr.in",
+  "finished_at": "2026-11-01T20:18:31.463622+08:00"
+}

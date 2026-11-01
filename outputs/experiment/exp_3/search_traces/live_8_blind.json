@@ -1,0 +1,23 @@
+{
+  "question": "南京现在的气温是多少摄氏度？",
+  "mode": "blind",
+  "answer": "我无法实时获取南京当前的气温数据。建议查看中国天气网、南京气象官方发布或手机天气应用以获取准确温度。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:12.363693+08:00",
+  "search_log": [],
+  "search_events": [],
+  "usage": [
+    {
+      "prompt_tokens": 73,
+      "completion_tokens": 123,
+      "total_tokens": 196,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:18:14.259991+08:00",
+  "seconds": 1.896,
+  "prompt_tokens": 73,
+  "completion_tokens": 123,
+  "total_tokens": 196
+}

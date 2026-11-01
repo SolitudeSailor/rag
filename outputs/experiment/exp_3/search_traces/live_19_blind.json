@@ -1,0 +1,23 @@
+{
+  "question": "现在1澳元兑换多少人民币？",
+  "mode": "blind",
+  "answer": "我无法实时获取当前外汇牌价，因此不能准确告诉你“现在”1澳元兑换多少人民币。汇率随时波动，请以银行或外汇平台的实时报价为准，例如中国银行外汇牌价、XE、支付宝/微信外汇服务等。若你提供具体金额，我可以帮你写换算公式或按你给出的汇率计算。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:59.265978+08:00",
+  "search_log": [],
+  "search_events": [],
+  "usage": [
+    {
+      "prompt_tokens": 75,
+      "completion_tokens": 174,
+      "total_tokens": 249,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:19:01.420493+08:00",
+  "seconds": 2.155,
+  "prompt_tokens": 75,
+  "completion_tokens": 174,
+  "total_tokens": 249
+}

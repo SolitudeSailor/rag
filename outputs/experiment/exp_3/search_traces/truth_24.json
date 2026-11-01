@@ -1,0 +1,9 @@
+{
+  "type": "fx",
+  "item": "泰铢",
+  "value": 0.1973,
+  "status": "ok",
+  "started_at": "2026-11-01T20:19:21.069793+08:00",
+  "source": "新版教师get_ground_truth：中国银行官网 → open.er-api.com → currency-api备用",
+  "finished_at": "2026-11-01T20:19:23.685127+08:00"
+}

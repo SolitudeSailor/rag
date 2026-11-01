@@ -1,0 +1,144 @@
+{
+  "question": "哈尔滨现在的气温是多少摄氏度？",
+  "mode": "rag",
+  "answer": "哈尔滨当前气温为 **-5℃**。来源为天气网哈尔滨页面“当前气温”栏，页面日期为2026年11月01日，抓取时间为20:18:31（北京时间）；该页面未提供具体观测时刻，不能视为现场实测。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:23.785961+08:00",
+  "search_log": [
+    [
+      "哈尔滨天气",
+      [
+        "【天气网页当前栏】城市：哈尔滨；当前气温：-5℃；页面日期：2026年11月01日；抓取时间：2026-11-01 20:18:31（北京时间）。页面未提供具体观测时刻，不能视为独立现场实测。来源：https://www.tianqi.com/haerbin",
+        "【哈尔滨天气预报,哈尔滨7天天气预报,哈尔滨15天天气预报,哈尔滨天气…】蓝天预报综合天气现象、能见度、空气质量等因子，预测未来一周的天空状况。 天空蔚蓝可见透彻蓝天，或有蓝天白云美景。 天空淡 … 来源：https://www.weather.com.cn/weather/101050101.shtml",
+        "【【哈尔滨天气预报】哈尔滨天气预报一周,哈尔滨天气预报15天,30天,今天,明天,7天,10天,未来哈尔滨一周天气预报查询—天气网】天气网提供哈尔滨天气预报15天,30天,今日天气,明天天气,哈尔滨未来一周的天气预报,黑龙江哈尔滨天气,哈尔滨实时天气查询,哈尔滨 … 来源：https://www.tianqi.com/haerbin",
+        "【哈尔滨-天气预报】哈尔滨 日落 降水量 相对湿度 体感温度 雷达图 24小时预报 7天预报 10天预报 11-30天预报 发布时间：11-01 12:00 11/01 周日 阵雪  … 来源：http://www.nmc.cn/publish/forecast/AHL/haerbin.html",
+        "【哈尔滨天气预报,哈尔滨7天天气预报,哈尔滨15天天气预报,哈尔滨天气查询 - 中国天气网】哈尔滨天气预报，及时准确发布中央气象台天气信息，便捷查询北京今日天气，哈尔滨周末天气，哈尔滨一周天气预报，哈尔滨15日 … 来源：https://www.weather.com.cn/weathern/101050101.shtml"
+      ]
+    ]
+  ],
+  "search_events": [
+    {
+      "query": "哈尔滨天气",
+      "started_at": "2026-11-01T20:18:24.955201+08:00",
+      "status": "ok",
+      "snippets": [
+        "【天气网页当前栏】城市：哈尔滨；当前气温：-5℃；页面日期：2026年11月01日；抓取时间：2026-11-01 20:18:31（北京时间）。页面未提供具体观测时刻，不能视为独立现场实测。来源：https://www.tianqi.com/haerbin",
+        "【哈尔滨天气预报,哈尔滨7天天气预报,哈尔滨15天天气预报,哈尔滨天气…】蓝天预报综合天气现象、能见度、空气质量等因子，预测未来一周的天空状况。 天空蔚蓝可见透彻蓝天，或有蓝天白云美景。 天空淡 … 来源：https://www.weather.com.cn/weather/101050101.shtml",
+        "【【哈尔滨天气预报】哈尔滨天气预报一周,哈尔滨天气预报15天,30天,今天,明天,7天,10天,未来哈尔滨一周天气预报查询—天气网】天气网提供哈尔滨天气预报15天,30天,今日天气,明天天气,哈尔滨未来一周的天气预报,黑龙江哈尔滨天气,哈尔滨实时天气查询,哈尔滨 … 来源：https://www.tianqi.com/haerbin",
+        "【哈尔滨-天气预报】哈尔滨 日落 降水量 相对湿度 体感温度 雷达图 24小时预报 7天预报 10天预报 11-30天预报 发布时间：11-01 12:00 11/01 周日 阵雪  … 来源：http://www.nmc.cn/publish/forecast/AHL/haerbin.html",
+        "【哈尔滨天气预报,哈尔滨7天天气预报,哈尔滨15天天气预报,哈尔滨天气查询 - 中国天气网】哈尔滨天气预报，及时准确发布中央气象台天气信息，便捷查询北京今日天气，哈尔滨周末天气，哈尔滨一周天气预报，哈尔滨15日 … 来源：https://www.weather.com.cn/weathern/101050101.shtml"
+      ],
+      "source_attempts": [
+        {
+          "source": "bing_snippet",
+          "status": "accepted"
+        },
+        {
+          "source": "weather_page",
+          "status": "accepted"
+        }
+      ],
+      "request_attempts": [
+        {
+          "purpose": "bing",
+          "url": "https://www.bing.com/search",
+          "params": {
+            "q": "哈尔滨天气",
+            "mkt": "zh-CN",
+            "setlang": "zh-hans",
+            "ensearch": "1"
+          },
+          "attempt": 1,
+          "status": "ok",
+          "final_url": "https://www.bing.com/search?q=%E5%93%88%E5%B0%94%E6%BB%A8%E5%A4%A9%E6%B0%94&mkt=zh-CN&setlang=zh-hans&ensearch=1",
+          "organic_results": [
+            {
+              "rank": 1,
+              "title": "哈尔滨天气预报,哈尔滨7天天气预报,哈尔滨15天天气预报,哈尔滨天气…",
+              "url": "https://www.weather.com.cn/weather/101050101.shtml"
+            },
+            {
+              "rank": 2,
+              "title": "【哈尔滨天气预报】哈尔滨天气预报一周,哈尔滨天气预报15天,30天,今天,明天,7天,10天,未来哈尔滨一周天气预报查询—天气网",
+              "url": "https://www.tianqi.com/haerbin"
+            },
+            {
+              "rank": 3,
+              "title": "哈尔滨-天气预报",
+              "url": "http://www.nmc.cn/publish/forecast/AHL/haerbin.html"
+            },
+            {
+              "rank": 4,
+              "title": "哈尔滨天气预报,哈尔滨7天天气预报,哈尔滨15天天气预报,哈尔滨天气查询 - 中国天气网",
+              "url": "https://www.weather.com.cn/weathern/101050101.shtml"
+            },
+            {
+              "rank": 5,
+              "title": "哈尔滨天气预报15天_哈尔滨天气预报15天查询,哈尔滨未来15天天气预报-哈尔滨天气网",
+              "url": "https://www.tianqi.com/haerbin/15/"
+            },
+            {
+              "rank": 6,
+              "title": "国内天气预报",
+              "url": "https://www.nmc.cn/publish/forecast"
+            },
+            {
+              "rank": 7,
+              "title": "【哈尔滨市天气】_哈尔滨市天气预报_天气查询 - 墨迹天气",
+              "url": "https://tianqi.moji.com/weather/china/heilongjiang/harbin"
+            },
+            {
+              "rank": 8,
+              "title": "【哈尔滨天气预报40天】_哈尔滨未来40天天气预报查询-2345天气预报",
+              "url": "https://tianqi.2345.com/wea_forty/50953.htm"
+            },
+            {
+              "rank": 9,
+              "title": "天气-哈尔滨市 - 14天预报：气温、风和雷达 | Ventusky",
+              "url": "https://www.ventusky.com/zh/harbin"
+            },
+            {
+              "rank": 10,
+              "title": "哈尔滨天气_【哈尔滨今天天气预报】哈尔滨天气预报24小时详情_哈尔滨天气预报一周_哈尔滨一周天气预报_哈尔滨15天天气_哈尔滨30天天气...",
+              "url": "https://tianqi.eastday.com/haerbin/"
+            }
+          ]
+        },
+        {
+          "purpose": "weather_page",
+          "url": "https://www.tianqi.com/haerbin",
+          "params": {},
+          "attempt": 1,
+          "status": "ok",
+          "final_url": "https://www.tianqi.com/haerbin"
+        }
+      ],
+      "finished_at": "2026-11-01T20:18:31.333174+08:00",
+      "selected_sources": [
+        "bing_snippet",
+        "weather_page"
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "prompt_tokens": 1017,
+      "completion_tokens": 6,
+      "total_tokens": 1023,
+      "status": "ok",
+      "temperature": 0.3
+    },
+    {
+      "prompt_tokens": 1426,
+      "completion_tokens": 151,
+      "total_tokens": 1577,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:18:33.348006+08:00",
+  "seconds": 9.562,
+  "prompt_tokens": 2443,
+  "completion_tokens": 157,
+  "total_tokens": 2600
+}

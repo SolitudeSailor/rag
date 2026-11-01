@@ -1,0 +1,9 @@
+{
+  "type": "fx",
+  "item": "港元",
+  "value": 0.8485,
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:54.510195+08:00",
+  "source": "新版教师get_ground_truth：中国银行官网 → open.er-api.com → currency-api备用",
+  "finished_at": "2026-11-01T20:18:57.490717+08:00"
+}

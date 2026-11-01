@@ -1,0 +1,23 @@
+{
+  "question": "现在1泰铢兑换多少人民币？",
+  "mode": "blind",
+  "answer": "我无法获取实时汇率，不能准确告诉你“现在”1泰铢兑换多少人民币。近期大致参考：**1泰铢约合0.20～0.21元人民币**，但实际以银行、支付宝/微信、境外支付平台或Google汇率的实时报价为准。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:19:23.686903+08:00",
+  "search_log": [],
+  "search_events": [],
+  "usage": [
+    {
+      "prompt_tokens": 76,
+      "completion_tokens": 223,
+      "total_tokens": 299,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:19:26.313655+08:00",
+  "seconds": 2.627,
+  "prompt_tokens": 76,
+  "completion_tokens": 223,
+  "total_tokens": 299
+}

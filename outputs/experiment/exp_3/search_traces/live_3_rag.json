@@ -1,0 +1,144 @@
+{
+  "question": "深圳现在的气温是多少摄氏度？",
+  "mode": "rag",
+  "answer": "深圳当前气温为27℃。该数据来自天气网深圳页面“当前气温”栏，页面日期为2026年11月1日，抓取时间为北京时间20:18；页面未提供具体观测时刻，因此不能视为现场实测。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:03.483328+08:00",
+  "search_log": [
+    [
+      "深圳天气",
+      [
+        "【天气网页当前栏】城市：深圳；当前气温：27℃；页面日期：2026年11月01日；抓取时间：2026-11-01 20:18:07（北京时间）。页面未提供具体观测时刻，不能视为独立现场实测。来源：https://www.tianqi.com/shenzhen",
+        "【深圳天气预报,深圳7天天气预报,深圳15天天气预报,深圳天气查询】深圳天气预报，及时准确发布中央气象台天气信息，便捷查询深圳今日天气，深圳周末天气，深圳一周天气预报，深圳蓝天预报，深 …Read more 来源：https://www.weather.com.cn/weather/101280601.shtml",
+        "【深圳市气象局（台）】深圳市气象局门户网站为您提供权威、及时、准确的深圳天气预警、天气预报、天气实况、台风路径、深圳气候等信息服务，为深圳 … 来源：https://weather.sz.gov.cn/",
+        "【【深圳天气预报】深圳天气预报一周,深圳天气预报15天,30天,今天,明天,7天,10天,未来深圳一周天气预报查询—天气网】天气网提供深圳天气预报15天,30天,今日天气,明天天气,深圳未来一周的天气预报,广东深圳天气,深圳实时天气查询,深圳天气预报一 … 来源：https://www.tianqi.com/shenzhen",
+        "【【深圳天气】深圳40天天气预报,深圳更长预报,深圳天气日历,深圳日历,15天天气预报,天气…】16-40天预报数据来源于国家气候中心，是根据全球数值天气预报模式客观预报系统加工而成，未经预报员主观订正，反应未来一段时 … 来源：https://www.weather.com.cn/weather40d/101280601.shtml"
+      ]
+    ]
+  ],
+  "search_events": [
+    {
+      "query": "深圳天气",
+      "started_at": "2026-11-01T20:18:04.809751+08:00",
+      "status": "ok",
+      "snippets": [
+        "【天气网页当前栏】城市：深圳；当前气温：27℃；页面日期：2026年11月01日；抓取时间：2026-11-01 20:18:07（北京时间）。页面未提供具体观测时刻，不能视为独立现场实测。来源：https://www.tianqi.com/shenzhen",
+        "【深圳天气预报,深圳7天天气预报,深圳15天天气预报,深圳天气查询】深圳天气预报，及时准确发布中央气象台天气信息，便捷查询深圳今日天气，深圳周末天气，深圳一周天气预报，深圳蓝天预报，深 …Read more 来源：https://www.weather.com.cn/weather/101280601.shtml",
+        "【深圳市气象局（台）】深圳市气象局门户网站为您提供权威、及时、准确的深圳天气预警、天气预报、天气实况、台风路径、深圳气候等信息服务，为深圳 … 来源：https://weather.sz.gov.cn/",
+        "【【深圳天气预报】深圳天气预报一周,深圳天气预报15天,30天,今天,明天,7天,10天,未来深圳一周天气预报查询—天气网】天气网提供深圳天气预报15天,30天,今日天气,明天天气,深圳未来一周的天气预报,广东深圳天气,深圳实时天气查询,深圳天气预报一 … 来源：https://www.tianqi.com/shenzhen",
+        "【【深圳天气】深圳40天天气预报,深圳更长预报,深圳天气日历,深圳日历,15天天气预报,天气…】16-40天预报数据来源于国家气候中心，是根据全球数值天气预报模式客观预报系统加工而成，未经预报员主观订正，反应未来一段时 … 来源：https://www.weather.com.cn/weather40d/101280601.shtml"
+      ],
+      "source_attempts": [
+        {
+          "source": "bing_snippet",
+          "status": "accepted"
+        },
+        {
+          "source": "weather_page",
+          "status": "accepted"
+        }
+      ],
+      "request_attempts": [
+        {
+          "purpose": "bing",
+          "url": "https://www.bing.com/search",
+          "params": {
+            "q": "深圳天气",
+            "mkt": "zh-CN",
+            "setlang": "zh-hans",
+            "ensearch": "1"
+          },
+          "attempt": 1,
+          "status": "ok",
+          "final_url": "https://www.bing.com/search?q=%E6%B7%B1%E5%9C%B3%E5%A4%A9%E6%B0%94&mkt=zh-CN&setlang=zh-hans&ensearch=1",
+          "organic_results": [
+            {
+              "rank": 1,
+              "title": "深圳天气预报,深圳7天天气预报,深圳15天天气预报,深圳天气查询",
+              "url": "https://www.weather.com.cn/weather/101280601.shtml"
+            },
+            {
+              "rank": 2,
+              "title": "深圳市气象局（台）",
+              "url": "https://weather.sz.gov.cn/"
+            },
+            {
+              "rank": 3,
+              "title": "【深圳天气预报】深圳天气预报一周,深圳天气预报15天,30天,今天,明天,7天,10天,未来深圳一周天气预报查询—天气网",
+              "url": "https://www.tianqi.com/shenzhen"
+            },
+            {
+              "rank": 4,
+              "title": "【深圳天气】深圳40天天气预报,深圳更长预报,深圳天气日历,深圳日历,15天天气预报,天气…",
+              "url": "https://www.weather.com.cn/weather40d/101280601.shtml"
+            },
+            {
+              "rank": 5,
+              "title": "天气实况与预报-深圳市气象局（台） - sz.gov.cn",
+              "url": "https://weather.sz.gov.cn/qixiangfuwu/yubaofuwu/jinmingtianqiyubao/index.html"
+            },
+            {
+              "rank": 6,
+              "title": "【深圳天气预报】深圳天气预报一周_深圳天气预报今天、7天、15天、30天、40天气预报查询—天气网",
+              "url": "https://www.tianqi.com/guangdong-shenzhen/3056/"
+            },
+            {
+              "rank": 7,
+              "title": "深圳-天气预报",
+              "url": "http://www.nmc.cn/publish/forecast/AGD/shenzuo.html"
+            },
+            {
+              "rank": 8,
+              "title": "广东省,深圳市天气预报 | MSN天气",
+              "url": "https://www.msn.com/zh-cn/weather/forecast/in-%E5%B9%BF%E4%B8%9C%E7%9C%81,%E6%B7%B1%E5%9C%B3%E5%B8%82"
+            },
+            {
+              "rank": 9,
+              "title": "深圳-天气预报",
+              "url": "https://www.nmc.cn/publish/forecast/AGD/shenzuo.html"
+            },
+            {
+              "rank": 10,
+              "title": "深圳天气预报 - weather.com.cn",
+              "url": "https://wx.weather.com.cn/mweather/101280601.shtml"
+            }
+          ]
+        },
+        {
+          "purpose": "weather_page",
+          "url": "https://www.tianqi.com/shenzhen",
+          "params": {},
+          "attempt": 1,
+          "status": "ok",
+          "final_url": "https://www.tianqi.com/shenzhen"
+        }
+      ],
+      "finished_at": "2026-11-01T20:18:07.759266+08:00",
+      "selected_sources": [
+        "bing_snippet",
+        "weather_page"
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "prompt_tokens": 1017,
+      "completion_tokens": 6,
+      "total_tokens": 1023,
+      "status": "ok",
+      "temperature": 0.3
+    },
+    {
+      "prompt_tokens": 1406,
+      "completion_tokens": 102,
+      "total_tokens": 1508,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:18:09.383928+08:00",
+  "seconds": 5.901,
+  "prompt_tokens": 2423,
+  "completion_tokens": 108,
+  "total_tokens": 2531
+}

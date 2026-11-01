@@ -1,0 +1,9 @@
+{
+  "type": "fx",
+  "item": "新西兰元",
+  "value": 3.75005,
+  "status": "ok",
+  "started_at": "2026-11-01T20:19:09.197223+08:00",
+  "source": "新版教师get_ground_truth：中国银行官网 → open.er-api.com → currency-api备用",
+  "finished_at": "2026-11-01T20:19:11.954113+08:00"
+}

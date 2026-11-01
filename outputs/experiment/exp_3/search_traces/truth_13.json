@@ -1,0 +1,9 @@
+{
+  "type": "weather",
+  "item": "厦门",
+  "value": 24,
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:31.270913+08:00",
+  "source": "教师get_ground_truth：wttr.in",
+  "finished_at": "2026-11-01T20:18:33.198881+08:00"
+}

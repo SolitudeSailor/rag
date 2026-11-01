@@ -1,0 +1,23 @@
+{
+  "question": "现在1俄罗斯卢布兑换多少人民币？",
+  "mode": "blind",
+  "answer": "我无法获取实时汇率数据，因此不能给出2026年11月1日准确的卢布兑人民币价格。汇率实时波动，建议你通过以下渠道查询最新报价：\n\n- 中国银行、工商银行等银行官网的“外汇牌价”\n- 支付宝/微信的汇率换算功能\n- 外汇平台（如XE、 Investing.com）\n\n如果你告诉我大致用途（比如小额换汇还是大额结算），我也可以帮你说明该看“现汇买入价”还是“现钞买入价”。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:19:28.640796+08:00",
+  "search_log": [],
+  "search_events": [],
+  "usage": [
+    {
+      "prompt_tokens": 76,
+      "completion_tokens": 203,
+      "total_tokens": 279,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:19:31.146761+08:00",
+  "seconds": 2.506,
+  "prompt_tokens": 76,
+  "completion_tokens": 203,
+  "total_tokens": 279
+}

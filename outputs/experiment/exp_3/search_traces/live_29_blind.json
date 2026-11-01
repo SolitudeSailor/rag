@@ -1,0 +1,23 @@
+{
+  "question": "现在1丹麦克朗兑换多少人民币？",
+  "mode": "blind",
+  "answer": "我无法实时获取 2026-11-01 当前外汇牌价，因此不能给出准确的成交汇率。丹麦克朗兑人民币大致在 **1 DKK ≈ 1.03–1.07 CNY** 区间波动，实际兑换请以银行或外汇平台实时报价为准。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:19:51.395626+08:00",
+  "search_log": [],
+  "search_events": [],
+  "usage": [
+    {
+      "prompt_tokens": 76,
+      "completion_tokens": 245,
+      "total_tokens": 321,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:19:53.885562+08:00",
+  "seconds": 2.49,
+  "prompt_tokens": 76,
+  "completion_tokens": 245,
+  "total_tokens": 321
+}

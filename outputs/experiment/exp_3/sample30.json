@@ -1,0 +1,152 @@
+[
+  {
+    "question": "北京现在的气温是多少摄氏度？",
+    "type": "weather",
+    "item": "北京"
+  },
+  {
+    "question": "上海现在的气温是多少摄氏度？",
+    "type": "weather",
+    "item": "上海"
+  },
+  {
+    "question": "广州现在的气温是多少摄氏度？",
+    "type": "weather",
+    "item": "广州"
+  },
+  {
+    "question": "深圳现在的气温是多少摄氏度？",
+    "type": "weather",
+    "item": "深圳"
+  },
+  {
+    "question": "成都现在的气温是多少摄氏度？",
+    "type": "weather",
+    "item": "成都"
+  },
+  {
+    "question": "杭州现在的气温是多少摄氏度？",
+    "type": "weather",
+    "item": "杭州"
+  },
+  {
+    "question": "西安现在的气温是多少摄氏度？",
+    "type": "weather",
+    "item": "西安"
+  },
+  {
+    "question": "武汉现在的气温是多少摄氏度？",
+    "type": "weather",
+    "item": "武汉"
+  },
+  {
+    "question": "南京现在的气温是多少摄氏度？",
+    "type": "weather",
+    "item": "南京"
+  },
+  {
+    "question": "重庆现在的气温是多少摄氏度？",
+    "type": "weather",
+    "item": "重庆"
+  },
+  {
+    "question": "哈尔滨现在的气温是多少摄氏度？",
+    "type": "weather",
+    "item": "哈尔滨"
+  },
+  {
+    "question": "昆明现在的气温是多少摄氏度？",
+    "type": "weather",
+    "item": "昆明"
+  },
+  {
+    "question": "青岛现在的气温是多少摄氏度？",
+    "type": "weather",
+    "item": "青岛"
+  },
+  {
+    "question": "厦门现在的气温是多少摄氏度？",
+    "type": "weather",
+    "item": "厦门"
+  },
+  {
+    "question": "拉萨现在的气温是多少摄氏度？",
+    "type": "weather",
+    "item": "拉萨"
+  },
+  {
+    "question": "现在1美元兑换多少人民币？",
+    "type": "fx",
+    "item": "美元"
+  },
+  {
+    "question": "现在1欧元兑换多少人民币？",
+    "type": "fx",
+    "item": "欧元"
+  },
+  {
+    "question": "现在1英镑兑换多少人民币？",
+    "type": "fx",
+    "item": "英镑"
+  },
+  {
+    "question": "现在1港元兑换多少人民币？",
+    "type": "fx",
+    "item": "港元"
+  },
+  {
+    "question": "现在1澳元兑换多少人民币？",
+    "type": "fx",
+    "item": "澳元"
+  },
+  {
+    "question": "现在1加元兑换多少人民币？",
+    "type": "fx",
+    "item": "加元"
+  },
+  {
+    "question": "现在1瑞士法郎兑换多少人民币？",
+    "type": "fx",
+    "item": "瑞士法郎"
+  },
+  {
+    "question": "现在1新西兰元兑换多少人民币？",
+    "type": "fx",
+    "item": "新西兰元"
+  },
+  {
+    "question": "现在1新加坡元兑换多少人民币？",
+    "type": "fx",
+    "item": "新加坡元"
+  },
+  {
+    "question": "现在1泰铢兑换多少人民币？",
+    "type": "fx",
+    "item": "泰铢"
+  },
+  {
+    "question": "现在1俄罗斯卢布兑换多少人民币？",
+    "type": "fx",
+    "item": "俄罗斯卢布"
+  },
+  {
+    "question": "现在1南非兰特兑换多少人民币？",
+    "type": "fx",
+    "item": "南非兰特"
+  },
+  {
+    "question": "现在1马来西亚林吉特兑换多少人民币？",
+    "type": "fx",
+    "item": "马来西亚林吉特"
+  },
+  {
+    "question": "现在1菲律宾比索兑换多少人民币？",
+    "type": "fx",
+    "item": "菲律宾比索"
+  },
+  {
+    "question": "现在1丹麦克朗兑换多少人民币？",
+    "type": "fx",
+    "item": "丹麦克朗"
+  }
+]

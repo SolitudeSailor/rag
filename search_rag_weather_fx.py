@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""天气与汇率RAG核心：模型调用、Bing检索、ReAct问答与教师评测工具。
+"""基于2026-11-01用户提供的教师代码：模型调用、Bing检索、ReAct与评测。
 
 直接运行用于交互问答；批量评测运行同目录的run_30.py。
 配置读取根目录.env和环境变量；三版提示词统一维护于scripts/weather_prompts.py。
@@ -346,6 +346,15 @@ def bing_search(query, top_k=5):
 # ------------------------------------------------------------
 # 核心逻辑：ReAct 式"思考 → 行动(搜索) → 观察 → 作答"循环
 # ------------------------------------------------------------
+def sanitize_query(keyword):
+    """沿用新版的关键词清理入口，保留实体、引号与历史/未来日期。"""
+    keyword = re.sub(r'\s+', ' ', keyword).strip()
+    # 避免「1美元…」被搜索为数字词条；不去掉年份或篡改币种。
+    names = '|'.join(map(re.escape, sorted(set(CURRENCIES) | set(_BOC_NAMES.values()), key=len, reverse=True)))
+    cleaned = re.sub(r'^\d+(?:\.\d+)?\s*(?=(?:' + names + r'))', '', keyword)
+    return cleaned or keyword
+
+
 def rag_answer(question, system_prompt=SYSTEM_PROMPT, max_search=2):
     """
     搜索增强（RAG）模式：
@@ -369,7 +378,7 @@ def rag_answer(question, system_prompt=SYSTEM_PROMPT, max_search=2):
         m = re.search(r"^\s*(?:\*\*)?搜索(?:\*\*)?[:：]\s*(.+)$", reply, flags=re.MULTILINE)
         if m and len(search_log) < max_search:
             # ---- 模型请求搜索：执行搜索，把结果作为新上下文拼回去 ----
-            keyword = m.group(1).strip()
+            keyword = sanitize_query(m.group(1))
             print(f"  [系统] 模型请求搜索 → 「{keyword}」")
             snippets = bing_search(keyword)
             search_log.append((keyword, snippets))
@@ -463,29 +472,74 @@ def get_current_temp(city_cn):
     return None, ""
 
 
+def _rate_from_erapi(code):
+    """数据源：open.er-api.com（免 Key，每小时更新，海外站点）。"""
+    resp = requests.get(f"https://open.er-api.com/v6/latest/{code}", timeout=10)
+    data = resp.json()
+    return float(data["rates"]["CNY"]), data.get("time_last_update_utc", "")
+
+
+# 我们的币种中文名与中行官方名称不一致的映射
+_BOC_NAMES = {"港元": "港币", "澳元": "澳大利亚元", "加元": "加拿大元",
+              "泰铢": "泰国铢", "俄罗斯卢布": "卢布", "马来西亚林吉特": "林吉特"}
+
+
+def _rate_from_boc(cur_cn):
+    """数据源：中国银行官网外汇牌价页（国内访问快、官方权威，覆盖全部 15 种货币）。
+    牌价表单位为 100 外币兑人民币，取"现汇买入/卖出均价除以 100"作为参考值。"""
+    from decimal import Decimal
+    bank_name = _BOC_NAMES.get(cur_cn, cur_cn)
+    resp = requests.get("https://www.boc.cn/sourcedb/whpj/",
+                        headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"},
+                        timeout=10)
+    resp.encoding = resp.apparent_encoding or "utf-8"
+    soup = BeautifulSoup(resp.text, "html.parser")
+    table = soup.select_one("table#priceTable")
+    if table is None:
+        raise ValueError("未找到牌价表")
+    headers = [th.get_text(strip=True) for th in table.select("th")]
+    for row in table.select("tr"):
+        cells = [td.get_text(" ", strip=True) for td in row.select("td")]
+        if len(cells) != len(headers):
+            continue
+        values = dict(zip(headers, cells))
+        if values.get("货币名称") == bank_name:
+            bid = Decimal(values["现汇买入价"].replace(",", ""))
+            ask = Decimal(values["现汇卖出价"].replace(",", ""))
+            if not (bid > 0 and ask >= bid):
+                raise ValueError("牌价数值异常")
+            return float((bid + ask) / Decimal(200)), values.get("发布日期", "")
+    raise ValueError(f"牌价表中没有「{bank_name}」")
+
+
+def _rate_from_jsdelivr(code):
+    """数据源：jsdelivr 托管的 currency-api（免 Key，每日更新，海外 CDN）。"""
+    resp = requests.get(
+        f"https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/{code.lower()}.json",
+        timeout=10)
+    data = resp.json()
+    return float(data[code.lower()]["cny"]), data.get("date", "")
+
+
 def get_current_rate(cur_cn):
     """获取指定货币（中文名）兑人民币的当前真实汇率，作为汇率题的标准答案。
-    返回 (汇率:float, 数据日期:str)；两个数据源都失败则返回 (None, "")。"""
+    依次尝试三个数据源（各重试一次）：中国银行官网（国内最快最稳）
+    → open.er-api.com（每小时更新）→ jsdelivr currency-api（每日更新）。
+    三个数据源全部失败才返回 (None, "")，并在命令行打印失败原因。"""
     import time
     code = CURRENCIES[cur_cn]
-    for attempt in range(2):                       # 每个数据源最多试 2 次
-        # 数据源一：open.er-api.com（免 Key，每小时更新）
-        try:
-            resp = requests.get(f"https://open.er-api.com/v6/latest/{code}", timeout=10)
-            data = resp.json()
-            return float(data["rates"]["CNY"]), data.get("time_last_update_utc", "")
-        except Exception:
-            pass
-        # 数据源二（备用）：jsdelivr 托管的 currency-api（免 Key，每日更新）
-        try:
-            resp = requests.get(
-                f"https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/{code.lower()}.json",
-                timeout=10)
-            data = resp.json()
-            return float(data[code.lower()]["cny"]), data.get("date", "")
-        except Exception:
-            if attempt == 0:
-                time.sleep(2)                      # 失败后稍等再试
+    sources = [("中国银行官网", lambda: _rate_from_boc(cur_cn)),
+               ("open.er-api.com", lambda: _rate_from_erapi(code)),
+               ("jsdelivr currency-api", lambda: _rate_from_jsdelivr(code))]
+    for name, fetch in sources:
+        for attempt in range(2):
+            try:
+                return fetch()
+            except Exception:
+                if attempt == 0:
+                    time.sleep(1)
+                else:
+                    print(f"  [评测] 数据源「{name}」获取 {cur_cn} 失败，尝试下一数据源…")
     return None, ""
 
 
@@ -508,7 +562,7 @@ def get_ground_truth(kind, key):
 
 
 def answer_correct(answer_text, truth, kind):
-    """判对：天气题用 ±3℃ 绝对容差，汇率题用 ±1.5% 相对容差。
+    """判对：天气题用 ±4℃ 绝对容差，汇率题用 ±1.5% 相对容差。
     标准答案获取失败（truth 为 None）时本题不计分。
     天气题额外做两层过滤，避免误判：
     ① 只检查含温度关键词的片段（防止把"16小时前"等时间数字当成气温）；

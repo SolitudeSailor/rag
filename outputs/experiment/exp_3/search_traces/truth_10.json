@@ -1,0 +1,9 @@
+{
+  "type": "weather",
+  "item": "哈尔滨",
+  "value": -5,
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:20.177257+08:00",
+  "source": "教师get_ground_truth：wttr.in",
+  "finished_at": "2026-11-01T20:18:22.100197+08:00"
+}

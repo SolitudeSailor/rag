@@ -1,0 +1,9 @@
+{
+  "type": "fx",
+  "item": "加元",
+  "value": 4.76405,
+  "status": "ok",
+  "started_at": "2026-11-01T20:19:03.035198+08:00",
+  "source": "新版教师get_ground_truth：中国银行官网 → open.er-api.com → currency-api备用",
+  "finished_at": "2026-11-01T20:19:05.843127+08:00"
+}

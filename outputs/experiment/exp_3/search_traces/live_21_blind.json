@@ -1,0 +1,23 @@
+{
+  "question": "现在1瑞士法郎兑换多少人民币？",
+  "mode": "blind",
+  "answer": "我无法实时获取当前外汇牌价，因此不能准确告诉你“现在”1瑞士法郎兑多少人民币。汇率会随市场实时波动，请以银行、外汇交易平台或权威财经网站的即时报价为准。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:19:10.397250+08:00",
+  "search_log": [],
+  "search_events": [],
+  "usage": [
+    {
+      "prompt_tokens": 76,
+      "completion_tokens": 181,
+      "total_tokens": 257,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:19:12.716404+08:00",
+  "seconds": 2.319,
+  "prompt_tokens": 76,
+  "completion_tokens": 181,
+  "total_tokens": 257
+}

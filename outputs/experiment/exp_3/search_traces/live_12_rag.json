@@ -1,0 +1,250 @@
+{
+  "question": "青岛现在的气温是多少摄氏度？",
+  "mode": "rag",
+  "answer": "青岛当前气温14℃。数据来自天气网页“当前栏”，页面日期为2026年11月01日，抓取时间为20:18:42（北京时间）；该页面未提供具体观测时刻，因此不能视为现场实测。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:18:34.250638+08:00",
+  "search_log": [
+    [
+      "青岛天气",
+      [
+        "【Scalloped Glass Coffee Table Twisted Legs- Madison Liquidators】Show Madison Liquidators for scalloped glass coffee table twisted legs at everyday low prices. Click-and-Ship options that are … 来源：https://madisonliquidators.com/search.php?scalloped+glass+coffee+table+twisted+legs",
+        "【Scalloped Coffee Table Twisted Legs- Madison Liquidators】Show Madison Liquidators for scalloped coffee table twisted legs at everyday low prices. Click-and-Ship options that are delivered … 来源：https://madisonliquidators.com/search.php?scalloped+coffee+table+twisted+legs",
+        "【ScalloppedGlass Coffee Table- Etsy】Discover unique scalloped glass coffee tables, perfect for any living space. Explore handcrafted, vintage, and modern designs from … 来源：https://www.etsy.com/market/scallopped_glass_coffee_table?msockid=0805aa233ba96ccf218fb2273a416d7d",
+        "【Amazon.com:Scalloped Coffee Table】Contemporary sculpted drum table with scalloped edge, fully assembled; round living room cocktail or center table. Scalloped coffee … 来源：https://www.amazon.com/scalloped-coffee-table/s?k=scalloped+coffee+table",
+        "【Scalloped Coffee Table- Wayfair】Shop Wayfair for the best Scalloped Coffee Table. Enjoy Free Shipping on most stuff, even big stuff. 来源：https://www.wayfair.com/keyword.php?keyword=scalloped+coffee+table&msockid=0805aa233ba96ccf218fb2273a416d7d"
+      ]
+    ],
+    [
+      "青岛 天气",
+      [
+        "【天气网页当前栏】城市：青岛；当前气温：14℃；页面日期：2026年11月01日；抓取时间：2026-11-01 20:18:42（北京时间）。页面未提供具体观测时刻，不能视为独立现场实测。来源：https://www.tianqi.com/qingdao/",
+        "【青岛天气预报,青岛7天天气预报,青岛15天天气预报,青岛天气查询】青岛天气预报，及时准确发布中央气象台天气信息，便捷查询青岛今日天气，青岛周末天气，青岛一周天气预报，青岛蓝天预报，青 … 来源：https://www.weather.com.cn/weather/101120201.shtml",
+        "【【青岛天气预报】青岛天气预报一周,青岛天气预报15天,30天,今天,明天,7天,10天,未来青岛一周天气预报查询—天气网】1 day ago· 天气网提供青岛天气预报15天,30天,今日天气,明天天气,青岛未来一周的天气预报,山东青岛天气,青岛实时天气查询,青岛天 … 来源：https://www.tianqi.com/qingdao/",
+        "【青岛-天气预报】当前位置： 首页 山东省 青岛天气预报 省份： 北京 北京 北京 城市： 北京 北京 北京 日出 青岛 日落 降水量 相对湿度 体感温度 雷达 … 来源：http://www.nmc.cn/publish/forecast/ASD/qingdao.html",
+        "【青岛天气预报,青岛7天天气预报,青岛15天天气预报,青岛天气查询 - 中国天气网】青岛天气预报，及时准确发布中央气象台天气信息，便捷查询北京今日天气，青岛周末天气，青岛一周天气预报，青岛15日天气预 … 来源：https://www.weather.com.cn/weathern/101120201.shtml"
+      ]
+    ]
+  ],
+  "search_events": [
+    {
+      "query": "青岛天气",
+      "started_at": "2026-11-01T20:18:35.376657+08:00",
+      "status": "ok",
+      "snippets": [
+        "【Scalloped Glass Coffee Table Twisted Legs- Madison Liquidators】Show Madison Liquidators for scalloped glass coffee table twisted legs at everyday low prices. Click-and-Ship options that are … 来源：https://madisonliquidators.com/search.php?scalloped+glass+coffee+table+twisted+legs",
+        "【Scalloped Coffee Table Twisted Legs- Madison Liquidators】Show Madison Liquidators for scalloped coffee table twisted legs at everyday low prices. Click-and-Ship options that are delivered … 来源：https://madisonliquidators.com/search.php?scalloped+coffee+table+twisted+legs",
+        "【ScalloppedGlass Coffee Table- Etsy】Discover unique scalloped glass coffee tables, perfect for any living space. Explore handcrafted, vintage, and modern designs from … 来源：https://www.etsy.com/market/scallopped_glass_coffee_table?msockid=0805aa233ba96ccf218fb2273a416d7d",
+        "【Amazon.com:Scalloped Coffee Table】Contemporary sculpted drum table with scalloped edge, fully assembled; round living room cocktail or center table. Scalloped coffee … 来源：https://www.amazon.com/scalloped-coffee-table/s?k=scalloped+coffee+table",
+        "【Scalloped Coffee Table- Wayfair】Shop Wayfair for the best Scalloped Coffee Table. Enjoy Free Shipping on most stuff, even big stuff. 来源：https://www.wayfair.com/keyword.php?keyword=scalloped+coffee+table&msockid=0805aa233ba96ccf218fb2273a416d7d"
+      ],
+      "source_attempts": [
+        {
+          "source": "bing_snippet",
+          "status": "accepted"
+        }
+      ],
+      "request_attempts": [
+        {
+          "purpose": "bing",
+          "url": "https://www.bing.com/search",
+          "params": {
+            "q": "青岛天气",
+            "mkt": "zh-CN",
+            "setlang": "zh-hans",
+            "ensearch": "1"
+          },
+          "attempt": 1,
+          "status": "ok",
+          "final_url": "https://www.bing.com/search?q=%E9%9D%92%E5%B2%9B%E5%A4%A9%E6%B0%94&mkt=zh-CN&setlang=zh-hans&ensearch=1",
+          "organic_results": [
+            {
+              "rank": 1,
+              "title": "Scalloped Glass Coffee Table Twisted Legs- Madison Liquidators",
+              "url": "https://madisonliquidators.com/search.php?scalloped+glass+coffee+table+twisted+legs"
+            },
+            {
+              "rank": 2,
+              "title": "Scalloped Coffee Table Twisted Legs- Madison Liquidators",
+              "url": "https://madisonliquidators.com/search.php?scalloped+coffee+table+twisted+legs"
+            },
+            {
+              "rank": 3,
+              "title": "ScalloppedGlass Coffee Table- Etsy",
+              "url": "https://www.etsy.com/market/scallopped_glass_coffee_table?msockid=0805aa233ba96ccf218fb2273a416d7d"
+            },
+            {
+              "rank": 4,
+              "title": "Amazon.com:Scalloped Coffee Table",
+              "url": "https://www.amazon.com/scalloped-coffee-table/s?k=scalloped+coffee+table"
+            },
+            {
+              "rank": 5,
+              "title": "Scalloped Coffee Table- Wayfair",
+              "url": "https://www.wayfair.com/keyword.php?keyword=scalloped+coffee+table&msockid=0805aa233ba96ccf218fb2273a416d7d"
+            },
+            {
+              "rank": 6,
+              "title": "Coffee TableWithTwisted Legs- Etsy",
+              "url": "https://www.etsy.com/market/coffee_table_with_twisted_legs?msockid=0805aa233ba96ccf218fb2273a416d7d"
+            },
+            {
+              "rank": 7,
+              "title": "Stickley 1997 Chippendale StyleGlassTray Top Butler'sCoffee Table",
+              "url": "https://www.chairish.com/product/37894049/stickley-1997-chippendale-style-glass-tray-top-butlers-coffee-table"
+            },
+            {
+              "rank": 8,
+              "title": "Scalloped Coffee Table- 37 For Sale on 1stDibs",
+              "url": "https://www.1stdibs.com/buy/scalloped-coffee-table/"
+            },
+            {
+              "rank": 9,
+              "title": "42\"GlassTopCoffee Tablewith BeveledGlass,ScallopedWood …",
+              "url": "https://www.bedbathandbeyond.com/Home-Garden/42-Glass-Top-Coffee-Table-with-Beveled-Glass-Scalloped-Wood-Frame-Cabriole-Legs-Open-Shelf-Living-Room-Center-Table/44258535/product.html?msockid=0805aa233ba96ccf218fb2273a416d7d"
+            },
+            {
+              "rank": 10,
+              "title": "ScallopedEdgesCoffee TablesYou'll Love | Wayfair",
+              "url": "https://www.wayfair.com/furniture/sb1/scalloped-edges-coffee-tables-c414602-a3726~580538.html?msockid=0805aa233ba96ccf218fb2273a416d7d"
+            }
+          ]
+        }
+      ],
+      "finished_at": "2026-11-01T20:18:37.700798+08:00",
+      "selected_sources": [
+        "bing_snippet"
+      ]
+    },
+    {
+      "query": "青岛 天气",
+      "started_at": "2026-11-01T20:18:38.742497+08:00",
+      "status": "ok",
+      "snippets": [
+        "【天气网页当前栏】城市：青岛；当前气温：14℃；页面日期：2026年11月01日；抓取时间：2026-11-01 20:18:42（北京时间）。页面未提供具体观测时刻，不能视为独立现场实测。来源：https://www.tianqi.com/qingdao/",
+        "【青岛天气预报,青岛7天天气预报,青岛15天天气预报,青岛天气查询】青岛天气预报，及时准确发布中央气象台天气信息，便捷查询青岛今日天气，青岛周末天气，青岛一周天气预报，青岛蓝天预报，青 … 来源：https://www.weather.com.cn/weather/101120201.shtml",
+        "【【青岛天气预报】青岛天气预报一周,青岛天气预报15天,30天,今天,明天,7天,10天,未来青岛一周天气预报查询—天气网】1 day ago· 天气网提供青岛天气预报15天,30天,今日天气,明天天气,青岛未来一周的天气预报,山东青岛天气,青岛实时天气查询,青岛天 … 来源：https://www.tianqi.com/qingdao/",
+        "【青岛-天气预报】当前位置： 首页 山东省 青岛天气预报 省份： 北京 北京 北京 城市： 北京 北京 北京 日出 青岛 日落 降水量 相对湿度 体感温度 雷达 … 来源：http://www.nmc.cn/publish/forecast/ASD/qingdao.html",
+        "【青岛天气预报,青岛7天天气预报,青岛15天天气预报,青岛天气查询 - 中国天气网】青岛天气预报，及时准确发布中央气象台天气信息，便捷查询北京今日天气，青岛周末天气，青岛一周天气预报，青岛15日天气预 … 来源：https://www.weather.com.cn/weathern/101120201.shtml"
+      ],
+      "source_attempts": [
+        {
+          "source": "bing_snippet",
+          "status": "accepted"
+        },
+        {
+          "source": "weather_page",
+          "status": "accepted"
+        }
+      ],
+      "request_attempts": [
+        {
+          "purpose": "bing",
+          "url": "https://www.bing.com/search",
+          "params": {
+            "q": "青岛 天气",
+            "mkt": "zh-CN",
+            "setlang": "zh-hans",
+            "ensearch": "1"
+          },
+          "attempt": 1,
+          "status": "ok",
+          "final_url": "https://www.bing.com/search?q=%E9%9D%92%E5%B2%9B+%E5%A4%A9%E6%B0%94&mkt=zh-CN&setlang=zh-hans&ensearch=1",
+          "organic_results": [
+            {
+              "rank": 1,
+              "title": "青岛天气预报,青岛7天天气预报,青岛15天天气预报,青岛天气查询",
+              "url": "https://www.weather.com.cn/weather/101120201.shtml"
+            },
+            {
+              "rank": 2,
+              "title": "【青岛天气预报】青岛天气预报一周,青岛天气预报15天,30天,今天,明天,7天,10天,未来青岛一周天气预报查询—天气网",
+              "url": "https://www.tianqi.com/qingdao/"
+            },
+            {
+              "rank": 3,
+              "title": "青岛-天气预报",
+              "url": "http://www.nmc.cn/publish/forecast/ASD/qingdao.html"
+            },
+            {
+              "rank": 4,
+              "title": "青岛天气预报,青岛7天天气预报,青岛15天天气预报,青岛天气查询 - 中国天气网",
+              "url": "https://www.weather.com.cn/weathern/101120201.shtml"
+            },
+            {
+              "rank": 5,
+              "title": "青岛天气预报15天_青岛天气预报15天查询,青岛未来15天天气预报-青岛天气网",
+              "url": "https://www.tianqi.com/qingdao/15/"
+            },
+            {
+              "rank": 6,
+              "title": "青岛首页 -青岛- 中国天气网 - weather.com.cn",
+              "url": "https://sd.weather.com.cn/qingdao/"
+            },
+            {
+              "rank": 7,
+              "title": "【青岛市天气】_青岛市天气预报_天气查询 - 墨迹天气",
+              "url": "https://tianqi.moji.com/weather/china/shandong/qingdao"
+            },
+            {
+              "rank": 8,
+              "title": "天气-青岛市 - 14天预报：气温、风和雷达 | Ventusky",
+              "url": "https://www.ventusky.com/zh/qingdao"
+            },
+            {
+              "rank": 9,
+              "title": "当地天气每日预测、雷达图、飓风更新和当前天气| MSN天气",
+              "url": "https://www.msn.cn/zh-cn/weather?lat=36.068&lon=120.382"
+            },
+            {
+              "rank": 10,
+              "title": "【青岛市天气预报15天】_青岛市天气预报15天查询 - 预报查询 - 墨迹天气",
+              "url": "https://tianqi.moji.com/forecast15/china/shandong/qingdao"
+            }
+          ]
+        },
+        {
+          "purpose": "weather_page",
+          "url": "https://www.tianqi.com/qingdao/",
+          "params": {},
+          "attempt": 1,
+          "status": "ok",
+          "final_url": "https://www.tianqi.com/qingdao/"
+        }
+      ],
+      "finished_at": "2026-11-01T20:18:42.410150+08:00",
+      "selected_sources": [
+        "bing_snippet",
+        "weather_page"
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "prompt_tokens": 1017,
+      "completion_tokens": 22,
+      "total_tokens": 1039,
+      "status": "ok",
+      "temperature": 0.3
+    },
+    {
+      "prompt_tokens": 1404,
+      "completion_tokens": 27,
+      "total_tokens": 1431,
+      "status": "ok",
+      "temperature": 0.3
+    },
+    {
+      "prompt_tokens": 1809,
+      "completion_tokens": 106,
+      "total_tokens": 1915,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:18:43.890415+08:00",
+  "seconds": 9.64,
+  "prompt_tokens": 4230,
+  "completion_tokens": 155,
+  "total_tokens": 4385
+}

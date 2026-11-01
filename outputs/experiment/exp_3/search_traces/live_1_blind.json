@@ -1,0 +1,23 @@
+{
+  "question": "上海现在的气温是多少摄氏度？",
+  "mode": "blind",
+  "answer": "我无法直接获取实时天气数据，因此不能准确告诉你上海此刻的气温。建议打开天气 App 或搜索“上海实时天气”查看当前温度。",
+  "status": "ok",
+  "started_at": "2026-11-01T20:17:48.715144+08:00",
+  "search_log": [],
+  "search_events": [],
+  "usage": [
+    {
+      "prompt_tokens": 73,
+      "completion_tokens": 120,
+      "total_tokens": 193,
+      "status": "ok",
+      "temperature": 0.3
+    }
+  ],
+  "finished_at": "2026-11-01T20:17:51.390451+08:00",
+  "seconds": 2.675,
+  "prompt_tokens": 73,
+  "completion_tokens": 120,
+  "total_tokens": 193
+}
